@@ -1,0 +1,15 @@
+title: Cloud platform user guide
+
+permalink: pretty
+
+defaults:
+  -
+    scope:
+      path: "overview"
+    values:
+      overview: true
+  -
+    scope:
+      path: "getting-started"
+    values:
+      getting-started: true
