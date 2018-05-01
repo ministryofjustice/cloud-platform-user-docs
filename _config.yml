@@ -13,3 +13,8 @@ defaults:
       path: "getting-started"
     values:
       getting-started: true
+  -
+    scope:
+      path: "cloud-platform"
+    values:
+      cloud-platform: true
