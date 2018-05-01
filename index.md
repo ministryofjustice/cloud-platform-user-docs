@@ -20,3 +20,12 @@ Users can create non-production environments and get access to the Kubernetes AP
 {% for article in getting_started_groups %}
   [{{ article.title }}]({{ article.url | relative_url }})
 {% endfor %}
+
+## Kubernetes
+
+{% assign kubernetes_groups = site.pages
+  | where: "kubernetes", true %}
+
+{% for article in kubernetes_groups %}
+  [{{ article.title }}]({{ article.url | relative_url }})
+{% endfor %}
