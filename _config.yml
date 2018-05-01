@@ -15,6 +15,6 @@ defaults:
       getting-started: true
   -
     scope:
-      path: "kubernetes"
+      path: "cloud-platform"
     values:
-      kubernetes: true
+      cloud-platform: true

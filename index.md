@@ -21,11 +21,11 @@ Users can create non-production environments and get access to the Kubernetes AP
   [{{ article.title }}]({{ article.url | relative_url }})
 {% endfor %}
 
-## Kubernetes
+## Cloud Platform
 
-{% assign kubernetes_groups = site.pages
-  | where: "kubernetes", true %}
+{% assign cloud-platform_groups = site.pages
+  | where: "cloud-platform", true %}
 
-{% for article in kubernetes_groups %}
+{% for article in cloud-platform_groups %}
   [{{ article.title }}]({{ article.url | relative_url }})
 {% endfor %}
