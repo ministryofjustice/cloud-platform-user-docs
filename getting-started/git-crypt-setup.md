@@ -1,3 +1,6 @@
+---
+category: getting-started
+---
 ## Git-Crypt
 
 We use `git-crypt` to ensure that application secrets are encrypted at rest in git.
