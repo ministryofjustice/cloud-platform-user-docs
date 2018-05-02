@@ -32,30 +32,30 @@ You will be working within the namespace directory to create your environment.
 
 ### GitHub directory structure
 
-#### k8s-non-prod-environment
+**k8s-non-prod-environment**
 
 ![Image](images/image4.png)
 
 This is the root of the repo, containing Terraform and Namespace directory
 
-#### /namespaces
+**/namespaces**
 
 ![Image](images/image5.png)
 
-This is the Namespace directory, this is where you will add create a directory for your service in the format `$servicename-$env`   
+This is the Namespace directory, this is where you will create a directory for your service in the format `$servicename-$env`   
 example: myapp-dev
 
-#### /$Servicename-$env
+**/$Servicename-$env**
 
 ![Image](images/image6.png)
 
 When you create your `$servicename-$env` directory for your service. You will need to create two files within it. `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`
 
-### Instructions
+#### Instructions
 
 ![Image](images/image2.png)
 
-1) Git clone the repo onto your local machine and create a new branch to make your changes. (Using terminal)
+**1)** Git clone the repo onto your local machine and create a new branch to make your changes. (Using terminal)
 
 ```
   #git clone the repo onto your local machine.
@@ -78,7 +78,8 @@ When you create your `$servicename-$env` directory for your service. You will ne
     remotes/origin/add-git-crypt
 ```
 
-2) Now we need to amend the namespaces directory in the root of repo and create an directory within it.
+
+**2)** Now we need to amend the namespaces directory in the root of repo and create an directory within it.
 
 ```
 #we will need to change directories and change into the namespaces directory.
@@ -99,10 +100,11 @@ $ mkdir myapp-dev
 $ cd myapp-dev
 ```
 
-3) Now we will need to create two files within our `$servicename-$env` directory.  `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`. The structures of both files are shown below.
+
+**3)** Now we will need to create two files within our `$servicename-$env` directory.  `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`. The structures of both files are shown below.
 
 
-#### k8s-non-prod-environment/namespaces/$servicename-$env/namespace.yaml
+**k8s-non-prod-environment/namespaces/$servicename-$env/namespace.yaml**
 
 ```
 apiVersion: v1
@@ -113,7 +115,7 @@ metadata:
     name: myapp-dev
 ```
 
-#### Namespace:
+**Namespace:**
 
 Namespaces is a mechanism in Kubernetes that will essentially create your environment. 
 
@@ -121,7 +123,7 @@ Kubernetes namespace creates a logical cluster within our cluster that provides 
 
 Using a Kubernetes namespace could isolate namespaces for different environments in the same cluster. Providing us with flexibility of creating segregated environments for different.
 
-#### Namespace.yaml
+**Namespace.yaml**
 
 ```
 apiVersion: 
@@ -134,7 +136,7 @@ metadata:
 
 [https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/)
 
-#### k8s-non-prod-environment/namespaces/$servicename-$env/$service-$name-admin-role.yaml
+**k8s-non-prod-environment/namespaces/$servicename-$env/$service-$name-admin-role.yaml**
 
 ```
 kind: RoleBinding
@@ -152,7 +154,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-#### Rolebinding:
+**Rolebinding:**
 
 We will also create a Rolebinding resouce that will provide us with access policies to the namespace we have created in the cluster.
 
@@ -196,7 +198,8 @@ myapp-dev-admin-role.yaml	namespace.yaml   		#output after running list command.
 
 ```
 
-4) After both files are created. You are ready to upload your branch to our github repo. You will need to add the files, commit them and then set a new upstream branch.
+
+**4)** After both files are created. You are ready to upload your branch to our github repo. You will need to add the files, commit them and then set a new upstream branch.
 
 ```
 # Add all new files from your current directory to staging.
@@ -228,5 +231,6 @@ git push --set-upstream origin myapp
 #Now you can go to the repo in the GITHUB GUI and make a pull request to merge your branch with master.
 ```
 
-5) Now that you have uploaded your branch, go to the Github GUI and select your branch. Once you have done this, you may make a pull request to merge to master.
+
+**5)** Now that you have uploaded your branch, go to the Github GUI and select your branch. Once you have done this, you may make a pull request to merge to master.
 ![Image](images/image3.png)
