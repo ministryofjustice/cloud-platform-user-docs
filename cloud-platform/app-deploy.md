@@ -39,7 +39,7 @@ Create a new repository, and name it something relevant:
 
 ![Image](images/create-ecr-repo.png)
 
-After confirmation that the repository was successfully created, ignore the list of commands and click 'Done', at the bottom of the page.
+After confirmation that the repository was successfully created, ignore the list of commands and click **Done**, at the bottom of the page.
 
 ### Authenticating with the repository
 
@@ -49,7 +49,7 @@ Within the repository, you will see the following section with values unique to 
 
 ![Image](images/repo-values.png)
 
-Click the 'View Push Commands' button.
+Click the **View Push Commands** button.
 
 You will then be presented with a list of preconfigured terminal commands for you to run.
 
@@ -59,7 +59,7 @@ Copy the first command. You will need to add `--profile yourAWSProfile` if the A
 
 Execute the command, then proceed to execute the Docker login command provided in the Terminal.
 
-'Login Succeeded' will confirm you have been authenticated with the repository.
+`Login Succeeded` will confirm you have been authenticated with the repository.
 
 ### Pushing the Docker image to the repository
 
@@ -67,7 +67,7 @@ Ensure the Docker image for your application has been built and is stored locall
 
 Now we need to tag the image with the tag provided by ECR, so I can be pushed into the correct repository.
 
-View the 'Push Commands' again, and modify the fourth command provided, ensuring the first tag is the one currently used on your machine:
+View the **Push Commands** again, and modify the fourth command provided, ensuring the first tag is the one currently used on your machine:
 
 `docker tag cloud-platform-demo-app:latest 926803513772.dkr.ecr.us-west-1.amazonaws.com/cloud-platform-demo-app:latest`
 
@@ -199,7 +199,7 @@ Confirm the deployment with:
 
 With the application deployed into the Cloud Platform, there are a few ways of managing it:
 
-* View pods - `kubectl get pods`
-* Check host - `kubectl get ing`
-* Delete application - `kubectl delete deployment --all` + `kubectl delete service --all` + `kubectl delete ingress --all`
-* Shell into container - `kubectl exec -it pod-name -- /bin/bash`
+* **View pods** - `kubectl get pods`
+* **Check host** - `kubectl get ing`
+* **Delete application** - `kubectl delete deployment --all` + `kubectl delete service --all` + `kubectl delete ingress --all`
+* **Shell into container** - `kubectl exec -it pod-name -- /bin/bash`
