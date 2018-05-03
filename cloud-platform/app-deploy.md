@@ -122,7 +122,7 @@ If you are using the file as a template for your own application, replace the va
 
 ### Service
 
-Service files are used to specify port and protocol information for your application.
+Service files are used to specify port and protocol information for your application and are also used to bundle together the set of pods created by the deployment.
 
 See the contents of the `service.yml` file below:
 
@@ -148,7 +148,7 @@ Also, ensure the `selector:` app tag is the same as specified in the `deployment
 
 ### Ingress
 
-Ingress files are to use to specify host resolving information for your application.
+Ingress files are to use to define external access to the application.
 
 See the contents of the `ingress.yml` file below:
 
@@ -201,5 +201,5 @@ With the application deployed into the Cloud Platform, there are a few ways of m
 
 * **View pods** - `kubectl get pods`
 * **Check host** - `kubectl get ing`
-* **Delete application** - `kubectl delete deployment --all` + `kubectl delete service --all` + `kubectl delete ingress --all`
+* **Delete application** - `kubectl delete -f deployment-files`
 * **Shell into container** - `kubectl exec -it pod-name -- /bin/bash`
