@@ -33,6 +33,8 @@ Amazon's ECR, within ECS is where all of the application images used by the Clou
 
 ### Creating or choosing a repository
 
+**NOTE:** *When you are uploading your image to ECR you'll need a credential from the cloud platform team, ask in the `#cloud-platform-users` channel in Slack*
+
 On the ECR start page you will have the option create a new repository, or to search for an existing one.
 
 Create a new repository, and name it something relevant:
@@ -54,6 +56,7 @@ Click the **View Push Commands** button.
 You will then be presented with a list of preconfigured terminal commands for you to run.
 
 Copy the first command. You will need to add `--profile yourAWSProfile` if the AWS account you're pushing to is not the default in your CLI:
+*Note: You can also set the environment variable `AWS_ENVIRONMENT=<yourAWSProfile>`*
 
 `aws ecr get-login --profile mojdsd --no-include-email --region eu-west-1`
 
@@ -65,7 +68,7 @@ Execute the command, then proceed to execute the Docker login command provided i
 
 Ensure the Docker image for your application has been built and is stored locally on your machine.
 
-Now we need to tag the image with the tag provided by ECR, so I can be pushed into the correct repository.
+Now we need to tag the image with the tag provided by ECR, so it can be pushed into the correct repository.
 
 View the **Push Commands** again, and modify the fourth command provided, ensuring the first tag is the one currently used on your machine:
 
@@ -120,6 +123,8 @@ For the value of the `image:` key, you will see the Repository URI, which has be
 
 If you are using the file as a template for your own application, replace the value of `image:` with the Repository URI of your application, found in ECR.
 
+*Tip:* You can find more deployment config info [here.](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
+
 ### Service
 
 Service files are used to specify port and protocol information for your application and are also used to bundle together the set of pods created by the deployment.
@@ -146,6 +151,8 @@ If you are using the file as a template for your own application, replace the `c
 
 Also, ensure the `selector:` app tag is the same as specified in the `deployment.yml`.
 
+*Tip:* You can find more deployment config info [here.](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
+
 ### Ingress
 
 Ingress files are to use to define external access to the application.
@@ -171,6 +178,8 @@ spec:
 If you are using the file as a template for your own application, replace the `cp-demo-app-ing` tag with one suited to your application.
 
 Also, ensure the `serviceName:` tag is the same as specified in the `service.yml`.
+
+*Tip:* You can find more deployment config info [here.](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
 
 ## Deploying application to the cluster
 
