@@ -48,12 +48,23 @@ Within your directory, you will now see a new sub-directory with the name of you
 
 Within your newly generated chart, you will find 4 objects at it's root level, 2 files and 2 directories:
 
-* `Chart.yaml`
-* `values.yaml`
-* `templates`
-* `charts`
+* `Chart.yaml` - This file contains basic information about your chart, App version, for example:
 
-### 
+```
+apiVersion: v1
+appVersion: "1.0"
+description: A Helm chart for Kubernetes
+name: yourName
+version: 0.1.0
+```
+
+* `values.yaml` - This file is where secrets or custom variables are stored, which can be later pulled into the other templates in the chart:
+
+* `templates` - The Template directory is where you store all of the manifest files for your applications deployment. You will notice some file templates have already been populated.
+
+* `charts` - This directory can also be known as a dependency folder. Essentially if the Helm chart you are creating depends on other Helm charts to run correctly, these charts must be stored here.
+
+### Configuring your Helm chart
 
 
 ## Deploying the Helm chart
