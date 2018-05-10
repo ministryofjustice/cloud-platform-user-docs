@@ -14,10 +14,10 @@ This guide uses a pre-configured application as an example of how to deploy your
 
 This guide assumes the following:
 
+* You have [created an environment for your application](/cloud-platform/env-create)
 * Kubectl is installed and configured.
 * Docker is installed and configured.
 * Authentication with the cluster has been established.
-* An environment has been created within the Cloud Platform.
 * Access to AWS, with ECR upload permissions.
 * AWS CLI configured with account credentials.
 
@@ -86,11 +86,11 @@ To deploy an application to the Cloud Platform, a number of deployment files mus
 
 These deployment files will make reference to your application's Docker image and handle configurations, such as ports and host resolving.
 
-This guide will analyse the deployment files for `Cloud-Platform-Demo-App`.
+This guide will analyse the deployment files for `Cloud-Platform-Reference-App`.
 
 The deployment files can be used as a basic template for your application, and can be found at:
 
-[https://github.com/ministryofjustice/cloud-platform-demo-app](https://github.com/ministryofjustice/cloud-platform-demo-app)
+[https://github.com/ministryofjustice/cloud-platform-reference-app](https://github.com/ministryofjustice/cloud-platform-reference-app)
 
 ### Deployment
 
@@ -183,32 +183,29 @@ Also, ensure the `serviceName:` tag is the same as specified in the `service.yml
 
 ## Deploying application to the cluster
 
-With all of the deployment files configured and saved locally, you can now deploy your application to the Cloud Platform.
+With all of the deployment files configured, you can now deploy your application to the Cloud Platform.
 
-Start by verifying you are connected to the environment you created:
+Start by listing the namespaces on the cluster you are connected to:
 
-`kubectl cluster-info`
+`kubectl get namespaces`
 
-Now ensure that the environment is empty by running each of the commands, `No resources found.` should be returned for all of them:
+The list that gets returned should include the environment you [created earlier](/cloud-platform/env-create), here we assume it is called `my-app-dev`.
 
-* `kubectl get pods`
-* `kubectl get deployments`
-* `kubectl get services` - ClusterIP should be returned.
-* `kubectl get ingress`
+To deploy your application run the following command, that points to the directory where the deployment files are stored, in the [reference app]() they are in the `kubectl_deploy` directory:
 
-With the environment empty, deploy the application by running the following command, that points to the `deployment-files` directory, in which the deployment files are stored:
+`kubectl create -f kubectl_deploy --namespace my-app-dev`
 
-`kubectl create -f deployment-files`
+You have to specify the namespace you want to deploy to, this should be the namespace of the environment you created.
 
 Confirm the deployment with:
 
-`kubectl get pods`
+`kubectl get pods --namespace my-app-dev`
 
 ## Interacting with the application
 
 With the application deployed into the Cloud Platform, there are a few ways of managing it:
 
-* **View pods** - `kubectl get pods`
-* **Check host** - `kubectl get ing`
-* **Delete application** - `kubectl delete -f deployment-files`
-* **Shell into container** - `kubectl exec -it pod-name -- /bin/bash`
+* **View pods** - `kubectl get pods --namespace my-app-dev`
+* **Check host** - `kubectl get ing --namespace my-app-dev`
+* **Delete application** - `kubectl delete -f deployment-files --namespace my-app-dev`
+* **Shell into container** - `kubectl exec -it pod-name -- /bin/bash --namespace my-app-dev`
