@@ -92,6 +92,8 @@ The deployment files can be used as a basic template for your application, and c
 
 [https://github.com/ministryofjustice/cloud-platform-reference-app](https://github.com/ministryofjustice/cloud-platform-reference-app)
 
+*Tip:* You can find more deployment config info [in the kubernetes developer documentation](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/).
+
 ### Deployment
 
 Deployment files are used to specify core information about an application that is being deployed to the Cloud Platform.
@@ -123,7 +125,6 @@ For the value of the `image:` key, you will see the Repository URI, which has be
 
 If you are using the file as a template for your own application, replace the value of `image:` with the Repository URI of your application, found in ECR.
 
-*Tip:* You can find more deployment config info [here.](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
 
 ### Service
 
@@ -151,7 +152,7 @@ If you are using the file as a template for your own application, replace the `c
 
 Also, ensure the `selector:` app tag is the same as specified in the `deployment.yml`.
 
-*Tip:* You can find more deployment config info [here.](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
+*Tip:* You can find more info on service definition in the [kubernetes docs](https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/).
 
 ### Ingress
 
@@ -179,7 +180,7 @@ If you are using the file as a template for your own application, replace the `c
 
 Also, ensure the `serviceName:` tag is the same as specified in the `service.yml`.
 
-*Tip:* You can find more deployment config info [here.](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
+*Tip:* You can find more info on ingress in the [kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
 ## Deploying application to the cluster
 
