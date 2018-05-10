@@ -1,8 +1,8 @@
 ---
 category: cloud-platform
-expires: 2018-01-31
+expires: 2018-06-30
 ---
-# Secrets
+# Secrets overview
 
 We identify secrets as one of three kinds:
 - user secrets
@@ -25,6 +25,6 @@ These are the secrets that the application requires at runtime. Some examples ar
 
 This kind of secrets falls under the shared responsibility model:
 
-- the owners of the application are responsible for securely managing the secrets at rest (eg. using [git-crypt]({{ site.baseurl }}{% post_url /getting-started/git-crypt %}) to encrypt them alongside the source code) and also for managing access to the secrets once they've been added to an environment,
+- the owners of the application are responsible for securely managing the secrets at rest (eg. using [git-crypt]({{ site.baseurl }}/getting-started/git-crypt-setup %}) to encrypt them alongside the source code) and also for managing access to the secrets once they've been added to an environment,
 
 - the Cloud Platform team, on the other hand, is responsible for ensuring the secrets remain secure inside the environment.
