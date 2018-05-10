@@ -143,3 +143,28 @@ git-crypt status
 to see what is (and isn't encrypted)
 
 For more information regarding git-crypt see [git-crypt-setup](https://github.com/ministryofjustice/cloud-platform-user-docs/blob/076be35f6f1826f4250b76317b6535734a2c095e/getting-started/git-crypt-setup.md)
+
+# Updating the cluster
+
+* to preview the rolling update
+
+```
+
+kops rolling-update cluster
+
+```
+
+* to apply the rolling-update
+
+```
+
+kops rolling-update cluster --yes
+
+```
+* to update the cluster with the config from state store
+
+```
+
+kops update cluster <cluster-name> --yes --state=s3://<kops-state-store-link>
+
+```
