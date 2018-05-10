@@ -209,4 +209,4 @@ With the application deployed into the Cloud Platform, there are a few ways of m
 * **View pods** - `kubectl get pods --namespace my-app-dev`
 * **Check host** - `kubectl get ing --namespace my-app-dev`
 * **Delete application** - `kubectl delete -f deployment-files --namespace my-app-dev`
-* **Shell into container** - `kubectl exec -it pod-name -- /bin/bash --namespace my-app-dev`
+* **Shell into container** - `kubectl exec --stdin --tty --namespace my-app-dev pod-name -- /bin/bash`
