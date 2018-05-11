@@ -158,23 +158,3 @@ git-crypt status
 ```
 
 to see what is (and isn't encrypted)
-
-
-# Updating the cluster
-
-* to preview the rolling update
-
-```
-kops rolling-update cluster
-```
-
-* to apply the rolling-update
-
-```
-kops rolling-update cluster --yes
-```
-* to update the cluster with the config from state store
-
-```
-kops update cluster <cluster-name> --yes --state=s3://<kops-state-store-link>
-```
