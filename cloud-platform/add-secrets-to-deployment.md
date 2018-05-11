@@ -25,10 +25,29 @@ for detailed information regarding providing base64 values in secret objects to 
 
 Create your AWS Credentials access key (making a note of the aws_access_key_id and aws_secret_access_key)
 
-put the aws key secret and id into a file (in this example demo-v9.k8s) as follows ('thekey' referencing the aws_access_key_id
-and 'thesecret' referencing the aws_secret_access_key):
+### base64-encode your secret as follows:
+
+In this example  aws_access_key_id is 'AKIAFTKSAW15HJLOGD'. Issue the following command to base64-encode:
 
 ```
+echo -n 'AKIAFTKSAW15HJLOGD' | base64 -b0
+```
+
+This will return the encoded id 'QUtJQUZUS1NBVzE1SEpMT0dE'
+
+In this example the is aws_secret_access_key 'g8hjpmhvgfhk4547gfdshhjj'. Issue the following command to base64-encode:
+
+```
+echo -n 'QUtJQUZUS1NBVzE1SEpMT0dE' | base64 -b0
+```
+
+This will return the encoded secret 'UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF' 
+
+ 
+
+put the encoded secret and id into a file (in this example demo-v9.k8s) as follows:
+
+```Yaml
 apiVersion: v1
 
 kind: Secret
@@ -41,10 +60,9 @@ type: Opaque
 
 data:
 
-  thekey: AKIAFTKSAW15HJLOGD
+  aws_access_key_id: QUtJQUZUS1NBVzE1SEpMT0dE
 
-  thesecret: g8hjpmhvgfhk4547gfdshhjj
-
+  aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
 ```
 
 create secret generic secret from that file:
@@ -61,7 +79,6 @@ To view the output of your secret:
 
 ```
 $kubectl -o json -n demo-app get secret demosecret-v9
-
 ```
 
 This will output something like the following:
@@ -83,16 +100,18 @@ This will output something like the following:
     },
     "type": "Opaque"
 }
-
 ```
 Using the 'data' output from above, issue the following command (to validate and verify that it is the same as you originally inputted into the demo-v9.k8s file above):
 
 ```
 $ base64 -D
 YXBpVmVyc2lvbjogdjEKa2luZDogU2VjcmV0Cm1ldGFkYXRhOgogIG5hbWU6IGRlbW9zZWNyZXQtdjkKdHlwZTogT3BhcXVlCmRhdGE6CiAgdGhla2V5OiBBS0lBRlRLU0FXMTVISkxPR0QKICB0aGVzZWNyZXQ6IGc4aGpwbWh2Z2ZoazQ1NDdnZmRzaGhqago=
+```
+To exit the command 
 
 ```
-ctrl+d to exit
+ctrl+d 
+```
 
 This will return similar to the following output:
 
@@ -103,13 +122,12 @@ metadata:
   name: demosecret-v9
 type: Opaque
 data:
-  thekey: AKIAFTKSAW15HJLOGD
-  thesecret: g8hjpmhvgfhk4547gfdshhjj
-
+  aws_access_key_id: QUtJQUZUS1NBVzE1SEpMT0dE
+  aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
 ```
-Add the AWS_ACCESS_KEY_ID referencing 'thekey' and AWS_SECRET_ACCESS_KEY referencing 'thesecret (as previously set) to the containers env in deployment-files/deployment.yaml
+Add the AWS_ACCESS_KEY_ID referencing 'aws_access_key_id' and AWS_SECRET_ACCESS_KEY referencing 'aws_secret_access_key' (as previously set) to the containers env in `deployment-files/deployment.yaml`
 
-```
+```Yaml
     spec:
       containers:
         - name: django-demo-container
@@ -121,13 +139,12 @@ Add the AWS_ACCESS_KEY_ID referencing 'thekey' and AWS_SECRET_ACCESS_KEY referen
               valueFrom:
                 secretKeyRef:
                   name: demosecret-v9
-                  key: thekey
+                  key: aws_access_key_id
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: demosecret-v9
-                  key: thesecret
-
+                  key: aws_secret_access_key
 ```
 
 As Base64 is an encoding algorithm that merely presents data in an alternative format, the data IS NOT encrypted. The output of 'base64 -D'
@@ -137,7 +154,6 @@ Just to be safe issue the command:
 
 ```
 git-crypt status
-
 ```
 
 to see what is (and isn't encrypted)
@@ -149,22 +165,16 @@ For more information regarding git-crypt see [git-crypt-setup](https://github.co
 * to preview the rolling update
 
 ```
-
 kops rolling-update cluster
-
 ```
 
 * to apply the rolling-update
 
 ```
-
 kops rolling-update cluster --yes
-
 ```
 * to update the cluster with the config from state store
 
 ```
-
 kops update cluster <cluster-name> --yes --state=s3://<kops-state-store-link>
-
 ```
