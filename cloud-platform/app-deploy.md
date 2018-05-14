@@ -23,7 +23,7 @@ This guide assumes the following:
 
 If you are not deploying your own application and would like to deploy the example application, clone the following repo:
 
-[https://github.com/ministryofjustice/cloud-platform-demo-app](https://github.com/ministryofjustice/cloud-platform-demo-app)
+[https://github.com/ministryofjustice/cloud-platform-reference-app](https://github.com/ministryofjustice/cloud-platform-reference-app)
 
 ## Pushing application to ECR
 
