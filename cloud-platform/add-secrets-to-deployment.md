@@ -89,6 +89,18 @@ secret "demosecret" created
 To view the output of your secret:
 
 ```
+$ kubectl get secret demosecret -n demo-app -o jsonpath="{.data.aws_secret_key}"
+QUtJQUZUS1NBVzE1SEpMT0dE
+```
+This can then be piped directly into base64 to get the plaintext value:
+
+```
+$ kubectl get secret demosecret -n demo-app -o jsonpath="{.data.aws_secret_key}" | base64 --decode
+AKIAFTKSAW15HJLOGD
+```
+Optional - to see more detail
+
+```
 $kubectl -o json -n demo-app get secret demosecret
 ```
 
