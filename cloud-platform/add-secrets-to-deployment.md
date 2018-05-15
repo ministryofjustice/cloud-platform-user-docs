@@ -43,11 +43,22 @@ echo -n 'QUtJQUZUS1NBVzE1SEpMT0dE' | base64 -b0
 
 This will return the encoded secret 'UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF' 
 
- 
+## Creating the secret
 
-put the encoded secret and id into a file (in this example secret-demo.k8s) as follows:
+There are 2 ways of creating the secret:
 
-```Yaml
+1. create a generic secret - for Concourse's git-crypt key
+
+
+2. Create the secret with a YAML file
+
+### 1. create a generic secret - for Concourse's git-crypt key
+
+This is Concourse-specific from a file. With this method output is base64d twice  
+
+put the encoded secret and id into a file (in this example secret-demo.k8s, can be any text file in the format below) as follows:
+
+```
 apiVersion: v1
 
 kind: Secret
@@ -107,7 +118,7 @@ Using the 'data' output from above, issue the following command (to validate and
 $ base64 -D
 YXBpVmVyc2lvbjogdjEKa2luZDogU2VjcmV0Cm1ldGFkYXRhOgogIG5hbWU6IGRlbW9zZWNyZXQtdjkKdHlwZTogT3BhcXVlCmRhdGE6CiAgdGhla2V5OiBBS0lBRlRLU0FXMTVISkxPR0QKICB0aGVzZWNyZXQ6IGc4aGpwbWh2Z2ZoazQ1NDdnZmRzaGhqago=
 ```
-To exit the command 
+To exit the base64 command (this will not log you out of your session) 
 
 ```
 ctrl+d 
@@ -125,6 +136,67 @@ data:
   aws_access_key_id: QUtJQUZUS1NBVzE1SEpMT0dE
   aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
 ```
+### 2. Create the secret with a YAML file
+
+Create a yaml file similar to:
+
+```
+apiVersion: v1
+
+kind: Secret
+
+metadata:
+
+  name: demosecret
+
+type: Opaque
+
+data:
+
+  aws_access_key_id: QUtJQUZUS1NBVzE1SEpMT0dE
+
+  aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
+```
+issue the following command:
+
+``` kubectl create -f demo.yaml ```
+
+This will output:
+
+``` secret "demosecret" created ```
+
+To see the secrets:
+
+``` kubectl get secrets ```
+
+Will output similar to
+
+```
+NAME                                          TYPE                                  DATA      AGE
+calico-zebu-external-dns-token-pldjb          kubernetes.io/service-account-token   3         16d
+dandy-bumblebee-nginx-ingress-token-bspl6     kubernetes.io/service-account-token   3         14d
+default-token-hz7z7                           kubernetes.io/service-account-token   3         26d
+demosecret                                    Opaque                                2         5d
+```
+
+Decoding the Secret
+Secrets can be retrieved via the kubectl get secret command. For example, to retrieve the secret you created:
+
+``` kubectl get secret demosecret  -o yaml ```
+
+output
+
+```
+apiVersion: v1
+data:
+  aws_access_key_id: dGVzdCBrZXk=
+  aws_secret_access_key: dGVzdCBrZXk=
+kind: Secret
+metadata:
+  creationTimestamp: 2018-05-15T12:24:33Z
+  name: demosecret
+
+
 Add the AWS_ACCESS_KEY_ID referencing 'aws_access_key_id' and AWS_SECRET_ACCESS_KEY referencing 'aws_secret_access_key' (as previously set) to the containers env in `deployment-files/deployment.yaml`
 
 ```Yaml
