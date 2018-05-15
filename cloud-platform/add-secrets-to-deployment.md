@@ -76,8 +76,10 @@ data:
   aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
 ```
 
-create secret generic secret from that file:
-```$kubectl -n demo-app create secret generic demosecret --from-file=demosecret=secret-demo.k8s```
+create the secret generic secret from that file:
+```
+$kubectl -n demo-app create secret generic demosecret --from-file=demosecret=secret-demo.k8s
+```
 
 'demo-app' being the namespace, 'demosecret' referencing the 'name' in secret-demo.k8s and referencing the file 'secret-demo.k8s'
 this will give the following screen output
@@ -101,12 +103,7 @@ AKIAFTKSAW15HJLOGD
 Optional - to see more detail
 
 ```
-$kubectl -o json -n demo-app get secret demosecret
-```
-
-This will output something like the following:
-
-```
+$ kubectl -o json -n demo-app get secret demosecret
 {
     "apiVersion": "v1",
     "data": {
@@ -152,7 +149,7 @@ data:
 
 Create a yaml file similar to:
 
-```
+```Yaml
 apiVersion: v1
 
 kind: Secret
@@ -171,19 +168,15 @@ data:
 ```
 issue the following command:
 
-``` kubectl create -f demo.yaml ```
-
-This will output:
-
-``` secret "demosecret" created ```
+```
+$ kubectl create -f demo.yaml
+secret "demosecret" created 
+```
 
 To see the secrets:
 
-``` kubectl get secrets ```
-
-Will output similar to
-
-```
+``` 
+$ kubectl get secrets
 NAME                                          TYPE                                  DATA      AGE
 calico-zebu-external-dns-token-pldjb          kubernetes.io/service-account-token   3         16d
 dandy-bumblebee-nginx-ingress-token-bspl6     kubernetes.io/service-account-token   3         14d
@@ -194,11 +187,8 @@ demosecret                                    Opaque                            
 Decoding the Secret
 Secrets can be retrieved via the kubectl get secret command. For example, to retrieve the secret you created:
 
-``` kubectl get secret demosecret  -o yaml ```
-
-output
-
-```
+``` 
+$ kubectl get secret demosecret  -o yaml
 apiVersion: v1
 data:
   aws_access_key_id: dGVzdCBrZXk=
@@ -207,7 +197,7 @@ kind: Secret
 metadata:
   creationTimestamp: 2018-05-15T12:24:33Z
   name: demosecret
-
+```
 
 Add the AWS_ACCESS_KEY_ID referencing 'aws_access_key_id' and AWS_SECRET_ACCESS_KEY referencing 'aws_secret_access_key' (as previously set) to the containers env in `deployment-files/deployment.yaml`
 
