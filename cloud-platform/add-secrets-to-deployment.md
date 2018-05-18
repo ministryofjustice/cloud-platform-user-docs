@@ -49,19 +49,12 @@ Create a secrets.yaml file similar to:
 
 ```Yaml
 apiVersion: v1
-
 kind: Secret
-
 metadata:
-
   name: demosecret
-
 type: Opaque
-
 data:
-
   aws_access_key_id: QUtJQUZUS1NBVzE1SEpMT0dE
-
   aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
 ```
 issue the following command:
@@ -118,15 +111,3 @@ Add the AWS_ACCESS_KEY_ID referencing 'aws_access_key_id' and AWS_SECRET_ACCESS_
                   name: demosecret
                   key: aws_secret_access_key
 ```
-
-As Base64 is an encoding algorithm that merely presents data in an alternative format, the data IS NOT encrypted. 
-The output of 'base64 -D'needs to be put into an [git crypted](/getting-started/git-crypt-setup) file that is referenced by the '.gitattribute' file.
-
-Just to be safe issue the command:
-
-
-```
-git-crypt status
-```
-
-to see what is (and isn't encrypted)
