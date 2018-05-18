@@ -45,109 +45,7 @@ This will return the encoded secret 'UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF'
 
 ## Creating the secret
 
-There are 2 ways of creating the secret:
-
-1. create a generic secret - for Concourse's git-crypt key
-
-
-2. Create the secret with a YAML file
-
-### 1. create a generic secret - for Concourse's git-crypt key
-
-This is Concourse-specific from a file. With this method output is base64d twice  
-
-put the encoded secret and id into a file (in this example secret-demo.k8s, can be any text file in the format below) as follows:
-
-```
-apiVersion: v1
-
-kind: Secret
-
-metadata:
-
-  name: demosecret
-
-type: Opaque
-
-data:
-
-  aws_access_key_id: QUtJQUZUS1NBVzE1SEpMT0dE
-
-  aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
-```
-
-create the secret generic secret from that file:
-```
-$kubectl -n demo-app create secret generic demosecret --from-file=demosecret=secret-demo.k8s
-```
-
-'demo-app' being the namespace, 'demosecret' referencing the 'name' in secret-demo.k8s and referencing the file 'secret-demo.k8s'
-this will give the following screen output
-
-
-```
-secret "demosecret" created
-```
-To view the output of your secret:
-
-```
-$ kubectl get secret demosecret -n demo-app -o jsonpath="{.data.aws_secret_key}"
-QUtJQUZUS1NBVzE1SEpMT0dE
-```
-This can then be piped directly into base64 to get the plaintext value:
-
-```
-$ kubectl get secret demosecret -n demo-app -o jsonpath="{.data.aws_secret_key}" | base64 --decode
-AKIAFTKSAW15HJLOGD
-```
-Optional - to see more detail
-
-```
-$ kubectl -o json -n demo-app get secret demosecret
-{
-    "apiVersion": "v1",
-    "data": {
-        "demosecret": "YXBpVmVyc2lvbjogdjEKa2luZDogU2VjcmV0Cm1ldGFkYXRhOgogIG5hbWU6IGRlbW9zZWNyZXQtdjkKdHlwZTogT3BhcXVlCmRhdGE6CiAgdGhla2V5OiBBS0lBRlRLU0FXMTVISkxPR0QKICB0aGVzZWNyZXQ6IGc4aGpwbWh2Z2ZoazQ1NDdnZmRzaGhqago="
-    },
-    "kind": "Secret",
-    "metadata": {
-        "creationTimestamp": "2018-05-09T15:17:50Z",
-        "name": "demosecret",
-        "namespace": "demo-app",
-        "resourceVersion": "3021923",
-        "selfLink": "/api/v1/namespaces/demo-app/secrets/demosecret",
-        "uid": "2315be2f-539c-11e8-8ff4-0aecd97fec6e"
-    },
-    "type": "Opaque"
-}
-```
-Using the 'data' output from above, issue the following command (to validate and verify that it is the same as you originally inputted into the secret-demo.k8s file above):
-
-```
-$ base64 -D
-YXBpVmVyc2lvbjogdjEKa2luZDogU2VjcmV0Cm1ldGFkYXRhOgogIG5hbWU6IGRlbW9zZWNyZXQtdjkKdHlwZTogT3BhcXVlCmRhdGE6CiAgdGhla2V5OiBBS0lBRlRLU0FXMTVISkxPR0QKICB0aGVzZWNyZXQ6IGc4aGpwbWh2Z2ZoazQ1NDdnZmRzaGhqago=
-```
-To exit the base64 command (this will not log you out of your session) 
-
-```
-ctrl+d 
-```
-
-This will return similar to the following output:
-
-```
-apiVersion: v1
-kind: Secret
-metadata:
-  name: demosecret
-type: Opaque
-data:
-  aws_access_key_id: QUtJQUZUS1NBVzE1SEpMT0dE
-  aws_secret_access_key: UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF
-```
-### 2. Create the secret with a YAML file
-
-Create a yaml file similar to:
+Create a secrets.yaml file similar to:
 
 ```Yaml
 apiVersion: v1
@@ -169,7 +67,7 @@ data:
 issue the following command:
 
 ```
-$ kubectl create -f demo.yaml
+$ kubectl apply -f secrets.yaml
 secret "demosecret" created 
 ```
 
