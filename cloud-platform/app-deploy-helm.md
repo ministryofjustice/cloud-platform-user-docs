@@ -1,4 +1,3 @@
-
 ---
 category: cloud-platform
 expires: 2018-01-31
@@ -26,7 +25,7 @@ The reference application we're going to use is a very simple Django application
 
 > Note: Even though we are going to install a database within the Kubernetes cluster, it is recommended to use a database as a service offering such as [AWS RDS](https://aws.amazon.com/rds/) if running in production. 
 
-Lucky for you the Helm deployment manifests have been pre-written for this exercise. But if you wish to know more about these files and what they do have a quick browse of the README <<<---- ADD LINK--->>. 
+Lucky for you the Helm deployment manifests have been pre-written for this exercise. But if you wish to know more about these files and what they do have a quick browse of the [README](https://github.com/ministryofjustice/cloud-platform-reference-app/tree/master/helm_deploy/django-app/README.md).
 
 ### Set up
 First and foremost we need to clone our reference application and subsequently change directory: 
