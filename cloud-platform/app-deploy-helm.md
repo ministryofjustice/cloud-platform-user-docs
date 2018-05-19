@@ -62,7 +62,7 @@ When succesful, you'll be greeted with the message:
 
 This is an indication we're ready to deploy our applicaton. 
 
-#### Helm install
+#### Application install
 
 To deploy the application with Helm first change directory so we can focus on the app we need:
 
