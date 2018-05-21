@@ -5,9 +5,9 @@ permalink: pretty
 defaults:
   -
     scope:
-      path: "overview"
+      path: "deploying-an-app"
     values:
-      overview: true
+      deploying-an-app: true
   -
     scope:
       path: "getting-started"
@@ -15,6 +15,6 @@ defaults:
       getting-started: true
   -
     scope:
-      path: "cloud-platform"
+      path: "other-topics"
     values:
-      cloud-platform: true
+      other-topics: true
