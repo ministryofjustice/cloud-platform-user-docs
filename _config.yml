@@ -5,16 +5,16 @@ permalink: pretty
 defaults:
   -
     scope:
-      path: "deploying-an-app"
+      path: "01-getting-started"
     values:
-      deploying-an-app: true
+      01-getting-started: true
   -
     scope:
-      path: "getting-started"
+      path: "02-deploying-an-app"
     values:
-      getting-started: true
+      02-deploying-an-app: true
   -
     scope:
-      path: "other-topics"
+      path: "03-other-topics"
     values:
-      other-topics: true
+      03-other-topics: true

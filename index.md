@@ -15,7 +15,7 @@ Users can create non-production environments and get access to the Kubernetes AP
 ## Getting started
 
 {% assign getting_started_groups = site.pages
-  | where: "getting-started", true %}
+  | where: "01-getting-started", true %}
 
 {% for article in getting_started_groups %}
   [{{ article.title }}]({{ article.url | relative_url }})
@@ -24,7 +24,7 @@ Users can create non-production environments and get access to the Kubernetes AP
 ## Deploying an app
 
 {% assign deploying_groups = site.pages
-  | where: "deploying-an-app", true %}
+  | where: "02-deploying-an-app", true %}
 
 {% for article in deploying_groups %}
   [{{ article.title }}]({{ article.url | relative_url }})
@@ -33,7 +33,7 @@ Users can create non-production environments and get access to the Kubernetes AP
 ## Other topics
 
 {% assign other_topics_groups = site.pages
-  | where: "other-topics", true %}
+  | where: "03-other-topics", true %}
 
 {% for article in other_topics_groups %}
   [{{ article.title }}]({{ article.url | relative_url }})
