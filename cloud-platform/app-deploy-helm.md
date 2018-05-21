@@ -32,9 +32,9 @@ First we need to clone our reference application and change directory:
     $ git clone https://github.com/ministryofjustice/cloud-platform-reference-app.git
     $ cd cloud-platform-reference-app
 
-You now have a functioning git repository that contains a Django simple application. Have a browse around and get familiar with the directory structure.
+You now have a functioning git repository that contains a simple Django application. Have a browse around and get familiar with the directory structure.
 
-### Browse the namespace
+### Browse the cluster
 Let's make use of the command line tool `kubectl` to browse around the cluster to see what it looks like before we deploy our application: 
 
     $ kubectl get pods --namespace <env-name>
@@ -49,15 +49,18 @@ Helm allows you to manage application deployment to Kubernetes using Charts. You
 
 #### Installing and configuring Helm
 
-There are two parts to Helm: The client and the Helm server (Tiller). When you created your environment, an instance of Tiller was installed. Before we continue we must install the [client](https://docs.helm.sh/using_helm/#installing-helm) and configure it with our Tiller instance. 
+There are two parts to Helm: The client and the Helm server (Tiller). When you created your environment, an instance of Tiller was installed automatically. This Tiller instance will need to be configured with your Helm installation.
 
-You can install the client via Homebrew on the Mac:
-`brew install kubernetes-helm`
+Install the client via Homebrew or by other [means](https://docs.helm.sh/using_helm/#installing-helm):
 
-And configure configure Tiller with:
-`helm init --tiller-namespace <env-name>`
+`$ brew install kubernetes-helm`
+
+Now configure the installation with Tiller:
+
+`$ helm init --tiller-namespace <env-name>`
 
 When succesful, you'll be greeted with the message:
+
 `Happy Helming`
 
 This is an indication we're ready to deploy our applicaton. 
@@ -68,14 +71,9 @@ To deploy the application with Helm first change directory so we can focus on th
 
     $ cd helm_deploy/django-app/
 
-Values for our application are stored in the `values.yaml` at the root of our directory. There is a single value we need to change before we deploy the application. This is the host name, which denotes the URL of your deployed application. Open this file with your favourite text editor and have a look. 
+Values for our application are stored in the `values.yaml` at the root of our directory. Configurations such as 'number of pods running' and which image repository to use is stored here in this file. Open this file and get familiar with our application layout. 
 
-The value to which I refer is:
-
-    deploy:
-      host: helm-demo.apps.cloud-platforms-test.k8s.integration.dsd.io
-
-Keeping this value the same would deploy our application using this URL and would more than likely cause a conflict. We can change this value by setting it as an argument in our command line install. 
+There is an important value in this file called `host`, which sets the URL for your application. We have to provide this value as an argument on our installation command. 
 
 Run the following (replacing the `YourName` with your own name and `env-name` with your environment name:
 
