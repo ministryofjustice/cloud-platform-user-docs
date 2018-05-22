@@ -41,6 +41,17 @@ you want them to be reviewed and published.
 
 [kramdown]: https://kramdown.gettalong.org/syntax.html
 
+## Ordering Pages
+
+Each section that appears on the homepage (generated from `index.md`) and each page within the section has a number at the beginning of its name to indicate where in the order of pages it goes.
+
+For instance, the "Getting started" section is named `001-getting-started.md` to indicated that it is the first section. The "Adding secrets to your app" page is named `003-add-secrets-to-your-deployment.md` showing it is the third page in its section.
+
+When you add a new page or section:
+
+1. Add a number to the front of the file, to show where you want it to go in the ordering
+2. Make sure the rest of the files are updated to reflect that (so we don't end up with e.g. two `002`s)
+
 ## Previewing
 
 We can preview our changes locally by running this command:
