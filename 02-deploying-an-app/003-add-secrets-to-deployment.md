@@ -12,16 +12,16 @@ The aim of this guide is to walkthrough the process of adding a secret (in this 
 
 This guide assumes the following:
 
-* You have previously set up an env. See [Creating a Cloud Platform Environment](/cloud-platform/env-create)
-* You have previously deployed your application. See [Deploying an application to the Cloud-Platform](/cloud-platform/app-deploy)
-* Check your deployment is running. See [Interacting with the application](/cloud-platform/app-deploy/#interacting-with-the-application)
+* You have previously set up an env. See [Creating a Cloud Platform Environment](/01-getting-started/003-env-create/)
+* You have previously deployed your application. See [Deploying an application to the Cloud-Platform](/02-deploying-an-app/001-app-deploy-helm/)
+* You have checked your [deployment is running](/02-deploying-an-app/001-app-deploy-helm/#viewing-your-application)
 
 ## Configuring secrets
 
 The following is an example of encoding (configuring) aws access-key credentials in your deployment.
-See [kuberenetes using secrets as environment variables](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables)
+See [kubernetes using secrets as environment variables](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables)
 
-for detailed information regarding providing base64 values in secret objects to Kuberenetes pods)
+for detailed information regarding providing base64 values in secret objects to Kubernetes pods)
 
 Create your AWS Credentials access key (making a note of the aws_access_key_id and aws_secret_access_key)
 
@@ -41,7 +41,7 @@ In this example the is aws_secret_access_key 'g8hjpmhvgfhk4547gfdshhjj'. Issue t
 echo -n 'QUtJQUZUS1NBVzE1SEpMT0dE' | base64 -b0
 ```
 
-This will return the encoded secret 'UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF' 
+This will return the encoded secret 'UVV0SlFVWlVTMU5CVnpFMVNFcE1UMGRF'
 
 ## Creating the secret
 
@@ -61,12 +61,12 @@ issue the following command:
 
 ```
 $ kubectl apply -f secrets.yaml
-secret "demosecret" created 
+secret "demosecret" created
 ```
 
 To see the secrets:
 
-``` 
+```
 $ kubectl get secrets
 NAME                                          TYPE                                  DATA      AGE
 calico-zebu-external-dns-token-pldjb          kubernetes.io/service-account-token   3         16d
@@ -78,7 +78,7 @@ demosecret                                    Opaque                            
 Decoding the Secret
 Secrets can be retrieved via the kubectl get secret command. For example, to retrieve the secret you created:
 
-``` 
+```
 $ kubectl get secret demosecret  -o yaml
 apiVersion: v1
 data:
