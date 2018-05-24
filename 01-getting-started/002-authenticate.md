@@ -70,5 +70,5 @@ For more information, please see this handy [cheatsheet](https://kubernetes.io/d
 
  Why don't you try and create a namespace of your own and deploying an application.
 
- * [Create a namespace](/01-getting-started/003-env-create/)
- * [Deploying an application](/02-deploying-an-app/001-app-deploy-helm/)
+ * [Create a namespace]({{ site.baseurl }}/01-getting-started/003-env-create/)
+ * [Deploying an application]({{ site.baseurl }}/02-deploying-an-app/001-app-deploy-helm/)

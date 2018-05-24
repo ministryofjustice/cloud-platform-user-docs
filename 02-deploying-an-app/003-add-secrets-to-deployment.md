@@ -12,9 +12,9 @@ The aim of this guide is to walkthrough the process of adding a secret (in this 
 
 This guide assumes the following:
 
-* You have previously set up an env. See [Creating a Cloud Platform Environment](/01-getting-started/003-env-create/)
-* You have previously deployed your application. See [Deploying an application to the Cloud-Platform](/02-deploying-an-app/001-app-deploy-helm/)
-* You have checked your [deployment is running](/02-deploying-an-app/001-app-deploy-helm/#viewing-your-application)
+* You have previously set up an env. See [Creating a Cloud Platform Environment]({{ site.baseurl }}/01-getting-started/003-env-create/)
+* You have previously deployed your application. See [Deploying an application to the Cloud-Platform]({{ site.baseurl }}/02-deploying-an-app/001-app-deploy-helm/)
+* You have checked your [deployment is running]({{ site.baseurl }}/02-deploying-an-app/001-app-deploy-helm/#viewing-your-application)
 
 ## Configuring secrets
 

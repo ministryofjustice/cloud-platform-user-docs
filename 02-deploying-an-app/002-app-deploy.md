@@ -14,10 +14,10 @@ This guide uses a pre-configured application as an example of how to deploy your
 
 This guide assumes the following:
 
-* You have [created an environment for your application](/01-getting-started/003-env-create/)
+* You have [created an environment for your application]({{ site.baseurl }}/01-getting-started/003-env-create/)
 * Kubectl is installed and configured.
 * Docker is installed and configured.
-* [Authentication with the cluster](/01-getting-started/002-authenticate/) has been established.
+* [Authentication with the cluster]({{ site.baseurl }}/01-getting-started/002-authenticate/) has been established.
 * Access to AWS, with ECR upload permissions.
 * AWS CLI configured with account credentials.
 
@@ -39,7 +39,7 @@ On the ECR start page you will have the option create a new repository, or to se
 
 Create a new repository, and name it something relevant:
 
-![Image](/images/create-ecr-repo.png)
+![Image]({{ site.baseurl }}/images/create-ecr-repo.png)
 
 After confirmation that the repository was successfully created, ignore the list of commands and click **Done**, at the bottom of the page.
 
@@ -49,7 +49,7 @@ Select your newly created repository from the displayed list.
 
 Within the repository, you will see the following section with values unique to you:
 
-![Image](/images/repo-values.png)
+![Image]({{ site.baseurl }}/images/repo-values.png)
 
 Click the **View Push Commands** button.
 
@@ -190,7 +190,7 @@ Start by listing the namespaces on the cluster you are connected to:
 
 `kubectl get namespaces`
 
-The list that gets returned should include the environment you [created earlier](/01-getting-started/003-env-create/), here we assume it is called `my-app-dev`.
+The list that gets returned should include the environment you [created earlier]({{ site.baseurl }}/01-getting-started/003-env-create/), here we assume it is called `my-app-dev`.
 
 To deploy your application run the following command, that points to the directory where the deployment files are stored, in the [reference app](https://github.com/ministryofjustice/cloud-platform-reference-app) they are in the `kubectl_deploy` directory:
 
