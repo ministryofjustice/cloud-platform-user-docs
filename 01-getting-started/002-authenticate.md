@@ -21,13 +21,9 @@ You must also have a valid GitHub account, be a member of the Ministry of Justic
 ## Clusters
 
 #### Introduction
-At the time of writing this document the Cloud Platform team has three clusters:
+We currently have one cluster for users to deploy apps to called the [Non-production cluster](https://login.apps.non-production.k8s.integration.dsd.io).
 
-[**Non-production cluster**](login.apps.non-production.k8s.integration.dsd.io)
-[**Test cluster**](login.apps.cloud-platforms-test.k8s.integration.dsd.io)
-[**Sandbox cluster**](login.apps.cloud-platforms-sandbox.k8s.integration.dsd.io)
-
-Authentication to these clusters is handled via a third party authentication helper named [Kuberos](https://github.com/negz/kuberos). For our use case, we want authentication and identity to be handled by Github, and to derive all cluster access control from Github teams - projects will be deployed into namespaces (e.g. `pvb-production`, `cla-staging`), and access to resources in those namespaces should be available to the appropriate teams only (e.g. `PVB` and `CLA` teams).
+Authentication to this cluster is handled via a third party authentication helper named [Kuberos](https://github.com/negz/kuberos). For our use case, we want authentication and identity to be handled by Github, and to derive all cluster access control from Github teams - projects will be deployed into namespaces (e.g. `pvb-production`, `cla-staging`), and access to resources in those namespaces should be available to the appropriate teams only (e.g. `PVB` and `CLA` teams).
 
 Kubernetes supports authentication from external identity providers, including group definition, via [OIDC](https://kubernetes.io/docs/admin/authentication/#openid-connect-tokens). Github however only support OAuth2 as an authentication method, so an identity broker is required to translate from OAuth2 to OIDC.
 
@@ -35,16 +31,13 @@ As work on MOJ's identity service is ongoing, a development [Auth0](https://www.
 
 #### How do I connect to a cluster?
 
-To authenticate to any of the three clusters, please follow the steps below;
+To authenticate to the cluster, please follow the steps below;
 
- - Pick the cluster you'd like to authenticate against:
-[Non-production cluster](login.apps.non-production.k8s.integration.dsd.io)
-[Test cluster](login.apps.cloud-platforms-test.k8s.integration.dsd.io)
-[Sandbox](login.apps.cloud-platforms-sandbox.k8s.integration.dsd.io)
+ - Navigate to the [Non-production cluster authentication setup page](https://login.apps.non-production.k8s.integration.dsd.io)
  - Click the login with GitHub option and authorise Kuberos.
  - Follow the instructions on the page presented, once finished you should have a config file in the  directory as shown below.
  `~/.kube/config`
- 
+
  - You should now be able to run `kubectl` commands such as `$ kubectl get pods --namespace <nameSpace>`
 
 ## Useful commands
@@ -65,9 +58,10 @@ $ kubectl config set-context gce --user=cluster-admin --namespace=foo \
   && kubectl config use-context gce
 ```
 For more information, please see this handy [cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/).
- 
- ## Where to go from here?
- Why don't you try and create a namespace of your own and deploying an application.
- [Create a namespace](https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/env-create/#creating-a-cloud-platform-environment)
- [Deploying an application](https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/app-deploy/#deploying-an-application-to-the-cloud-platform)
 
+## Where to go from here?
+
+ To deploy applications you will need to create a namespace of your own:
+
+ * [Create a namespace]({{ "/01-getting-started/003-env-create" | relative_url }})
+ * [Deploying an application]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }})
