@@ -34,26 +34,26 @@ You will be working within the namespace directory to create your environment.
 
 **k8s-non-prod-environment**
 
-![Image](images/image4.png)
+![Image]({{ "/images/image4.png" | relative_url }})
 
 This is the root of the repo, containing Terraform and Namespace directory
 
 **/namespaces**
 
-![Image](images/image5.png)
+![Image]({{ "/images/image5.png" | relative_url }})
 
 This is the Namespace directory, this is where you will create a directory for your service in the format `$servicename-$env`   
 example: myapp-dev
 
 **/$Servicename-$env**
 
-![Image](images/image6.png)
+![Image]({{ "/images/image6.png" | relative_url }})
 
 When you create your `$servicename-$env` directory for your service. You will need to create two files within it. `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`
 
 #### Instructions
 
-![Image](images/image2.png)
+![Image]({{ "/images/image2.png" | relative_url }})
 
 **1)** Git clone the repo onto your local machine and create a new branch to make your changes. (Using terminal)
 
@@ -233,4 +233,4 @@ git push --set-upstream origin myapp
 
 
 **5)** Now that you have uploaded your branch, go to the Github GUI and select your branch. Once you have done this, you may make a pull request to merge to master.
-![Image](images/image3.png)
+![Image]({{ "/images/image3.png" | relative_url }})
