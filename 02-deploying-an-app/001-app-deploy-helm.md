@@ -2,7 +2,7 @@
 category: cloud-platform
 expires: 2018-01-31
 ---
-# Tutorial: Deploying an application to the Cloud Platform with Helm
+# Deploying an application to the Cloud Platform with Helm
 
 ## Introduction
 This document will act as a guide to your first application deployment into the Cloud Platform. If you have any issues completing the objective or have any suggestions please feel free to drop use a line in the #cloud-platform-users slack channel.
