@@ -6,33 +6,44 @@ expires: 2018-01-31
 
 ## Aim
 
-This is a guide to creating a non-production environment in our non-production Kubernetes cluster. This document is intended for any developers who are interested in creating a development or staging environments within Kubernetes.
+This is a guide to creating a environment in one of our Kubernetes clustes. This document is intended for any developers who are interested in creating a development or staging environments within Kubernetes.
 
 ## Description
 
-[K8s-nonprod-environments repo](https://github.com/ministryofjustice/k8s-nonprod-environments)
+[cloud-platform-environments repo](https://github.com/ministryofjustice/cloud-platform-environments)
 
-This repo contains the necessary files to create a pipeline in AWS to create Kubernetes cluster namespaces and resources after a push has been made to the master branch of this repo.
+This repo contains the necessary files to create a pipeline for each cluster in AWS to create Kubernetes cluster namespaces and resources after a push has been made to the master branch of this repo.
 
-This repo contains the following files and directories
+## Functionality
 
-#### Terraform
+The pipeline will for each defined cluster:
+1) create any namespace defined in the `namespaces/<cluster>` directory in the corresponding cluster that does not actually exist on the cluster.
+2) delete any namespaces that exist in the <cluster> but is not defined in the repo.
+3) create any kubernetes resource that is defined under `namespaces/<cluster>`
+
+## This repo contains the following files and directories
+
+### namespace.py
+
+namespace.py is the main python script in charge of creating, deleting namespaces and creating resources. It is triggered by the pipeline and takes as an argument the cluster name.
+
+### Terraform
 
 This directory contains terraform resources to create AWS pipeline for creation of kubernetes namespace and resource creation.
 
-#### Buildspec
-
-The `buildspec.yaml` file contains codebuild specification that will create resources defined in the namespaces.
-
-#### Namespace
+### Namespaces
 
 The namespaces contains subdirectories named after each of the desired namespaces you want to create.
 
 You will be working within the namespace directory to create your environment.
 
+### Build alarms: Success/failure slackbot
+
+The `build-alarms/` directory contains all you need to setup a slackbot to notify users on the success/failure of their namespace creation.
+
 ### GitHub directory structure
 
-**k8s-non-prod-environment**
+**cloud-platform-environments**
 
 ![Image]({{ "/images/image4.png" | relative_url }})
 
@@ -42,10 +53,10 @@ This is the root of the repo, containing Terraform and Namespace directory
 
 ![Image]({{ "/images/image5.png" | relative_url }})
 
-This is the Namespace directory, this is where you will create a directory for your service in the format `$servicename-$env`   
+This is the Namespace directory, this is where you will create a directory for your service in the format `$servicename-$env` inside the corresponding cluster subdirectory.  
 example: myapp-dev
 
-**/$Servicename-$env**
+**/<cluster>/$Servicename-$env**
 
 ![Image]({{ "/images/image6.png" | relative_url }})
 
@@ -59,10 +70,10 @@ When you create your `$servicename-$env` directory for your service. You will ne
 
 ```
   #git clone the repo onto your local machine.
-  $ git clone git@github.com:ministryofjustice/k8s-nonprod-environments.git
+  $ git clone git@github.com:ministryofjustice/cloud-platform-environments.git
 
-  # change directory into the k8s-non prod repo
-  cd k8s-nonprod-environments/
+  # change directory into the cloud-platform-environments repo
+  cd cloud-platform-environments/
 
   #create new branch in the repo, my-app is used as an example, you can call it something descriptive.
   $ git checkout -b my-app
@@ -83,15 +94,15 @@ When you create your `$servicename-$env` directory for your service. You will ne
 
 ```
 #we will need to change directories and change into the namespaces directory.
-cd namespaces/
+cd namespaces/<cluster>
 
 #we shall now be in our namespaces directory but we can confirm by the following command.
 pwd
 
-#output should show that we are in the namespaces directory. This will all be dependent on where you have chosen to git clone the repo. In this example k8s-nonprod was cloned into the Git directory which is located in Documents.
+#output should show that we are in the namespaces directory. This will all be dependent on where you have chosen to git clone the repo. In this example cloud-platform-environments was cloned into the Git directory which is located in Documents.
 
 $ pwd
-/Users/<username>/Desktop/Git/k8s-nonprod-environments/namespaces
+/Users/<username>/Desktop/Git/cloud-platform-environments/namespaces/<cluster>/
 
 #Now we must create the directory for our service, the name of the directory we create should be in the format $servicename-$env
 $ mkdir myapp-dev
@@ -104,7 +115,7 @@ $ cd myapp-dev
 **3)** Now we will need to create two files within our `$servicename-$env` directory.  `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`. The structures of both files are shown below.
 
 
-**k8s-non-prod-environment/namespaces/$servicename-$env/namespace.yaml**
+**cloud-platform-environments/namespaces/<cluster>/$servicename-$env/namespace.yaml**
 
 ```
 apiVersion: v1
@@ -136,7 +147,7 @@ metadata:
 
 [https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/)
 
-**k8s-non-prod-environment/namespaces/$servicename-$env/$service-$name-admin-role.yaml**
+**cloud-platform-environments/namespaces/<cluster>/$servicename-$env/$service-$name-admin-role.yaml**
 
 ```
 kind: RoleBinding
@@ -213,8 +224,8 @@ $ git status
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
 
-	new file:   namespaces/myapp-dev/myapp-dev-admin-role.yaml
-	new file:   namespaces/myapp-dev/namespace.yaml
+	new file:   namespaces/<cluster>/myapp-dev/myapp-dev-admin-role.yaml
+	new file:   namespaces/<cluster>/namespace.yaml
 
 #once your happy with the files to be uploaded, you can now run git commit to commit the files and -m parameter to add message to your commit.
 $ git commit -m "adding namespace.yaml and admin-roles for myapp to create dev environment"
@@ -222,8 +233,8 @@ $ git commit -m "adding namespace.yaml and admin-roles for myapp to create dev e
 #Should get output reflecting files added.
 
 2 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 namespaces/myapp-dev/myapp-dev-admin-role.yaml
- create mode 100644 namespaces/myapp-dev/namespace.yam
+ create mode 100644 namespaces/<cluster>/myapp-dev/myapp-dev-admin-role.yaml
+ create mode 100644 namespaces/<cluster>/myapp-dev/namespace.yam
 
 #Now you are ready to upload your branch to the repo. myapp being your branch name.
 git push --set-upstream origin myapp
