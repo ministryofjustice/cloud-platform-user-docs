@@ -4,160 +4,97 @@ expires: 2018-01-31
 ---
 # Creating a Cloud Platform Environment
 
-## Aim
+## Introduction
 
-This is a guide to creating a environment in one of our Kubernetes clustes. This document is intended for any developers who are interested in creating a development or staging environments within Kubernetes.
+This is a guide to creating a environment in one of our Kubernetes clusters.
 
-## Description
+We define an environment as a Kubernetes [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) with some key resources deployed in it. Each Kubernetes namespace creates a logical separation within our cluster that provides isolation from any other namespace.
 
-[cloud-platform-environments repo](https://github.com/ministryofjustice/cloud-platform-environments)
+Once you have created an environment you will be able to perform actions using the `kubectl` command in the namespace you have created.
 
-This repo contains the necessary files to create a pipeline for each cluster in AWS to create Kubernetes cluster namespaces and resources after a push has been made to the master branch of this repo.
+## Objective
 
-## Functionality
+By the end of this guide you'll have created a Kubernetes namespace ready for you to [deploy an application]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }}) into.
 
-The pipeline will for each defined cluster:
-1) create any namespace defined in the `namespaces/<cluster>` directory in the corresponding cluster that does not actually exist on the cluster.
-2) delete any namespaces that exist in the <cluster> but is not defined in the repo.
-3) create any kubernetes resource that is defined under `namespaces/<cluster>`
+## Create an environment
 
-## This repo contains the following files and directories
+You create an environment by adding the definition of the environment in YAML to the following repository, hosted on GitHub:
 
-### namespace.py
+[cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments)
 
-namespace.py is the main python script in charge of creating, deleting namespaces and creating resources. It is triggered by the pipeline and takes as an argument the cluster name.
+Adding your environment definition kicks off a pipeline which builds your environment on the appropriate cluster.  
 
-### Terraform
+### Set up
 
-This directory contains terraform resources to create AWS pipeline for creation of kubernetes namespace and resource creation.
+First we need to clone the repository and change directory:
 
-### Namespaces
+```
+$ git clone git@github.com:ministryofjustice/cloud-platform-environments.git
+$ cd cloud-platform-environments
+```
 
-The namespaces contains subdirectories named after each of the desired namespaces you want to create.
+### The directory structure
 
-You will be working within the namespace directory to create your environment.
-
-### Build alarms: Success/failure slackbot
-
-The `build-alarms/` directory contains all you need to setup a slackbot to notify users on the success/failure of their namespace creation.
-
-### GitHub directory structure
+We build new environments by creating a new directory for our environment and putting the YAML files that define the environment into that directory. To understand where to create the directory it is useful to understand the overall structure of the repo:  
 
 **cloud-platform-environments**
 
-![Image]({{ "/images/image4.png" | relative_url }})
-
-This is the root of the repo, containing Terraform and Namespace directory
+This is the root of the repo, containing `namespaces` directory
 
 **/namespaces**
 
-![Image]({{ "/images/image5.png" | relative_url }})
+The namespaces directory contains a directory for each of the clusters that you can build environments on. Create your environment in the `non-production.k8s.integration.dsd.io` directory.
 
-This is the Namespace directory, this is where you will create a directory for your service in the format `$servicename-$env` inside the corresponding cluster subdirectory.  
-example: myapp-dev
+**/namespaces/non-production.k8s.integration.dsd.io/**
 
-**/<cluster>/$Servicename-$env**
+Within the cluster directory you will create a directory for your environment in the format `$servicename-$env`, for example `myapp-dev`.
 
-![Image]({{ "/images/image6.png" | relative_url }})
+**/namespaces/non-production.k8s.integration.dsd.io/$servicename-$env**
 
-When you create your `$servicename-$env` directory for your service. You will need to create two files within it. `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`
+The `$servicename-$env` directory for your environment defines the specific resources we will create in your namespace. In this guide we create the base namespace definition and a rolebinding that sets who can perform actions on the namespace.
 
-#### Instructions
+### Defining your environment
 
-![Image]({{ "/images/image2.png" | relative_url }})
-
-**1)** Git clone the repo onto your local machine and create a new branch to make your changes. (Using terminal)
+We create the environment by adding a directory in the `/namespaces/non-production.k8s.integration.dsd.io/` directory:
 
 ```
-  #git clone the repo onto your local machine.
-  $ git clone git@github.com:ministryofjustice/cloud-platform-environments.git
-
-  # change directory into the cloud-platform-environments repo
-  cd cloud-platform-environments/
-
-  #create new branch in the repo, my-app is used as an example, you can call it something descriptive.
-  $ git checkout -b my-app
-
-  #you can confirm you are using the branch you made using the command.
-  $ git branch -a
-
-  #Current branch you are currently using will be indicated by the *.
-
-    master
-  * my-app
-    remotes/origin/HEAD -> origin/master
-    remotes/origin/add-git-crypt
-```
-
-
-**2)** Now we need to amend the namespaces directory in the root of repo and create an directory within it.
-
-```
-#we will need to change directories and change into the namespaces directory.
-cd namespaces/<cluster>
-
-#we shall now be in our namespaces directory but we can confirm by the following command.
-pwd
-
-#output should show that we are in the namespaces directory. This will all be dependent on where you have chosen to git clone the repo. In this example cloud-platform-environments was cloned into the Git directory which is located in Documents.
-
-$ pwd
-/Users/<username>/Desktop/Git/cloud-platform-environments/namespaces/<cluster>/
-
-#Now we must create the directory for our service, the name of the directory we create should be in the format $servicename-$env
+$ cd namespaces/non-production.k8s.integration.dsd.io/
 $ mkdir myapp-dev
-
-#Now that we have created our namespaces subdirectory $servicename-env, lets now change into this directory.
-$ cd myapp-dev
 ```
 
+Now we will need to create two files within our `$servicename-$env` directory,  `namespaces.yaml` and `$servicename-$env-admin-role.yaml`. The structures of both files are shown below.
 
-**3)** Now we will need to create two files within our `$servicename-$env` directory.  `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`. The structures of both files are shown below.
+#### Namespace definition
 
+The `namespace.yaml` file defines the namespace so that the cluster Kubernetes knows to create a namespace and what to call it.
 
-**cloud-platform-environments/namespaces/<cluster>/$servicename-$env/namespace.yaml**
-
-```
+```YAML
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: myapp-dev
+  name: myapp-dev # This is where you will define your $servicename-$env
   labels:
-    name: myapp-dev
+    name: myapp-dev # Also your $servicename-$env
 ```
+Example from the cloud-reference-app [namespace file](https://github.com/ministryofjustice/cloud-platform-environments/blob/master/namespaces/non-production.k8s.integration.dsd.io/cloudplatforms-reference-app/namespace.yaml).
 
-**Namespace:**
+#### Rolebinding
 
-Namespaces is a mechanism in Kubernetes that will essentially create your environment. 
+We will also create a `RoleBinding` resource by adding a `$servicename-$env-admin-role.yaml` file. This will provide us with [access policies](https://kubernetes.io/docs/admin/authorization/rbac/) on the namespace we have created in the cluster.
 
-Kubernetes namespace creates a logical cluster within our cluster that provides isolation from any other namespace.
+A role binding resource grants the permissions defined in a role to a user or set of users. A role can be another resource we can create but in this instance we will reference a Kubernetes default role `ClusterRole - admin`.
 
-Using a Kubernetes namespace could isolate namespaces for different environments in the same cluster. Providing us with flexibility of creating segregated environments for different.
+This `RoleBinding` resource references the `ClusterRole - admin` to provide  admin permissions on the namespace to the set of users defined under `subjects`. In this case, the `$yourTeam` GitHub group will have admin access to any resources within the namespace `myapp-dev`.
 
-**Namespace.yaml**
-
-```
-apiVersion: 
-kind: 
-metadata:
-      name: This is where you will define your $servicename-$env
-      labels:
-           name: Also define your $servicename-$env
-```
-
-[https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/)
-
-**cloud-platform-environments/namespaces/<cluster>/$servicename-$env/$service-$name-admin-role.yaml**
-
-```
+```YAML
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: myapp-dev-admins
-  namespace: myapp-dev
+  name: myapp-dev-admins  # Your namespace with `-admin` e.g. `$servicename-$env-admin`
+  namespace: myapp-dev # Your namespace `$servicename-$env`
 subjects:
   - kind: Group
-    name: "github:$yourTeam"
+    name: "github:$yourTeam" # Make this the name of the GitHub team you want to give access to
     apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
@@ -165,83 +102,18 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-**Rolebinding:**
+After both files are created commit them and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) repo.
 
-We will also create a Rolebinding resouce that will provide us with access policies to the namespace we have created in the cluster.
+The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel.  
 
-A rolebinding resource grants the permissions defined in a role to a user or set of users. A role can be another resource we can create but in this instance we will reference (roleRef) a Kubernetes default role "ClusterRole - admin" .
+### Accessing your environments
 
-This Rolebinding resource references the ClusterRole to provide ClusterRole admin access to a set of users which is defined under subjects. In this case, the `$yourTeam` github group will have admin access to any resources within the namespace "myapp dev".
+Once the pipeline has completed you will be able to check that your environment is available by running:
 
-`$servicename-$env-admin-role.yaml`
+`$ kubectl get pods --namespace myenv-dev`
 
-Example of yaml above, i will explain parts that need to be changed.
+This will return a list of running pods in the environment.
 
-```
-kind: 
-apiVersion:
-metadata:
-     name:
-     namespace: Define your namespace as created in namespace.yaml, this is where its mapped.
-subjects:
-     kind: 
-     name: This is where you specify your Github team, as format shown above "github:$yourTeam"
-     apiGroup:
-roleRef: 
-     kind: 
-     name:
-     apiGroup:
-```
+## Next steps
 
-[https://kubernetes.io/docs/admin/authorization/rbac/](https://kubernetes.io/docs/admin/authorization/rbac/)
-
-```
-within our $servicename-$env directory, you will need to create the two files shown above. You can use any file editor of your choice (nano, vim).
-
-$ cd myapp-dev/       								# Make sure you are in your service directory.
-$ vi namespace.yaml   								#create the namespace.yaml and use guide above to help structure file.
-$ vi myapp-dev-admin-role.yaml 						#once completed do the same for admin-role file.
-$ ls                            					#list files in $Servicename-$dev directory, to see both files have been saved.
-myapp-dev-admin-role.yaml	namespace.yaml   		#output after running list command.
-
-##Remember these are Yaml files, so make sure syntax is correct. If syntax is incorrect then file may not build properly, you can use a online validator.
-#https://codebeautify.org/yaml-validator
-
-```
-
-
-**4)** After both files are created. You are ready to upload your branch to our github repo. You will need to add the files, commit them and then set a new upstream branch.
-
-```
-# Add all new files from your current directory to staging.
-$ git add
-
-# Can run the command git status to check what changes are to be commited.
-$ git status
-
-# output will show files that are to be commited in green.
-
-Changes to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-
-	new file:   namespaces/<cluster>/myapp-dev/myapp-dev-admin-role.yaml
-	new file:   namespaces/<cluster>/namespace.yaml
-
-#once your happy with the files to be uploaded, you can now run git commit to commit the files and -m parameter to add message to your commit.
-$ git commit -m "adding namespace.yaml and admin-roles for myapp to create dev environment"
-
-#Should get output reflecting files added.
-
-2 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 namespaces/<cluster>/myapp-dev/myapp-dev-admin-role.yaml
- create mode 100644 namespaces/<cluster>/myapp-dev/namespace.yam
-
-#Now you are ready to upload your branch to the repo. myapp being your branch name.
-git push --set-upstream origin myapp
-
-#Now you can go to the repo in the GITHUB GUI and make a pull request to merge your branch with master.
-```
-
-
-**5)** Now that you have uploaded your branch, go to the Github GUI and select your branch. Once you have done this, you may make a pull request to merge to master.
-![Image]({{ "/images/image3.png" | relative_url }})
+Try [deploying an app]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager, or [deploying manually]({{ "/02-deploying-an-app/002-app-deploy" | relative_url }}) by writing some custom YAML files.
