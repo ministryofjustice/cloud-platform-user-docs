@@ -10,7 +10,7 @@ This is a guide to creating a non-production environment in our non-production K
 
 ## Description
 
-[K8s-nonprod-environments repo](https://github.com/ministryofjustice/k8s-nonprod-environments)
+[cloud-platform-environments repo](https://github.com/ministryofjustice/cloud-platform-environments)
 
 This repo contains the necessary files to create a pipeline in AWS to create Kubernetes cluster namespaces and resources after a push has been made to the master branch of this repo.
 
@@ -32,24 +32,18 @@ You will be working within the namespace directory to create your environment.
 
 ### GitHub directory structure
 
-**k8s-non-prod-environment**
+**cloud-platform-environments**
 
-![Image](images/image4.png)
+![Image](images/env-repo-structure.png)
 
-This is the root of the repo, containing Terraform and Namespace directory
-
-**/namespaces**
-
-![Image](images/image5.png)
-
-This is the Namespace directory, this is where you will create a directory for your service in the format `$servicename-$env`   
+This is the root of the repo, containing Terraform and namespaces directories. Namespaces is where you will create a subdirectory for your service in the format `$servicename-$env`
 example: myapp-dev
 
-**/$Servicename-$env**
+**$Servicename-$env**
 
 ![Image](images/image6.png)
 
-When you create your `$servicename-$env` directory for your service. You will need to create two files within it. `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`
+When you create your `$servicename-$env` directory for your service. You will need to create two files within it. `namespaces.yaml` and `$servicename-$env-admin-role.yaml`
 
 #### Instructions
 
@@ -59,10 +53,10 @@ When you create your `$servicename-$env` directory for your service. You will ne
 
 ```
   #git clone the repo onto your local machine.
-  $ git clone git@github.com:ministryofjustice/k8s-nonprod-environments.git
+  $ git clone git@github.com:ministryofjustice/cloud-platform-environments.git
 
   # change directory into the k8s-non prod repo
-  cd k8s-nonprod-environments/
+  cd cloud-platform-environments/
 
   #create new branch in the repo, my-app is used as an example, you can call it something descriptive.
   $ git checkout -b my-app
@@ -83,15 +77,15 @@ When you create your `$servicename-$env` directory for your service. You will ne
 
 ```
 #we will need to change directories and change into the namespaces directory.
-cd namespaces/
+cd namespaces/$cluster
 
 #we shall now be in our namespaces directory but we can confirm by the following command.
 pwd
 
-#output should show that we are in the namespaces directory. This will all be dependent on where you have chosen to git clone the repo. In this example k8s-nonprod was cloned into the Git directory which is located in Documents.
+#output should show that we are in the namespaces directory. This will all be dependent on where you have chosen to git clone the repo. In this example the repo was cloned into the Git directory which is located in Documents.
 
 $ pwd
-/Users/<username>/Desktop/Git/k8s-nonprod-environments/namespaces
+/Users/$username/Desktop/Git/cloud-platform-environments/namespaces/$cluster
 
 #Now we must create the directory for our service, the name of the directory we create should be in the format $servicename-$env
 $ mkdir myapp-dev
@@ -104,7 +98,7 @@ $ cd myapp-dev
 **3)** Now we will need to create two files within our `$servicename-$env` directory.  `Namespaces.yaml` and `$servicename-$env-admin-role.yaml`. The structures of both files are shown below.
 
 
-**k8s-non-prod-environment/namespaces/$servicename-$env/namespace.yaml**
+**namespaces/$cluster/$servicename-$env/namespace.yaml**
 
 ```
 apiVersion: v1
@@ -136,7 +130,7 @@ metadata:
 
 [https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces-walkthrough/)
 
-**k8s-non-prod-environment/namespaces/$servicename-$env/$service-$name-admin-role.yaml**
+**cloud-platform-environments/namespaces/$cluster/$servicename-$env/$service-$name-admin-role.yaml**
 
 ```
 kind: RoleBinding
@@ -222,8 +216,8 @@ $ git commit -m "adding namespace.yaml and admin-roles for myapp to create dev e
 #Should get output reflecting files added.
 
 2 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 namespaces/myapp-dev/myapp-dev-admin-role.yaml
- create mode 100644 namespaces/myapp-dev/namespace.yam
+ create mode 100644 namespaces/non-production.k8s.integration.dsd.io/myapp-dev/myapp-dev-admin-role.yaml
+ create mode 100644 namespaces/non-production.k8s.integration.dsd.io/myapp-dev/namespace.yam
 
 #Now you are ready to upload your branch to the repo. myapp being your branch name.
 git push --set-upstream origin myapp

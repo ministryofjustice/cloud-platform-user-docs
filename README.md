@@ -30,6 +30,11 @@ dependencies by running the following in this directory:
 bundle install
 ```
 
+Docker alternative:
+```bash
+docker build -t jekyll -f Dockerfile-jekyll .
+```
+
 ## Making changes
 
 To make changes, edit the appropriate Markdown files in this project.
@@ -65,6 +70,11 @@ This will create a local web server, probably at http://127.0.0.1:4000
 own computer, and won't be accessible to anyone else. It's also set up
 to automatically update (thanks to `--watch`) when we make changes to
 the working Markdown files.
+
+Docker (if built above):
+```bash
+docker run -d --rm --name jekyll -p 8000:8000 -v $PWD:/docs jekyll
+```
 
 ## Publishing changes
 

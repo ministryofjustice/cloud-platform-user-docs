@@ -21,11 +21,10 @@ You must also have a valid GitHub account, be a member of the Ministry of Justic
 ## Clusters
 
 #### Introduction
-At the time of writing this document the Cloud Platform team has three clusters:
+At the time of writing this document the Cloud Platform team has two clusters:
 
 [**Non-production cluster**](login.apps.non-production.k8s.integration.dsd.io)
 [**Test cluster**](login.apps.cloud-platforms-test.k8s.integration.dsd.io)
-[**Sandbox cluster**](login.apps.cloud-platforms-sandbox.k8s.integration.dsd.io)
 
 Authentication to these clusters is handled via a third party authentication helper named [Kuberos](https://github.com/negz/kuberos). For our use case, we want authentication and identity to be handled by Github, and to derive all cluster access control from Github teams - projects will be deployed into namespaces (e.g. `pvb-production`, `cla-staging`), and access to resources in those namespaces should be available to the appropriate teams only (e.g. `PVB` and `CLA` teams).
 
@@ -40,11 +39,10 @@ To authenticate to any of the three clusters, please follow the steps below;
  - Pick the cluster you'd like to authenticate against:
 [Non-production cluster](login.apps.non-production.k8s.integration.dsd.io)
 [Test cluster](login.apps.cloud-platforms-test.k8s.integration.dsd.io)
-[Sandbox](login.apps.cloud-platforms-sandbox.k8s.integration.dsd.io)
  - Click the login with GitHub option and authorise Kuberos.
  - Follow the instructions on the page presented, once finished you should have a config file in the  directory as shown below.
  `~/.kube/config`
- 
+
  - You should now be able to run `kubectl` commands such as `$ kubectl get pods --namespace <nameSpace>`
 
 ## Useful commands
@@ -65,9 +63,8 @@ $ kubectl config set-context gce --user=cluster-admin --namespace=foo \
   && kubectl config use-context gce
 ```
 For more information, please see this handy [cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/).
- 
+
  ## Where to go from here?
  Why don't you try and create a namespace of your own and deploying an application.
  [Create a namespace](https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/env-create/#creating-a-cloud-platform-environment)
  [Deploying an application](https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/app-deploy/#deploying-an-application-to-the-cloud-platform)
-
