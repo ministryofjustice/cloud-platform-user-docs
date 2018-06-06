@@ -1,0 +1,9 @@
+FROM ruby:2.5-stretch
+USER root
+WORKDIR /root
+ENV LC_ALL=C.UTF-8
+RUN apt-get update && apt-get -y upgrade
+COPY Gemfile* /root/
+RUN gem install bundler
+RUN bundle install
+CMD ["/usr/local/bundle/bin/bundle","exec","jekyll serve -H 0.0.0.0 -P 8000 -w -I -s /docs"]
