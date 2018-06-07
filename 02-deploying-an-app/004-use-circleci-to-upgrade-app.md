@@ -20,10 +20,7 @@ By the end of the tutorial, you will have done the following:
 ### Requirements
 It is assumed you have the following:
 
- - You have a basic understanding of what [Kubernetes](https://kubernetes.io/) is.
  - You have [created an environment for your application](/01-getting-started/003-env-create)
- - You have installed [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your local machine.
- - You have [Authenticated](/01-getting-started/002-authenticate) to the cluster known as the 'non-production cluster'.
  - You have [deployed an application](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/001-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm) to the 'non-production cluster' using Helm.
  - You have created an [ECR repository](TODO) (docs coming soon)
 
@@ -32,18 +29,21 @@ As part of the CircleCI deployment pipeline, CircleCI will need to authenticate 
 
 A Service Account is created in the [namespace creation github repository](https://github.com/ministryofjustice/cloud-platform-environments/tree/master/namespaces).
 ```bash
-  $ kubectl get sa --namespace $ns
+  $ kubectl get serviceaccounts --namespace $ns
   NAME       SECRETS   AGE
   circleci   1         3h
-  $ kubectl get sa/circleci --namespace reference-app -o yaml
+  
+  $ kubectl get serviceaccounts/circleci --namespace reference-app -o yaml
   apiVersion: v1
   kind: ServiceAccount
   ...
   secrets:
   - name: circleci-token-prlkp
+  
   $ kubectl get secrets --namespace $ns
   NAME                   TYPE                                  DATA      AGE
   circleci-token-prlkp   kubernetes.io/service-account-token   3         3h
+  
   $ kubectl get secrets/circleci-token-prlkp --namespace $ns -o yaml
   ...
   namespace: cm..cA==
@@ -51,30 +51,29 @@ A Service Account is created in the [namespace creation github repository](https
 ```
 
 ### Migration to CircleCI 2.0
-We are using CircleCI 2.0 if you already have a CircleCI circle.yml please [migrate](https://circleci.com/docs/2.0/migration/) your project to 2.0.
+We are using CircleCI 2.0 if you already have a CircleCI ```circle.yml``` please [migrate](https://circleci.com/docs/2.0/migration/) your project to 2.0.
 
 ### Linking Repository to CircleCI
 MoJ has as an account with CircleCI, please login to [CircleCI](https://circleci.com/dashboard) using GitHub credentials. Select project, and if config.yml is in the repo CircleCI will build and run tests.
 
 ### Adding the config.yml
-CircleCI uses a YAML file to identify how you want your testing environment set up and what tests you want to run. On CircleCI 2.0, this file must be called config.yml and must be in a hidden folder called .circleci .
+CircleCI uses a YAML file to identify how you want your testing environment set up and what tests you want to run. On CircleCI 2.0, this file must be called ```config.yml``` and must be in a hidden folder called ```.circleci``` .
 
 ### Add variables to CircleCI
 From Builds click the cog and select Enviroment Variables under Build Settings. The variables needed to add are.
-- AWS_DEFAULT_REGION
+```
+- AWS_DEFAULT_REGION (vars generated if specific resources like ECR/S3 are needed)
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
 - ECR_ENDPOINT
-- CA_CERT
-- CLUSTER_NAME
-- TOKEN
+- CA_CERT (used by k8s internally, read with 'see above kubectl get secrets/ca')
+- CLUSTER_NAME (eg non-production.k8s.integration.dsd.io)
+- TOKEN (k8s auth token generated when building the namespace, 'kubectl get secrets/circleci-token | base64 -d')
+```
 
 ### Creating the config.yml
-[Tutorial](https://circleci.com/docs/2.0/tutorials/) on creating a config.yml file. The cloud platform reference app, has the following steps. As long as you are build a docker image you can configure circle however you wish. The only extra code you will need to add are the Upload to ECR and Deploy to Kubernetes.
-- Create the remote docker environment
-- Build environment and install requirements
-- Build image and cache
-- Run tests
+[Tutorial](https://circleci.com/docs/2.0/tutorials/) on creating a config.yml file. As long as you are building a Docker image you can configure Circle however you wish. A sample worker image build is described in [Dockerfile-worker](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/master/Dockerfile-worker).
+The only extra code you will need to add is in Upload to ECR and Deploy to Kubernetes: 
 - Upload to ECR
 ```bash
 deploy:
@@ -107,3 +106,4 @@ deploy:
             --install \
             --debug
 ```
+The principles behind the 'Authenticate to cluster' step are described in https://ministryofjustice.github.io/cloud-platform-user-docs/01-getting-started/002-authenticate/#authenticating-to-the-cluster
