@@ -76,34 +76,33 @@ From Builds click the cog and select Enviroment Variables under Build Settings. 
 The only extra code you will need to add is in Upload to ECR and Deploy to Kubernetes: 
 - Upload to ECR
 ```bash
-deploy:
+- deploy:
     name: Push application Docker image
-    environment:
     command: |
-    login="$(aws ecr get-login)"
-    ${login}
-
-    docker tag app "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
-    docker push "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
-
-    if [ "${CIRCLE_BRANCH}" == "master" ]; then
-        docker tag app "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:latest"
-        docker push "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:latest"
-    fi
+      login="$(aws ecr get-login)"
+      ${login}
+      docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+      docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+      if [ "${CIRCLE_BRANCH}" == "master" ]; then
+        docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
+        docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
+      fi
 ```
 - Deploy to Kubernetes
 ```bash
-deploy:
-    if [ "${CIRCLE_BRANCH}" == "master" ]; then
-        kubectl delete job django-app-circleci-db-migration
-        helm upgrade django-app-circleci ./helm_deploy/django-app/. \
-            --tiller-namespace=cloudplatforms-reference-app \
-            --namespace=cloudplatforms-reference-app \
-            --set image.repository="${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}" \
-            --set image.tag="latest" \
-            --set deploy.host="${APPLICATION_HOST_URL}" \
-            --set replicaCount="1" \
-            --install \
-            --debug
+- deploy:
+    name: Helm deployment
+    command: |
+      if [ "${CIRCLE_BRANCH}" == "master" ]; then
+        helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
+                      --install \
+                      --tiller-namespace=${NON_PROD_NS} \
+                      --namespace=${NON_PROD_NS} \
+                      --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
+                      --set image.tag="latest" \
+                      --set deploy.host="${APPLICATION_HOST_URL}" \
+                      --set replicaCount="4" \
+                      --debug
+      fi
 ```
 The principles behind the 'Authenticate to cluster' step are described in https://ministryofjustice.github.io/cloud-platform-user-docs/01-getting-started/002-authenticate/#authenticating-to-the-cluster
