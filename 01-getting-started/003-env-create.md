@@ -10,7 +10,7 @@ This is a guide to creating a environment in one of our Kubernetes clusters.
 
 We define an environment as a Kubernetes [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) with some key resources deployed in it. Each Kubernetes namespace creates a logical separation within our cluster that provides isolation from any other namespace.
 
-Once you have created an environment you will be able to perform actions using the `kubectl` command in the namespace you have created.
+Once you have created an environment you will be able to perform actions using the `kubectl` tool in the namespace you have created.
 
 ## Objective
 
@@ -37,28 +37,39 @@ $ cd cloud-platform-environments
 
 We build new environments by creating a new directory for our environment and putting the YAML files that define the environment into that directory. To understand where to create the directory it is useful to understand the overall structure of the repo:  
 
+```
+cloud-platform-environments
+└── namespaces
+    └── cloud-platform-live-0.k8s.integration.dsd.io
+        ├── kube-system
+
+        ...
+
+        └── user-roles.yaml
+```
+
 **cloud-platform-environments**
 
 This is the root of the repo, containing `namespaces` directory
 
 **/namespaces**
 
-The namespaces directory contains a directory for each of the clusters that you can build environments on. Create your environment in the `non-production.k8s.integration.dsd.io` directory.
+The namespaces directory contains a directory for each of the clusters that you can build environments on. Create your environment in the `cloud-platform-live-0.k8s.integration.dsd.io` directory.
 
-**/namespaces/non-production.k8s.integration.dsd.io/**
+**/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/**
 
 Within the cluster directory you will create a directory for your environment in the format `$servicename-$env`, for example `myapp-dev`.
 
-**/namespaces/non-production.k8s.integration.dsd.io/$servicename-$env**
+**/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/$servicename-$env**
 
 The `$servicename-$env` directory for your environment defines the specific resources we will create in your namespace. In this guide we create the base namespace definition and a rolebinding that sets who can perform actions on the namespace.
 
 ### Defining your environment
 
-We create the environment by adding a directory in the `/namespaces/non-production.k8s.integration.dsd.io/` directory:
+We create the environment by adding a directory in the `/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/` directory:
 
 ```
-$ cd namespaces/non-production.k8s.integration.dsd.io/
+$ cd namespaces/cloud-platform-live-0.k8s.integration.dsd.io/
 $ mkdir myapp-dev
 ```
 
@@ -76,7 +87,7 @@ metadata:
   labels:
     name: myapp-dev # Also your $servicename-$env
 ```
-Example from the cloud-reference-app [namespace file](https://github.com/ministryofjustice/cloud-platform-environments/blob/master/namespaces/non-production.k8s.integration.dsd.io/cloudplatforms-reference-app/namespace.yaml).
+Example from the cloud-platform-reference-app [namespace file](https://github.com/ministryofjustice/cloud-platform-environments/blob/master/namespaces/non-production.k8s.integration.dsd.io/reference-app/namespace.yaml).
 
 #### Rolebinding
 
