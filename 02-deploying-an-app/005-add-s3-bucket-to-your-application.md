@@ -6,7 +6,7 @@ expires: 2018-01-31
 # Adding S3 Bucket for your application.
 
 ## Introduction
-This document covers how to add an S3 bucket for your application using our terraform module. 
+This document will cover how to add an S3 bucket for your application using our terraform module. 
 
 
 ### Creating S3 Bucket
@@ -14,7 +14,7 @@ This document covers how to add an S3 bucket for your application using our terr
 
 [Cloud-Platform-Environments Repo](https://github.com/ministryofjustice/cloud-platform-environments)
 
-1\. In order to create a S3 bucket, you will need to work with Cloud-Platform-Environments repo. Git clone the repo and create a new branch.
+1\. In order to create a S3 bucket, you will need to work within our Cloud-Platform-Environments repo. Git clone the repo and create a new branch.
 
     In terminal
 
@@ -28,7 +28,7 @@ This document covers how to add an S3 bucket for your application using our terr
 
 ```
 
-2\. You will need to navigate to your service's directory under namespaces, then create a folder called "resources" in your service's directory.
+2\. You will need to navigate to your service's directory which is located in the namespaces directory. Create a directory named "resources".
 
 ```bash
              
@@ -48,7 +48,7 @@ This document covers how to add an S3 bucket for your application using our terr
 
 ```
 
-4\. Create your module by changing the module name and variables. More instructions [here](https://github.com/ministryofjustice/cloud-platform-terraform-s3-bucket)
+4\. Create your module by changing the module name and variables. More instructions [here](https://github.com/ministryofjustice/cloud-platform-terraform-s3-bucket). Follow the example directory for more direction.
 
 
 ```hcl
@@ -72,7 +72,7 @@ module "example_team_s3" {
 
 ```
 
-5\. Once the terraform file created, git add and commit it to your branch.
+5\. Once the terraform file created, git add, commit and push to your branch.
 
 ```bash
              
