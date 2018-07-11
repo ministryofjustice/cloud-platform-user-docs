@@ -63,5 +63,5 @@ Now that you've setup `kubectl`, you might want to look at this handy [cheatshee
 
 Once you are ready to deploy applications you will need to create an environment first:
 
- * [Create a namespace]({{ "/01-getting-started/003-env-create" | relative_url }})
+ * [Create a namespace]({{ "/01-getting-started/002-env-create" | relative_url }})
  * [Deploying an application]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }})

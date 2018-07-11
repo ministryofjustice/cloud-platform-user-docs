@@ -16,9 +16,9 @@ By the end of this guide you'll have deployed a reference [Django application](h
 It is assumed you have the following:
 
  - You have a basic understanding of what [Kubernetes](https://kubernetes.io/) is.
- - You have [created an environment for your application]({{ "/01-getting-started/003-env-create" | relative_url }})
+ - You have [created an environment for your application]({{ "/01-getting-started/002-env-create" | relative_url }})
  - You have installed [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your local machine.
- - You have [Authenticated]({{ "/01-getting-started/002-authenticate" | relative_url }}) to the cluster known as the 'non-production cluster'.
+ - You have [Authenticated]({{ "/01-getting-started/001-kubectl-config" | relative_url }}) to the cluster known as the 'non-production cluster'.
 
 ## Deploy the app
 The reference application we're going to use is a very simple Django application with an on-cluster Postgresql database.
@@ -41,7 +41,7 @@ Let's make use of the command line tool `kubectl` to browse around the cluster t
     $ kubectl get pods --namespace <env-name>
 *The `<env-name>` here is the environment you created, listed in the requirements section at the beginning of the document.*
 
-If you receive the below error message then you've either not typed in your environment name correctly or you don't have permission to perform a `get pods` command. Either way, you'll need to go back and review the [Creating an Environment]({{ "/01-getting-started/003-env-create" | relative_url }}) document previously mentioned.
+If you receive the below error message then you've either not typed in your environment name correctly or you don't have permission to perform a `get pods` command. Either way, you'll need to go back and review the [Creating an Environment]({{ "/01-getting-started/002-env-create" | relative_url }}) document previously mentioned.
 
     $ Error from server (Forbidden): pods is forbidden: User "test-user" cannot list pods in the namespace "demo"
 

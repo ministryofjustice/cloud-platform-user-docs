@@ -14,7 +14,7 @@ This guide uses a pre-configured application as an example of how to deploy your
 
 This guide assumes the following:
 
-* You have [created an environment for your application]({{ "/01-getting-started/003-env-create" | relative_url }})
+* You have [created an environment for your application]({{ "/01-getting-started/002-env-create" | relative_url }})
 * Kubectl is installed and configured.
 * Docker is installed and configured.
 * Authentication with the cluster has been established.
@@ -190,7 +190,7 @@ Start by listing the namespaces on the cluster you are connected to:
 
 `kubectl get namespaces`
 
-The list that gets returned should include the environment you [created earlier]({{ "/01-getting-started/003-env-create" | relative_url }}), here we assume it is called `my-app-dev`.
+The list that gets returned should include the environment you [created earlier]({{ "/01-getting-started/002-env-create" | relative_url }}), here we assume it is called `my-app-dev`.
 
 To deploy your application run the following command, that points to the directory where the deployment files are stored, in the [reference app](https://github.com/ministryofjustice/cloud-platform-reference-app) they are in the `kubectl_deploy` directory:
 

@@ -20,7 +20,7 @@ By the end of the tutorial, you will have done the following:
 ### Requirements
 It is assumed you have the following:
 
- - You have [created an environment for your application](/01-getting-started/003-env-create)
+ - You have [created an environment for your application](/01-getting-started/002-env-create)
  - You have [deployed an application](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/001-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm) to the 'non-production cluster' using Helm.
  - You have created an [ECR repository](TODO) (docs coming soon)
 
@@ -71,7 +71,7 @@ From Builds click the cog and select Enviroment Variables under Build Settings. 
 - Kubernetes `ServiceAccount` credentials. There are four different variables per environment that CircleCI will need to access (eg.: development and production). The naming scheme is what our helper script expects (see the last section of this document) and `<ENVIRONMENT>` should be replaced below:
 
   - `KUBE_ENV_<ENVIRONMENT>_NAME` - the full name of the cluster (eg.: `cloud-platform-live-0.k8s.integration.dsd.io`)
-  - `KUBE_ENV_<ENVIRONMENT>_NAMESPACE` - the name of the `Namespace` (see [Create a namespace]({{ "/01-getting-started/003-env-create" | relative_url }}))
+  - `KUBE_ENV_<ENVIRONMENT>_NAMESPACE` - the name of the `Namespace` (see [Create a namespace]({{ "/01-getting-started/002-env-create" | relative_url }}))
   - `KUBE_ENV_<ENVIRONMENT>_CACERT` - the CA Certificate for the cluster, can be acquired from the `Secret` that is generated for the `ServiceAccount`
   - `KUBE_ENV_<ENVIRONMENT>_TOKEN` - the access token generated for the `ServiceAccount` (please note that you should first `base64` decode the value shown in the previous section)
 
