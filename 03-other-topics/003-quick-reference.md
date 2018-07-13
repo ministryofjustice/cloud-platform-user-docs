@@ -10,9 +10,6 @@ The examples here only address the most basic approach to these operations. For 
 
 There is also a more detailed [cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/) in the official kubernetes documentation.
 
-## Table of contents
-{:toc}
-
 #### Inspecting running instances of the application
 To list running `Pods`:
 ```
