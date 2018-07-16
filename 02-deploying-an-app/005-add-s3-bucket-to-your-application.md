@@ -48,7 +48,7 @@ This document will cover how to add an S3 bucket for your application using our 
 
 ```
 
-4\. Create your module by changing the module name and variables. More instructions [here](https://github.com/ministryofjustice/cloud-platform-terraform-s3-bucket). Follow the example directory for more direction. Also create a Kubernetes secret, which will use the values from your S3 and create a Kubernetes Secret within our cluster, moore information [here](https://www.terraform.io/docs/providers/kubernetes/r/secret.html).
+4\. Create your module by changing the module name and variables. More instructions [here](https://github.com/ministryofjustice/cloud-platform-terraform-s3-bucket). Follow the example directory for more direction. Also create a Kubernetes secret, which will use the values from your S3 and create a Kubernetes Secret within our cluster. More information [here](https://www.terraform.io/docs/providers/kubernetes/r/secret.html).
 
 
 ```hcl
