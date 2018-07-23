@@ -114,7 +114,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-After both files are created commit them and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) repo master repo.
+After both files are created commit them and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
 The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel.  
 
