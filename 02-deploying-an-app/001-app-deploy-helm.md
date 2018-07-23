@@ -81,7 +81,7 @@ Run the following (replacing the `YourName` with your own name and `env-name` wi
         $ helm install . \
           --name django-app-<YourName> \
           --namespace <env-name> \
-          --set deploy.host=django-<YourName>.apps.non-production.k8s.integration.dsd.io \
+          --set deploy.host=django-<YourName>.apps.cloud-platform-live-0.k8s.integration.dsd.io \
           --tiller-namespace <env-name>
 
 > Note: We're naming it like this as app names and host names have to be unique on the cluster.
