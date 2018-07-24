@@ -61,7 +61,4 @@ When setting up multiple clusters, this will generate conflicts so you should re
 
 Now that you've setup `kubectl`, you might want to look at this handy [cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/).
 
-Once you are ready to deploy applications you will need to create an environment first:
-
- * [Create a namespace]({{ "/01-getting-started/002-env-create" | relative_url }})
- * [Deploying an application]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }})
+Once you are ready to deploy applications you will need to [create an environment first]({{ "/01-getting-started/002-env-create" | relative_url }}).
