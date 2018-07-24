@@ -126,5 +126,6 @@ Once the pipeline has completed you will be able to check that your environment 
 This will return a list of running pods in the environment.
 
 ## Next steps
+Perhaps you would like to [create an ECR repository]({{ "/01-getting-started/003-ecr-setup" | relative_url }}) to push your docker image to.
 
-Try [deploying an app]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager, or [deploying manually]({{ "/02-deploying-an-app/002-app-deploy" | relative_url }}) by writing some custom YAML files.
+If you don't need one, you can try [deploying an app]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager, or [deploying manually]({{ "/02-deploying-an-app/002-app-deploy" | relative_url }}) by writing some custom YAML files.
