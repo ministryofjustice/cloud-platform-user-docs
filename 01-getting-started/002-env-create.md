@@ -26,11 +26,12 @@ Adding your environment definition kicks off a pipeline which builds your enviro
 
 ### Set up
 
-First we need to clone the repository and change directory:
+First we need to clone the repository, change directory and create a new branch:
 
 ```
 $ git clone git@github.com:ministryofjustice/cloud-platform-environments.git
 $ cd cloud-platform-environments
+$ git checkout -b "yourBranch"
 ```
 
 ### The directory structure
@@ -113,7 +114,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-After both files are created commit them and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) repo.
+After both files are created commit them and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
 The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel.  
 
@@ -121,9 +122,9 @@ The cloud platform team will merge the pull request which will kick off the pipe
 
 Once the pipeline has completed you will be able to check that your environment is available by running:
 
-`$ kubectl get pods --namespace myenv-dev`
+`$ kubectl get namespaces`
 
-This will return a list of running pods in the environment.
+This will return a list of the namespaces within the cluster, and you should see yours in the list.
 
 ## Next steps
 Perhaps you would like to [create an ECR repository]({{ "/01-getting-started/003-ecr-setup" | relative_url }}) to push your docker image to.
