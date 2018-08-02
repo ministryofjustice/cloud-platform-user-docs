@@ -4,8 +4,10 @@ This document is intended to assist engineers in accessing application and syste
 
 Production and non-production data will be indexed in seperate clusters. 
 ## Quick start
-<insert kibana link>
+-----kibana link------
 ## How to get my data into Elasticsearch
-As long as your application is writing to stdout, it'll be collected by fluentd and passed to the Elasticsearch cluster. 
+As long as your application is writing to stdout, it'll be collected by fluentd and passed to the Elasticsearch cluster. Use one of the links above and authenticate with your GitHub username and password. 
 ## How do I use Kibana?
-<insert elasticsearch links>
+https://www.elastic.co/guide/en/kibana/6.3/search.html
+https://www.elastic.co/guide/en/beats/packetbeat/current/kibana-queries-filters.html
+
