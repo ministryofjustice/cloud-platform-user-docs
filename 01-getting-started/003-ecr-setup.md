@@ -14,7 +14,7 @@ AWS resources are provisioned through the [cloud-platform-environments](https://
 In your local clone of the environments repository, `cd` to your environment's path and create a new directory called `resources`. Inside `resources`, create a new file called `ecr.tf`:
 
 ```
-$ cat ecr.tf
+$ cat > ecr.tf
 terraform {
   backend "s3" {}
 }
@@ -43,6 +43,7 @@ resource "kubernetes_secret" "ecr-repo" {
   }
 }
 ```
+Type [Ctrl-d] at the end to save the file.
 
 This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amazonaws.com/my-team-name/my-app-name` along with the credentials to push to it.
 
