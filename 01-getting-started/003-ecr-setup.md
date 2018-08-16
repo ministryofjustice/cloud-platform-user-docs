@@ -11,10 +11,9 @@ This guide will guide you through the creation of an ECR (Elastic Container Regi
 AWS resources are provisioned through the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments/) repository, per environment. Your application might be using multiple environments, however, you only need one image repository so we will be working in only one of the environments (it doesn't matter which one).
 
 ## Write the terraform configuration
-In your local clone of the environments repository, `cd` to your environment's path and create a new directory called `resources`. Inside `resources`, create a new file called `ecr.tf`:
+In your local clone of the environments repository, `cd` to your environment's path and create a new directory called `resources`. Inside `resources`, create a new file called `ecr.tf` with the following contents:
 
 ```
-$ cat ecr.tf
 terraform {
   backend "s3" {}
 }
@@ -44,7 +43,7 @@ resource "kubernetes_secret" "ecr-repo" {
 }
 ```
 
-This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amazonaws.com/my-team-name/my-app-name` along with the credentials to push to it.
+This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amazonaws.com/my-team-name/my-app-name` along with the credentials to push to it. Make sure you adjust the values of `team_name`, `repo_name` and `namespace` to what is appropriate for your environment.
 
 Commit the changes and raise a pull request. Once merged, our pipeline will apply the changes and create the AWS resources.
 
