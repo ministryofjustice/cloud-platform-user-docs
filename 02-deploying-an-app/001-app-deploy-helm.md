@@ -58,7 +58,7 @@ Install the client via Homebrew or by other [means](https://docs.helm.sh/using_h
 
 Now configure the installation with Tiller:
 
-`$ helm init --tiller-namespace <env-name>`
+`$ helm init --tiller-namespace <env-name> --service-account tiller`
 
 When succesful, you'll be greeted with the message:
 
