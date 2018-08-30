@@ -8,7 +8,7 @@ expires: 2018-01-31
 This document will act as a guide to your first application deployment into the Cloud Platform. If you have any issues completing the objective or have any suggestions please feel free to drop use a line in the #cloud-platform-users slack channel.
 
 ### Objective
-By the end of this guide you'll have deployed a reference [Django application](https://github.com/ministryofjustice/cloud-platform-reference-app) to a cluster for non-production appplications using the Kubernetes package manager [Helm](https://helm.sh/).
+By the end of this guide you'll have deployed a reference [Django application](https://github.com/ministryofjustice/cloud-platform-reference-app) to a cluster using the Kubernetes package manager [Helm](https://helm.sh/).
 
 *Disclaimer: You'll see fairly quickly that the application is not fit for production. A perfect example of this is the [plaintext secrets file](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/master/helm_deploy/django-app/templates/secret.yaml). For the reference application we've left this file in plaintext but it **must** be encrypted when writing your own manifests for production/non-production work in the MoJ.*
 
@@ -18,7 +18,7 @@ It is assumed you have the following:
  - You have a basic understanding of what [Kubernetes](https://kubernetes.io/) is.
  - You have [created an environment for your application]({{ "/01-getting-started/002-env-create" | relative_url }})
  - You have installed [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your local machine.
- - You have [Authenticated]({{ "/01-getting-started/001-kubectl-config" | relative_url }}) to the cluster known as the 'non-production cluster'.
+ - You have [Authenticated]({{ "/01-getting-started/001-kubectl-config" | relative_url }}) to the cloud-platform-live-0 cluster.
 
 ## Deploy the app
 The reference application we're going to use is a very simple Django application with an on-cluster Postgresql database.

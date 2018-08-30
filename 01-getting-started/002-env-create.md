@@ -88,7 +88,7 @@ metadata:
   labels:
     name: myapp-dev # Also your $servicename-$env
 ```
-Example from the cloud-platform-reference-app [namespace file](https://github.com/ministryofjustice/cloud-platform-environments/blob/master/namespaces/non-production.k8s.integration.dsd.io/reference-app/namespace.yaml).
+Example from the cloud-platform-reference-app [namespace file](https://github.com/ministryofjustice/cloud-platform-environments/blob/master/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/reference-app/00-namespace.yaml).
 
 #### Rolebinding
 

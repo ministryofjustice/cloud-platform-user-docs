@@ -21,8 +21,8 @@ By the end of the tutorial, you will have done the following:
 It is assumed you have the following:
 
  - You have [created an environment for your application](/01-getting-started/002-env-create)
- - You have [deployed an application](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/001-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm) to the 'non-production cluster' using Helm.
- - You have created an [ECR repository](TODO) (docs coming soon)
+ - You have [deployed an application](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/001-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm) to the 'cloud-platform-live-0' cluster using Helm.
+ - You have created an [ECR repository](/01-getting-started/003-ecr-setup/#creating-an-ecr-repository)
 
 ### Creating a Service Account for CircleCI
 As part of the CircleCI deployment pipeline, CircleCI will need to authenticate with the Kubernetes cluster. In order to do so, Kubernetes uses [Service Accounts](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/). Service Accounts provide an identity for processes that run in a cluster allowing the process to access the API server.
