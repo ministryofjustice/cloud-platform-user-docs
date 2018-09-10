@@ -63,7 +63,6 @@ metadata:
   name: tiller
   namespace: myapp-dev # Your namespace `$servicename-$env`
 ---
-
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
