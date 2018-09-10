@@ -32,7 +32,7 @@ Live clusters are those available to users:
 
 | Cluster Name | Login page |
 | ------------ | ---------- |
-| `cloud-platform-live-0` | https://login.apps.cloud-platform-live-0.k8s.integration.dsd.io/ |
+| `cloud-platform-live-0` | [https://login.apps.cloud-platform-live-0.k8s.integration.dsd.io/](https://login.apps.cloud-platform-live-0.k8s.integration.dsd.io/) |
 
 ### How do I connect to a cluster?
 
