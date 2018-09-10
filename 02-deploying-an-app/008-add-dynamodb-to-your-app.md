@@ -48,7 +48,7 @@ terraform {
 
 provider "aws" {
   region  = "eu-west-1"
-  version = "~> 1.17.0"
+  version = ">= 1.17.0"
 }
 
 module "example_team_dynamodb" {
