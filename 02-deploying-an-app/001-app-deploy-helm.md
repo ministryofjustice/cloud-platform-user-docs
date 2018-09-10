@@ -75,7 +75,7 @@ subjects:
 roleRef:
   kind: ClusterRole
   name: cluster-admin
-apiGroup: rbac.authorization.k8s.io
+  apiGroup: rbac.authorization.k8s.io
 ``` 
 
 After the file is created, commit it and create a pull request against the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
