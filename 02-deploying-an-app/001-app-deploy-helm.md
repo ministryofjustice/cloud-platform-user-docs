@@ -63,18 +63,20 @@ metadata:
   name: tiller
   namespace: myapp-dev # Your namespace `$servicename-$env`
 ---
+
+kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
 metadata:
   name: tiller
+  namespace: myapp-dev # Your namespace `$servicename-$env`
+subjects:
+- kind: ServiceAccount
+  name: tiller
+  namespace: myapp-dev # Your namespace `$servicename-$env`
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: tiller
-    namespace: myapp-dev # Your namespace `$servicename-$env`
+apiGroup: rbac.authorization.k8s.io
 ``` 
 
 After the file is created, commit it and create a pull request against the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
