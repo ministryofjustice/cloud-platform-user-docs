@@ -48,9 +48,41 @@ If you receive the below error message then you've either not typed in your envi
 ### Using Helm
 Helm allows you to manage application deployment to Kubernetes using Charts. You can read about of some of the many features of [Helm Charts](https://docs.helm.sh/developing_charts/). We've chosen to use Helm as the default way to deploy applications to the Cloud Platform as it provides useful tooling as an interface to the YAML files that Kubernetes uses to run.
 
-#### Installing and configuring Helm
+#### Tiller RBAC Configuration
 
-There are two parts to Helm: The client and the Helm server (Tiller). When you created your environment, an instance of Tiller was installed automatically. This Tiller instance will need to be configured with your Helm installation.
+There are two parts to Helm: The client and the Helm server (Tiller).
+
+We will create a `Service Account` resource by adding a `$servicename-$env-rbac-tiller.yaml` file. This gives Helm the permissions it needs to deploy within your namespace.
+
+This file should be created in the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) repository under your namespace directory `/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/$servicename-$env`. 
+
+```
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: myapp-dev # Your namespace `$servicename-$env`
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: tiller
+  namespace: myapp-dev # Your namespace `$servicename-$env`
+subjects:
+- kind: ServiceAccount
+  name: tiller
+  namespace: myapp-dev # Your namespace `$servicename-$env`
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+``` 
+
+After the file is created, commit it and create a pull request against the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
+
+Once it is merged, an instance of tiller is installed in your namespace. This Tiller instance will need to be configured with your Helm installation.
+
+#### Installing and configuring Helm
 
 Install the client via Homebrew or by other [means](https://docs.helm.sh/using_helm/#installing-helm):
 
