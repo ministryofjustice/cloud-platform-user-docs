@@ -72,7 +72,7 @@ resource "kubernetes_secret" "dynamodb" {
   }
 
   data {
-    name = "${module.dynamodb.table_name}"
+    name              = "${module.dynamodb.table_name}"
     access_key_id     = "${module.dynamodb.access_key_id}"
     secret_access_key = "${module.dynamodb.secret_access_key}"
   }
@@ -80,31 +80,7 @@ resource "kubernetes_secret" "dynamodb" {
 
 ```
 
-The DB name will be present in the k8s secret, or if used outside the CP pipeline, create an output.tf file:
-
-```hcl
-
-output "table_name" {
-  value       = "${module.example_team_dynamodb.table_name}"
-  description = "DynamoDB table name"
-}
-
-output "table_arn" {
-  value       = "${module.example_team_dynamodb.table_arn}"
-  description = "DynamoDB table ARN"
-}
-
-output "access_key_id" {
-  description = "Access key id for db"
-  value       = "${module.example_team_dynamodb.access_key_id}"
-}
-
-output "secret_access_key" {
-  description = "Secret key for db"
-  value       = "${module.example_team_dynamodb.secret_access_key}"
-}
-
-```
+The DB name will be present in the k8s secret.
 
 5\. Once the terraform file created, git add, commit and push to your branch.
 
