@@ -5,12 +5,15 @@ This document will cover how to add DynamoDB to your application using our [terr
 
 ### Creating a cluster
 
+sddsf
+
 1\. In order to create an DynamoDB cluster, you will need to work within our [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) repo. Git clone the repo and create a new branch.
 
 ```bash
 
   $ git clone git@github.com:ministryofjustice/cloud-platform-environments.git #git clone repo
-
+namespaces
+asa
   $ cd cloud-platform-environments # navigate into cloud-platform-environments directory.
 
   $ git co -b add_dynamodb   # create and checkout new branch.
@@ -56,13 +59,26 @@ module "example_team_dynamodb" {
 
   team_name              = "example-team"
   business-unit          = "example-bu"
-  application            = "exampleapp"
+  application            = "exampleapp" # note RDS doesn't accept "-" in the DB name
   is-production          = "false"
   environment-name       = "development"
   infrastructure-support = "example-team@digtal.justice.gov.uk"
 
   hash_key  = "example-hash"
   range_key = "example-range"
+}
+
+resource "kubernetes_secret" "dynamodb" {
+  metadata {
+    name      = "dynamodb"
+    namespace = "exampleapp"
+  }
+
+  data {
+    name = "${module.dynamodb.table_name}"
+    access_key_id     = "${module.dynamodb.access_key_id}"
+    secret_access_key = "${module.dynamodb.secret_access_key}"
+  }
 }
 
 ```
