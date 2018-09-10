@@ -45,6 +45,21 @@ To authenticate with a cluster, please follow the steps below;
  - Follow the instructions on the page presented, once finished you should have a [`kubeconfig`](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/) file in `~/.kube/config`.
  - You should now be able to run `kubectl` commands; try running such `kubectl get namespaces`
 
+#### Troubleshooting: "current" context
+
+If you receive `The connection to the server localhost:8080 was refused` errors while executing `kubectl` commands,
+check that your "current" context is set.
+
+Run `kubectl config get-contexts`:
+```
+CURRENT   NAME                                           CLUSTER                                        AUTHINFO                 NAMESPACE
+          cloud-platform-live-0.k8s.integration.dsd.io   cloud-platform-live-0.k8s.integration.dsd.io   <your github e-mail>
+```
+
+Set the context you want to use as "current" with: `kubectl config use-context <NAME>`.
+
+E.g. `kubectl config use-context cloud-platform-live-0.k8s.integration.dsd.io`
+
 ### Multiple clusters
 To setup additional clusters, follow the process above and save the generated `kubeconfig` with a different filename (eg.: `~/.kube/config_live0`).
 
