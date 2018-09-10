@@ -75,7 +75,7 @@ resource "kubernetes_secret" "elasticache" {
   }
 
   data {
-    name="${lookup(module.example_team_ec_cluster.cache_nodes[0],"address")}:${lookup(module.example_team_ec_cluster.cache_nodes[0],"port")}"
+    name = "${lookup(module.example_team_ec_cluster.cache_nodes[0], "address")}:${lookup(module.example_team_ec_cluster.cache_nodes[0], "port")}"
   }
 }
 
