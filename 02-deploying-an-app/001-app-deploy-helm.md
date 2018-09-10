@@ -48,7 +48,7 @@ If you receive the below error message then you've either not typed in your envi
 ### Using Helm
 Helm allows you to manage application deployment to Kubernetes using Charts. You can read about of some of the many features of [Helm Charts](https://docs.helm.sh/developing_charts/). We've chosen to use Helm as the default way to deploy applications to the Cloud Platform as it provides useful tooling as an interface to the YAML files that Kubernetes uses to run.
 
-#### Installing and configuring Helm
+#### Tiller RBAC Configuration
 
 There are two parts to Helm: The client and the Helm server (Tiller).
 
@@ -81,6 +81,8 @@ roleRef:
 After the file is created, commit it and create a pull request against the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
 Once it is merged, an instance of tiller is installed in your namespace. This Tiller instance will need to be configured with your Helm installation.
+
+#### Installing and configuring Helm
 
 Install the client via Homebrew or by other [means](https://docs.helm.sh/using_helm/#installing-helm):
 
