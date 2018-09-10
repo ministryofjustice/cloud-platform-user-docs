@@ -51,7 +51,7 @@ region = "eu-west-1"
 }
 
 module "example_team_ec_cluster" {
-source = "github.com/ministryofjustice/cloud-platform-terraform-elasticache-cluster?ref=v1.0"
+source = "github.com/ministryofjustice/cloud-platform-terraform-elasticache-cluster?ref=1.0"
 
 team_name                 = "example-repo"
 ec_engine                 = "redis"
@@ -75,7 +75,7 @@ resource "kubernetes_secret" "elasticache" {
   }
 
   data {
-    name = "${module.elasticache.endpoint}"
+    name="${lookup(module.example_team_ec_cluster.cache_nodes[0],"address")}:${lookup(module.example_team_ec_cluster.cache_nodes[0],"port")}"
   }
 }
 
