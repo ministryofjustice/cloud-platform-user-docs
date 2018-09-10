@@ -5,15 +5,12 @@ This document will cover how to add DynamoDB to your application using our [terr
 
 ### Creating a cluster
 
-sddsf
-
 1\. In order to create an DynamoDB cluster, you will need to work within our [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) repo. Git clone the repo and create a new branch.
 
 ```bash
 
   $ git clone git@github.com:ministryofjustice/cloud-platform-environments.git #git clone repo
-namespaces
-asa
+
   $ cd cloud-platform-environments # navigate into cloud-platform-environments directory.
 
   $ git co -b add_dynamodb   # create and checkout new branch.
@@ -79,6 +76,32 @@ resource "kubernetes_secret" "dynamodb" {
     access_key_id     = "${module.dynamodb.access_key_id}"
     secret_access_key = "${module.dynamodb.secret_access_key}"
   }
+}
+
+```
+
+The DB name will be present in the k8s secret, or if used outside the CP pipeline, create an output.tf file:
+
+```hcl
+
+output "table_name" {
+  value       = "${module.example_team_dynamodb.table_name}"
+  description = "DynamoDB table name"
+}
+
+output "table_arn" {
+  value       = "${module.example_team_dynamodb.table_arn}"
+  description = "DynamoDB table ARN"
+}
+
+output "access_key_id" {
+  description = "Access key id for db"
+  value       = "${module.example_team_dynamodb.access_key_id}"
+}
+
+output "secret_access_key" {
+  description = "Secret key for db"
+  value       = "${module.example_team_dynamodb.secret_access_key}"
 }
 
 ```
