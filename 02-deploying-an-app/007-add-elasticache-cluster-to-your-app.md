@@ -41,31 +41,35 @@ This document will cover how to add ElastiCache to your application using our [t
 
 
 ```hcl
-
 terraform {
   backend "s3" {}
 }
 
 provider "aws" {
-region = "eu-west-1"
+  region = "eu-west-1"
 }
 
-module "example_team_ec_cluster" {
-source = "github.com/ministryofjustice/cloud-platform-terraform-elasticache-cluster?ref=1.0"
+// The following two variables are provided at runtime by the pipeline.
+variable "cluster_name" {}
+variable "cluster_state_bucket" {}
 
-team_name                 = "example-repo"
-ec_engine                 = "redis"
-engine_version            = "4.0.10"
-parameter_group_name      = "default.redis4.0"
-node_type                 = "cache.m3.medium"
-number_of_nodes           = 1
-port                      = 6379
-ec_subnet_groups          = ["subnet-a", "subnet-b", "subnet-c"]
-business-unit             = "example-bu"
-application               = "exampleapp"
-is-production             = "false"
-environment-name          = "development"
-infrastructure-support    = "example-team@digtal.justice.gov.uk"
+module "example_team_ec_cluster" {
+  source = "github.com/ministryofjustice/cloud-platform-terraform-elasticache-cluster?ref=1.0"
+
+  team_name                 = "example-repo"
+  ec_engine                 = "redis"
+  engine_version            = "4.0.10"
+  parameter_group_name      = "default.redis4.0"
+  node_type                 = "cache.m3.medium"
+  number_of_nodes           = 1
+  port                      = 6379
+  cluster_name              = "${var.cluster_name}"
+  cluster_state_bucket      = "${var.cluster_state_bucket}"
+  business-unit             = "example-bu"
+  application               = "exampleapp"
+  is-production             = "false"
+  environment-name          = "development"
+  infrastructure-support    = "example-team@digtal.justice.gov.uk"
 }
 
 resource "kubernetes_secret" "elasticache" {
