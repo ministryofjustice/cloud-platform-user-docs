@@ -8,7 +8,7 @@ expires: 2019-01-31
 
 This guide will guide you through the creation of an ECR (Elastic Container Registry) repository for your application's docker image.
 
-AWS resources are provisioned through the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments/) repository, per environment. Your application might be using multiple environments, however, you only need one image repository so we will be working in only one of the environments (it doesn't matter which one).
+AWS resources are provisioned through the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments/) repository, per environment. Your application might be using multiple namespaces, however you typically only need one image repository and once created in any of them you can copy credentials for it to the others via `kubectl get/create secret`.
 
 ### Creating the registry
 
@@ -65,7 +65,7 @@ module "ecr-repo" {
 resource "kubernetes_secret" "ecr-repo" {
   metadata {
     name      = "ecr-repo-my-app-name"
-    namespace = "my-environment"
+    namespace = "my-app"
   }
 
   data {
@@ -99,7 +99,7 @@ The end result will be a kubernetes `Secret` inside your environment, called `ec
 
 To retrieve the credentials:
 ```
-kubectl -n <environment_name> get secret ecr-repo-my-app-name -o yaml
+kubectl -n <namespace_name> get secret ecr-repo-my-app-name -o yaml
 ```
 
 The values in kubernetes `Secrets` are always `base64` encoded so you will have to decode them before you can use them outside kubernetes. Inside the cluster, the nodes already have access to the ECR so you don't need to make any changes.

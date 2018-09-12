@@ -10,7 +10,7 @@ This is a guide to creating a environment in one of our Kubernetes clusters.
 
 We define an environment as a Kubernetes [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) with some key resources deployed in it. Each Kubernetes namespace creates a logical separation within our cluster that provides isolation from any other namespace.
 
-Once you have created an environment you will be able to perform actions using the `kubectl` tool in the namespace you have created.
+Once you have created an environment you will be able to perform actions using the `kubectl` tool in the associated namespace.
 
 ## Objective
 
@@ -18,11 +18,11 @@ By the end of this guide you'll have created a Kubernetes namespace ready for yo
 
 ## Create an environment
 
-You create an environment by adding the definition of the environment in YAML to the following repository, hosted on GitHub:
+You create an environment by adding its definition in YAML to the following repository, hosted on GitHub:
 
 [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments)
 
-Adding your environment definition kicks off a pipeline which builds your environment on the appropriate cluster.  
+Adding your environment definition kicks off a pipeline which builds your namespace on the appropriate cluster and external AWS resources in the `mojds-platforms-integration` account `eu-west-1` region.
 
 ### Set up
 
@@ -36,17 +36,23 @@ $ git checkout -b "yourBranch"
 
 ### The directory structure
 
-We build new environments by creating a new directory for our environment and putting the YAML files that define the environment into that directory. To understand where to create the directory it is useful to understand the overall structure of the repo:  
+We build new environments by creating a new directory and adding within YAML/HCL files that define it. To understand where to create the directory it is useful to glance at the repo structure:
 
 ```
 cloud-platform-environments
 └── namespaces
-    └── cloud-platform-live-0.k8s.integration.dsd.io
+    └── cloud-platform-live-0.k8s.integration.dsd.io/
         ├── kube-system
-
         ...
-
-        └── user-roles.yaml
+        ├── user-roles.yaml
+        ...
+        └── $servicename-$env/
+            ├── 00-namespace.yaml
+            ...
+            ├── 04-networkpolicy.yaml
+            ...
+            └── resources/
+                └── main.tf
 ```
 
 **cloud-platform-environments**
@@ -55,15 +61,19 @@ This is the root of the repo, containing `namespaces` directory
 
 **/namespaces**
 
-The namespaces directory contains a directory for each of the clusters that you can build environments on. Create your environment in the `cloud-platform-live-0.k8s.integration.dsd.io` directory.
+The namespaces directory contains a directory for each of the clusters that you can build environments on. Create yours in the `cloud-platform-live-0.k8s.integration.dsd.io` directory.
 
 **/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/**
 
-Within the cluster directory you will create a directory for your environment in the format `$servicename-$env`, for example `myapp-dev`.
+Within the cluster directory you will create a directory for your namespace in the format `$servicename-$env`, for example `myapp-dev`.
 
 **/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/$servicename-$env**
 
 The `$servicename-$env` directory for your environment defines the specific resources we will create in your namespace. In this guide we create the base namespace definition and a rolebinding that sets who can perform actions on the namespace.
+
+**/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/$servicename-$env/resources**
+
+The `resources` sub-directory must contain terraform files defining additional AWS resources based on available modules (currently [ECR / S3 / RDS / ElastiCache / DynamoDB](https://ministryofjustice.github.io/cloud-platform-user-docs/#deploying-an-app))
 
 ### Defining your environment
 
@@ -116,17 +126,20 @@ roleRef:
 
 After both files are created commit them and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
-The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel.  
+The cloud platform team will merge the pull request which will kick off a Concourse pipeline to build the environment. Once deployed all the resources can be inspected using `kubectl` as specified in their corresponding guides (or watch [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) for failures!).
 
 ### Accessing your environments
 
 Once the pipeline has completed you will be able to check that your environment is available by running:
 
-`$ kubectl get namespaces`
+```
+$ kubectl get namespaces
+$ kubectl -n myapp-dev get secrets
+```
 
-This will return a list of the namespaces within the cluster, and you should see yours in the list.
+This will return a list of the namespaces within the cluster, and you should see yours in the list. Within the namespace, address and credentials for additional AWS resources are available as `Secrets`.
 
 ## Next steps
 Perhaps you would like to [create an ECR repository]({{ "/01-getting-started/003-ecr-setup" | relative_url }}) to push your docker image to.
 
-If you don't need one, you can try [deploying an app]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager, or [deploying manually]({{ "/02-deploying-an-app/002-app-deploy" | relative_url }}) by writing some custom YAML files.
+Next, try [a deployment]({{ "/02-deploying-an-app/001-app-deploy" | relative_url }}) by writing `kubectl`-specific YAML files or [deploy an app]({{ "/02-deploying-an-app/002-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager.

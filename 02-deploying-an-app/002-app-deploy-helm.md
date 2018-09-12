@@ -41,7 +41,7 @@ Let's make use of the command line tool `kubectl` to browse around the cluster t
     $ kubectl get pods --namespace <env-name>
 *The `<env-name>` here is the environment you created, listed in the requirements section at the beginning of the document.*
 
-If you receive the below error message then you've either not typed in your environment name correctly or you don't have permission to perform a `get pods` command. Either way, you'll need to go back and review the [Creating an Environment]({{ "/01-getting-started/002-env-create" | relative_url }}) document previously mentioned.
+If you receive the below error message then you've either not typed in your namespace correctly or you don't have permission to perform a `get pods` command. Either way, you'll need to go back and review the [Creating an Environment]({{ "/01-getting-started/002-env-create" | relative_url }}) document previously mentioned.
 
     $ Error from server (Forbidden): pods is forbidden: User "test-user" cannot list pods in the namespace "demo"
 

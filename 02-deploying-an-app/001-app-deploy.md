@@ -171,7 +171,7 @@ Start by listing the namespaces on the cluster you are connected to:
 
 `kubectl get namespaces`
 
-The list that gets returned should include the environment you [created earlier]({{ "/01-getting-started/002-env-create" | relative_url }}), here we assume it is called `my-app-dev`.
+The list that gets returned should include the one you [created earlier]({{ "/01-getting-started/002-env-create" | relative_url }}), here we assume it is called `my-app-dev`.
 
 To deploy your application run the following command, that points to the directory where the deployment files are stored, in the [reference app](https://github.com/ministryofjustice/cloud-platform-reference-app) they are in the `kubectl_deploy` directory:
 
