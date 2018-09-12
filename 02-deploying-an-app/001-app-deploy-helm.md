@@ -172,7 +172,7 @@ You now have our application up and running but you decide one pod isn't enough.
 
 Let's try:
 
-`$ helm upgrade django-app-<YourName> . --set replicaCount=3 --tiller-namespace <env-name>`
+`$ helm upgrade django-app-<YourName> . --set replicaCount=3 --tiller-namespace --set deploy.host=<DeploymentURL>`
 
 This command terminates the current running pod and spins up three in its place.
 
