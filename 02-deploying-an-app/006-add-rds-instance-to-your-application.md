@@ -57,10 +57,10 @@ This document will cover how to add an RDS instance to your application using ou
     provider "aws" {
   region = "eu-west-1"
 }
-  
+
   module "example_team_rds" {
   source = "github.com/ministryofjustice/cloud-platform-terraform-rds-instance"
-  
+
   team_name                   = "example-repo"
   db_allocated_storage        = "100"
   db_engine                   = "mysql"
@@ -124,3 +124,12 @@ The AWS resoures that are created as part of the RDS instance.
 - KMS key
 - IAM User (The IAM user will have access to the RDS instance.
 - Credentials for IAM user (AWS_ACCESS_KEY and AWS_SECRET_KEY)
+
+### Accessing the credentials
+
+The end result will be a kubernetes `Secret` inside your namespace, called `rds-instance-example`; the secret holds username and IAM credentials for the database and its address.
+
+To retrieve the credentials:
+```
+kubectl -n platforms-dev get secret rds-instance-example -o yaml
+```

@@ -110,3 +110,12 @@ The AWS resoures that are created as part of the S3 module.
 - S3 Bucket
 - IAM User (The IAM user will have access to the bucket and objects stored within the bucket)
 - Credentials for IAM user (AWS_ACCESS_KEY and AWS_SECRET_KEY)
+
+### Accessing the credentials
+
+The end result will be a kubernetes `Secret` inside your namespace, called `s3-bucket-example`; the secret holds IAM credentials to authenticate and the bucket name.
+
+To retrieve the credentials:
+```
+kubectl -n platforms-dev get secret s3-bucket-example -o yaml
+```

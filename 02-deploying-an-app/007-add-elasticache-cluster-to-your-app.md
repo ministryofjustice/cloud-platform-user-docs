@@ -107,3 +107,12 @@ AWS resources that are created as part of the pipeline:
  - a subnet group
  - 1 or more EC nodes
  - tags including the team name with a random ID appended
+
+### Accessing the credentials
+
+The end result will be a kubernetes `Secret` inside your namespace, called `elasticache`; the secret the nodes list and endpoint hostname.
+
+To retrieve the credentials:
+ ```
+ kubectl -n exampleapp get secret elasticache -o yaml
+ ```
