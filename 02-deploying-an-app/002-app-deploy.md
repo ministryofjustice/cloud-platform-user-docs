@@ -1,6 +1,6 @@
 ---
 category: cloud-platform
-expires: 2018-01-31
+expires: 2019-01-31
 ---
 # Deploying an application to the Cloud Platform
 
@@ -18,8 +18,8 @@ This guide assumes the following:
 * Kubectl is installed and configured.
 * Docker is installed and configured.
 * Authentication with the cluster has been established.
-* Access to AWS, with ECR upload permissions.
-* AWS CLI configured with account credentials.
+* You have access to a Docker registry, by default one created [in the same account](/01-getting-started/003-ecr-setup/#creating-an-ecr-repository).
+* If using ECR above, AWS CLI configured with account credentials.
 
 If you are not deploying your own application and would like to deploy the example application, clone the following repo:
 
@@ -29,36 +29,17 @@ If you are not deploying your own application and would like to deploy the examp
 
 To deploy an application to the Cloud Platform, firstly the application image needs to be retrievable from a repository.
 
-Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored.
-
-### Creating or choosing a repository
-
-**NOTE:** *When you are uploading your image to ECR you'll need a credential from the cloud platform team, ask in the `#cloud-platform-users` channel in Slack*
-
-On the ECR start page you will have the option create a new repository, or to search for an existing one.
-
-Create a new repository, and name it something relevant:
-
-![Image]({{ "/images/create-ecr-repo.png" | relative_url }})
-
-After confirmation that the repository was successfully created, ignore the list of commands and click **Done**, at the bottom of the page.
+Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored. A single AWS account is used (mojds-platforms-integration), and within it each team can generate separate repositories. The ECR address will be 926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app.
 
 ### Authenticating with the repository
 
-Select your newly created repository from the displayed list.
+Login details for your newly created ECR will be available as Kubernetes secrets in the namespace chosen.
 
-Within the repository, you will see the following section with values unique to you:
+`kubectl -n your-namespace get secrets -o yaml`
 
-![Image]({{ "/images/repo-values.png" | relative_url }})
+You will need to set `--profile yourAWSProfile` if values are copied to `~/.aws/credentials` or set the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
 
-Click the **View Push Commands** button.
-
-You will then be presented with a list of preconfigured terminal commands for you to run.
-
-Copy the first command. You will need to add `--profile yourAWSProfile` if the AWS account you're pushing to is not the default in your CLI:
-*Note: You can also set the environment variable `AWS_ENVIRONMENT=<yourAWSProfile>`*
-
-`aws ecr get-login --profile mojdsd --no-include-email --region eu-west-1`
+`aws ecr get-login --no-include-email --region eu-west-1`
 
 Execute the command, then proceed to execute the Docker login command provided in the Terminal.
 
@@ -72,13 +53,13 @@ Now we need to tag the image with the tag provided by ECR, so it can be pushed i
 
 View the **Push Commands** again, and modify the fourth command provided, ensuring the first tag is the one currently used on your machine:
 
-`docker tag cloud-platform-demo-app:latest 926803513772.dkr.ecr.us-west-1.amazonaws.com/cloud-platform-demo-app:latest`
+`docker tag my-app:latest 926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app:latest`
 
 Finish by running the fifth command provided, to push the image to your repository.
 
-`docker push 926803513772.dkr.ecr.us-west-1.amazonaws.com/cloud-platform-demo-app:latest`
+`docker push 926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app:latest`
 
-A quick refresh of ECR, and your image should now be displayed.
+The ECR does not allow unauthenticated pulls, to use the repo `aws ecr get-login` must be run first. For CircleCI, the AWS CLI tools must be installed as part of the build (sample images are described in https://github.com/ministryofjustice/cloud-platform-tools-image) and the AWS_ vars set in the build settings (https://circleci.com/gh/ministryofjustice/my-app/edit#env-vars)
 
 ## Configuring deployment files
 
