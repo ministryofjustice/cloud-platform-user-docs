@@ -191,7 +191,7 @@ To delete the deployment you simply run:
 
 And then confirm the pods are terminating as expected:
 
-`$ kubectl get pods -namespace <env-var>`
+`$ kubectl get pods --namespace <env-var>`
 
 ## Next steps
 The next step will be to create your own Helm Chart. You can try this with an application of your own or run through [Bitnami's excellent guide](https://docs.bitnami.com/kubernetes/how-to/create-your-first-helm-chart/) on how to build using a simple quickstart.
