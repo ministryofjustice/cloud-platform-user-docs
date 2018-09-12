@@ -1,6 +1,6 @@
 ---
 category: cloud-platform
-expires: 2018-01-31
+expires: 2019-01-31
 ---
 # Creating an ECR repository
 
@@ -10,8 +10,41 @@ This guide will guide you through the creation of an ECR (Elastic Container Regi
 
 AWS resources are provisioned through the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments/) repository, per environment. Your application might be using multiple environments, however, you only need one image repository so we will be working in only one of the environments (it doesn't matter which one).
 
-## Write the terraform configuration
-In your local clone of the environments repository, `cd` to your environment's path and create a new directory called `resources`. Inside `resources`, create a new file called `ecr.tf` with the following contents:
+### Creating the registry
+
+1\. In order to create the ECR Docker registry, git clone the repo and create a new branch.
+
+```bash
+
+  $ git clone git@github.com:ministryofjustice/cloud-platform-environments.git #git clone repo
+
+  $ cd cloud-platform-environments # navigate into cloud-platform-environments directory.
+
+  $ git co -b add_ecr   # create and checkout new branch.
+
+```
+
+2\. You will need to navigate to your service's directory which is located in the namespaces directory. Create a directory named "resources".
+
+```bash
+
+  $ cd namespaces/$your_service  #navigate to your service's directory.
+
+  $ mkdir resources # make directory called resources
+
+  $ cd namespaces/$your_service/resources
+
+```
+
+3\. Create a terraform file within the resources directory.
+
+```bash
+
+  $ vi main.tf  #create a terraform file.
+
+```
+
+4\. Add the following contents to the .tf file:
 
 ```
 terraform {
@@ -45,7 +78,18 @@ resource "kubernetes_secret" "ecr-repo" {
 
 This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amazonaws.com/my-team-name/my-app-name` along with the credentials to push to it. Make sure you adjust the values of `team_name`, `repo_name` and `namespace` to what is appropriate for your environment.
 
-Commit the changes and raise a pull request. Once merged, our pipeline will apply the changes and create the AWS resources.
+5\. git add, commit and push to your branch.
+
+```bash
+
+  $ git add main.tf
+
+  $ git commit -m "created Terraform module for ECR"
+
+  $ git push
+
+```
+6\. Once your request has been approved and the branches are merged, it will trigger our build pipeline which will apply the Terraform module and create the resources.
 
 For more information about the terraform module being used, please read the documentation [here](https://github.com/ministryofjustice/cloud-platform-terraform-ecr-credentials).
 
