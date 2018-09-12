@@ -104,3 +104,12 @@ AWS resources that are created as part of the pipeline:
  - a "simple" (as opposed to "global") table
  - an autoscaling role&policy, CloudWatch based
  - a dedicated IAM user and API key allowing only access to this resource
+
+### Accessing the credentials
+
+The end result will be a kubernetes `Secret` inside your namespace, called `dynamodb`; the secret holds IAM credentials to authenticate and the table name.
+
+To retrieve the credentials:
+ ```
+ kubectl -n exampleapp get secret dynamodb -o yaml
+ ```

@@ -18,18 +18,18 @@ This guide assumes the following:
 * Kubectl is installed and configured.
 * Docker is installed and configured.
 * Authentication with the cluster has been established.
-* You have access to a Docker registry, by default one created [in the same account](/01-getting-started/003-ecr-setup/#creating-an-ecr-repository).
+* You have access to a Docker registry, by default one created [in the same account]( {{ "/01-getting-started/003-ecr-setup/#creating-an-ecr-repository" | relative_url }} ).
 * If using ECR above, AWS CLI configured with account credentials.
 
 If you are not deploying your own application and would like to deploy the example application, clone the following repo:
 
-[https://github.com/ministryofjustice/cloud-platform-reference-app](https://github.com/ministryofjustice/cloud-platform-reference-app)
+[cloud-platform-reference-app](https://github.com/ministryofjustice/cloud-platform-reference-app)
 
 ## Pushing application to ECR
 
 To deploy an application to the Cloud Platform, firstly the application image needs to be retrievable from a repository.
 
-Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored. A single AWS account is used (mojds-platforms-integration), and within it each team can generate separate repositories. The ECR address will be 926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app.
+Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored. A single AWS account is used (mojds-platforms-integration), and within it each team can generate separate repositories. The ECR address will be `926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app`.
 
 ### Authenticating with the repository
 
@@ -37,7 +37,7 @@ Login details for your newly created ECR will be available as Kubernetes secrets
 
 `kubectl -n your-namespace get secrets -o yaml`
 
-You will need to set `--profile yourAWSProfile` if values are copied to `~/.aws/credentials` or set the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
+You will need to set `--profile yourAWSProfile` if values are copied to `~/.aws/credentials` or set the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 `aws ecr get-login --no-include-email --region eu-west-1`
 
