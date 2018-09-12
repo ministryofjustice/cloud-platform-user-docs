@@ -6,7 +6,7 @@ expires: 2018-01-31
 # Continuous Deployment of an application using CircleCI and Helm
 
 ## Introduction
-This document covers how to continuously deploy your application in the Cloud Platform. It is essentially a continuation of [‘Deploying an application to the Cloud Platform with Helm’](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/001-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm).
+This document covers how to continuously deploy your application in the Cloud Platform. It is essentially a continuation of [‘Deploying an application to the Cloud Platform with Helm’](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/002-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm).
 
 *Note: This document is specific to using [CircleCI](https://circleci.com/) as the Continuous Integration method.*
 
@@ -21,7 +21,7 @@ By the end of the tutorial, you will have done the following:
 It is assumed you have the following:
 
  - You have [created an environment for your application](/01-getting-started/002-env-create)
- - You have [deployed an application](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/001-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm) to the 'cloud-platform-live-0' cluster using Helm.
+ - You have [deployed an application](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/002-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm) to the 'cloud-platform-live-0' cluster using Helm.
  - You have created an [ECR repository](/01-getting-started/003-ecr-setup/#creating-an-ecr-repository)
 
 ### Creating a Service Account for CircleCI
