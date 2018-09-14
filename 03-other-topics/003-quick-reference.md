@@ -2,7 +2,7 @@
 category: cloud-platform
 expires: 2019-01-01
 ---
-# Kubernetes quick reference
+# Kubectl quick reference
 
 This document acts as a quick reference to `kubectl`, listing some of the most common operations.
 
