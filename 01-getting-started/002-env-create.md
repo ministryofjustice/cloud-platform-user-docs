@@ -232,6 +232,6 @@ You can now run commands in your namespace by appending the `-n` or `--namespace
 `$ kubectl get pods --namespace myenv-dev`
 
 ## Next steps
-Perhaps you would like to [create an ECR repository]({{ "/01-getting-started/003-ecr-setup" | relative_url }}) to push your docker image to.
+[Create an ECR repository]({{ "/01-getting-started/003-ecr-setup" | relative_url }}) to push your application docker image to.
 
-If you don't need one, you can try [deploying an app]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager, or [deploying manually]({{ "/02-deploying-an-app/002-app-deploy" | relative_url }}) by writing some custom YAML files.
+Then you can try [deploying an app to Kubernetes manually]({{ "/02-deploying-an-app/001-app-deploy" | relative_url }}) by writing some custom YAML files or [deploying an app with Helm]({{ "/02-deploying-an-app/002-app-deploy-helm" | relative_url }}), a Kubernetes [package manager]((https://helm.sh/)).
