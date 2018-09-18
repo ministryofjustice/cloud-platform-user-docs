@@ -20,7 +20,7 @@ AWS resources are provisioned through the [cloud-platform-environments](https://
 
   $ cd cloud-platform-environments # navigate into cloud-platform-environments directory.
 
-  $ git co -b add_ecr   # create and checkout new branch.
+  $ git checkout -b add_ecr   # create and checkout new branch.
 
 ```
 
@@ -58,14 +58,14 @@ provider "aws" {
 module "ecr-repo" {
   source = "github.com/ministryofjustice/cloud-platform-terraform-ecr-credentials?ref=master"
 
-  team_name = "my-team-name"
-  repo_name = "my-app-name"
+  team_name = "<my-team>"
+  repo_name = "<my-app>"
 }
 
 resource "kubernetes_secret" "ecr-repo" {
   metadata {
-    name      = "ecr-repo-my-app-name"
-    namespace = "my-app"
+    name      = "<ecr-repo-my-app>"
+    namespace = "<my-app-dev>"
   }
 
   data {
@@ -84,7 +84,7 @@ This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amaz
 
   $ git add main.tf
 
-  $ git commit -m "created Terraform module for ECR"
+  $ git commit
 
   $ git push
 
