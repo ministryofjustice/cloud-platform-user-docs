@@ -52,49 +52,50 @@ Helm allows you to manage application deployment to Kubernetes using Charts. You
 
 There are two parts to Helm: The client and the Helm server (Tiller).
 
-We will create a `Service Account` resource by adding a `$servicename-$env-rbac-tiller.yaml` file. This gives Helm the permissions it needs to deploy within your namespace.
+We will create a `Service Account` resource by adding to your `01-rbac.yaml` file. This gives Helm the permissions it needs to deploy within your namespace.
 
-This file should be created in the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) repository under your namespace directory `/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/$servicename-$env`. 
+Add the following to the bottom of the `01-rbac.yaml` file you defined when you [created your environment]({{ "/01-getting-started/002-env-create#01-rbacyaml" | relative_url }}):
 
 ```
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: tiller
-  namespace: myapp-dev # Your namespace `$servicename-$env`
+  namespace: myapp-dev # Your namespace `<servicename-env>`
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   name: tiller
-  namespace: myapp-dev # Your namespace `$servicename-$env`
+  namespace: myapp-dev # Your namespace `<servicename-env>`
 subjects:
 - kind: ServiceAccount
   name: tiller
-  namespace: myapp-dev # Your namespace `$servicename-$env`
+  namespace: myapp-dev # Your namespace `<servicename-env>`
 roleRef:
   kind: ClusterRole
   name: cluster-admin
   apiGroup: rbac.authorization.k8s.io
-``` 
+```
 
-After the file is created, commit it and create a pull request against the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
+After you have added this to the file, commit it and create a pull request against the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
-Once it is merged, an instance of tiller is installed in your namespace. This Tiller instance will need to be configured with your Helm installation.
+Once it is merged and applied, you will have a service account for Tiller that allows it act on your namespace. Now you have to install Helm and Tiller into your namespace.
 
-#### Installing and configuring Helm
+#### Installing and configuring Helm and Tiller
 
 Install the client via Homebrew or by other [means](https://docs.helm.sh/using_helm/#installing-helm):
 
-`$ brew install kubernetes-helm`
+    $ brew install kubernetes-helm
 
 Now configure the installation with Tiller:
 
-`$ helm init --tiller-namespace <env-name> --service-account tiller`
+    $ helm init --tiller-namespace <env-name> --service-account tiller
 
 When succesful, you'll be greeted with the message:
 
-`Happy Helming`
+    Happy Helming
 
 This is an indication we're ready to deploy our applicaton.
 
@@ -161,7 +162,7 @@ Then copy the pod name that isn't postgresql.
 
 We're going to follow the log, so we'll run:
 
-`$ kubectl logs django-app-<name>-fcc657679-w69cr --namespace <env-name> -f`
+    $ kubectl logs django-app-<name>-fcc657679-w69cr --namespace <env-name> -f
 
 As you can see, this tails the log and you should see our health checks giving a HTTP 200.
 
@@ -172,13 +173,13 @@ You now have our application up and running but you decide one pod isn't enough.
 
 Let's try:
 
-`$ helm upgrade django-app-<YourName> . --set replicaCount=3 --tiller-namespace <env-name> --set deploy.host=<DeploymentURL>`
+    $ helm upgrade django-app-<YourName> . --set replicaCount=3 --tiller-namespace <env-name> --set deploy.host=<DeploymentURL>
 
 This command terminates the current running pod and spins up three in its place.
 
 If we run the familiar command we've been using:
 
-`$ kubectl get pods --namespace <env-var>`
+    $ kubectl get pods --namespace <env-var>
 
 You'll see the pod replication in progress.
 
@@ -187,11 +188,11 @@ Finally, we have built are app and deployed to the cluster. There is only one th
 
 To delete the deployment you simply run:
 
-`$ helm del --purge django-app-<YourName> --tiller-namespace <env-name>`
+    $ helm del --purge django-app-<YourName> --tiller-namespace <env-name>
 
 And then confirm the pods are terminating as expected:
 
-`$ kubectl get pods --namespace <env-var>`
+    $ kubectl get pods --namespace <env-var>
 
 ## Next steps
 The next step will be to create your own Helm Chart. You can try this with an application of your own or run through [Bitnami's excellent guide](https://docs.bitnami.com/kubernetes/how-to/create-your-first-helm-chart/) on how to build using a simple quickstart.
