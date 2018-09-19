@@ -81,9 +81,9 @@ roleRef:
 
 After you have added this to the file, commit it and create a pull request against the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
-Once it is merged, an instance of Tiller is installed in your namespace. This Tiller instance will need to be configured with your Helm installation.
+Once it is merged and applied, you will have a service account for Tiller that allows it act on your namespace. Now you have to install Helm and Tiller into your namespace.
 
-#### Installing and configuring Helm
+#### Installing and configuring Helm and Tiller
 
 Install the client via Homebrew or by other [means](https://docs.helm.sh/using_helm/#installing-helm):
 
