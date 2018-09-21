@@ -68,12 +68,7 @@ The `<servicename-env>` directory for your environment defines the specific reso
 
 ## Define your environment
 
-We create the environment by adding a directory in the `/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/` directory:
-
-```
-$ cd namespaces/cloud-platform-live-0.k8s.integration.dsd.io/
-$ mkdir myapp-dev
-```
+We create the environment by adding a directory in the `/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/` directory.
 
 To set up an environment we need to create 5 files in our namespace:
 
@@ -85,139 +80,74 @@ To set up an environment we need to create 5 files in our namespace:
 
 These files define key elements of the namespace and restrictions we want to place on it so that we have security and resource allocation properties. We describe each of these files in more detail below.
 
-To get started copy the example versions of these files from the [`namespace-resources`](https://github.com/ministryofjustice/cloud-platform-environments/tree/master/namespace-resources) directory in the `cloud-platform-evironments` repo into your `<servicename-env>` directory.
-
-```Shell
-# From the root of the cloud-platform-environments directory
-$ cp namespace-resources/* namespaces/cloud-platform-live-0.k8s.integration.dsd.io/myapp-dev/
-```
-
-In each of these files you need to replace some example values with information about your namespace, team or app. We go through each of the changes below.
-
-After you have changed the files commit them and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
-
-The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel.  
-
 ### `00-namespace.yaml`
 
-The `00-namespace.yaml` file defines the namespace so that the cluster Kubernetes knows to create a namespace and what to call it.
-
-```YAML
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: myapp-dev # This is where you will define your <servicename-env>
-  labels:
-    name: myapp-dev # Also your <servicename-env>
-```
+In Kubernetes you run your application in a namespace; namespaces allow us to subdivide our cluster for multitenacy and provide isolation of Kubernetes resources.
 
 ### `01-rbac.yaml`
 
-We will also create a `RoleBinding` resource by adding the `01-rbac.yaml` file. This will provide us with [access policies](https://kubernetes.io/docs/admin/authorization/rbac/) on the namespace we have created in the cluster.
-
-A role binding resource grants the permissions defined in a role to a user or set of users. A role can be another resource we can create but in this instance we will reference a Kubernetes default role `ClusterRole - admin`.
-
-This `RoleBinding` resource references the `ClusterRole - admin` to provide  admin permissions on the namespace to the set of users defined under `subjects`. In this case, the `<yourTeam>` GitHub group will have admin access to any resources within the namespace `myapp-dev`.
-
-```YAML
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: myapp-dev-admins  # Your namespace with `-admin` e.g. `<servicename-env>-admin`
-  namespace: myapp-dev # Your namespace `<servicename-env>`
-subjects:
-  - kind: Group
-    name: "github:<yourTeam>" # Make this the name of the GitHub team you want to give access to
-    apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: ClusterRole
-  name: admin
-  apiGroup: rbac.authorization.k8s.io
-```
+Role base access control will provide permission to grant access to resources within your namespace. You will need to provide your github team that matches the Github API as your github team will be given access to your namespace via this file.
 
 ### `02-limitrange.yaml`
 
-As we are working on a shared Kubernetes cluster it is useful to put in place limits on the resources that each namespace, pod and container can use. This helps to stop us accidentally entering a situation where a one service impacts the performance of another through using more resources than are available.  
-
-The first Kubernetes limit we can use is a [LimitRange](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/) which we define in `02-limitrange.yaml`.
-
-The LimitRange object specifies two key resource limits on containers, `defaultRequest` and `default`. `defaultRequest` is the memory and cpu a container will request on startup. This is what the Kubernetes scheduler uses to determine whether there is enough space on the cluster to run your application and what you application will start up with when it is created. `default` is the limit at which your application will be killed or throttled.
-
-In `02-limitrange.yaml` you need to change the value of the `namespace` key to match the name of your namespace in the form `<service-env>`. We have set default values for the limits in the templates. As you learn more about the behaviour of your applications on Kubernetes you can change them.  
-
-```YAML
-apiVersion: v1
-kind: LimitRange
-metadata:
-  name: limitrange
-  namespace: myapp-dev # Your namespace `<servicename-env>`
-spec:
-  limits:
-  - default:
-      cpu: 1000m
-      memory: 2Gi
-    defaultRequest:
-      cpu: 100m
-      memory: 128Mi
-    type: Container
-```
+As we are working on a shared Kubernetes cluster it is useful to put in place limits on the resources that each namespace, pod and container can use. This helps to stop us accidentally entering a situation where a one service impacts the performance of another through using more resources than are available.
 
 ### `03-resourcequota.yaml`
 
-The [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) object allows us to set a total limit on the resources used in a namespace. As with the LimitRange, the `requests.cpu` and `requests.memory` limits set how much namespace will request on creation. The `limits.cpu` and `limits.memory` define the overall hard limits for the namespace.
-
-In `03-resourcequota.yaml` you need to change the value of the `namespace` key to match the name of your namespace in the form `<service-env>`. We have set default values for the limits in the templates. As you learn more about the behaviour of your applications on Kubernetes you can change them.  
-
-```YAML
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: namespace-quota
-  namespace: myapp-dev # Your namespace `<servicename-env>`
-spec:
-  hard:
-    requests.cpu: 4000m
-    requests.memory: 8Gi
-    limits.cpu: 6000m
-    limits.memory: 12Gi
-```
+The ResourceQuota object allows us to set a total limit on the resources used in a namespace
 
 ### `04-networkpolicy.yaml`
 
-The [NetworkPolicy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) object defines how groups of pods are allowed to communicate with each other and other network endpoints. By default pods are non-isolated, they accept traffic from any source. We apply a network policy to restrict where traffic can come from, allowing traffic only from the [ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress/) and other pods in your namespace.
+The NetworkPolicy object defines how groups of pods are allowed to communicate with each other and other network endpoints. By default pods are non-isolated, they accept traffic from any source. We apply a network policy to restrict where traffic can come from, allowing traffic only from the ingress controller and other pods in your namespace.
 
-In `04-networkpolicy.yaml` you need to change the value of the `namespace` key to match the name of your namespace in the form `<service-env>`.
+## Create your namespace and namespace-resources
 
-```YAML
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: default
-  namespace: myapp-dev # Your namespace `<servicename-env>`
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - podSelector: {}
----
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: allow-ingress-controllers
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          component: ingress-controllers
+We will automate the creation of these namespace-resources files using terraform. You will need to install terraform locally.
+
+```Shell
+$ brew install terraform
 ```
 
+In each of these files you need to replace some example values with information about your namespace, team or app. We do this by running terraform commands and filling in the values.
+
+```Shell
+$ terraform init
+$ terraform plan
+$ terraform apply
+```
+Our terraform module uses live-0 by default but if you would like to deploy to another cluster.
+
+```Shell
+$ terraform apply -var "cluster=<cluster-name>"
+```
+
+## Inputs
+
+These are the inputs for the terraform module, that you will need to fill.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| application |  | string | - | yes |
+| business-unit | Area of the MOJ responsible for the service | string | - | yes |
+| cluster | What cluster are you deploying your namespace. I.E cloud-platform-test-1 | string | `cloud-platform-live-0` | no |
+| contact_email | Contact email address for owner of the application | string | - | yes |
+| environment |  | string | - | yes |
+| github_team | This is your team name as defined by the GITHUB api. This has to match the team name on the Github API | string | - | yes |
+| is-production |  | string | `false` | no |
+| namespace | Namespace you would like to create on cluster <application>-<environment>. I.E myapp-dev | string | - | yes |
+| owner | Who is the owner/Who is responsible for this application | string | - | yes |
+| source_code_url | Url of the source code for your application | string | - | yes |
+
+
+
+You can access your namespace files under cloud-platform-environments/$namespaces/$cluster/$your-namespace, if satisfied you can then push the changes to your branch and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
+
+The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel.  
+
+
 ## Accessing your environments
+
+You will need to commit these changes to github. Once your branch has been merged to master, our pipeline will create your namespace and deploy the resources to it.
 
 Once the pipeline has completed you will be able to check that your environment is available by running:
 
