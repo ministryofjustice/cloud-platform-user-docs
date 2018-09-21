@@ -133,9 +133,10 @@ If the deploy was successful you should be greeted with something similar to the
 ```
 NAME                                           READY     STATUS    RESTARTS   AGE
 django-app-<Name>-fcc657679-w69cr               1/1       Running   1          39m
+django-app-<Name>-fcc657679-c5wdm               1/1       Running   1          39m
 django-app-<Name>-postgresql-7b4bdff4b8-xdlw2   1/1       Running   0          39m
 ```
-You should have a postgres and app pod **ready** with the status **running**.
+You should have a postgres pod and 2 app pods **ready** with the status **running**.
 
 Let's check your host has a URL by running:
 
@@ -152,11 +153,12 @@ First grab the pod name:
 
     $ kubectl get pods --namespace <env-name>
 
-Then copy the pod name that isn't postgresql.
+Then copy the name of a pod that isn't postgresql.
 
  ```
    NAME                                           READY     STATUS    RESTARTS   AGE
  * django-app-<name>-fcc657679-w69cr               1/1       Running   1          54m
+   django-app-<name>-fcc657679-c5wdm               1/1       Running   1          39m
    django-app-<name>-postgresql-7b4bdff4b8-xdlw2   1/1       Running   0          54m
 ```
 
@@ -169,13 +171,13 @@ As you can see, this tails the log and you should see our health checks giving a
 Read more about Kubernetes logging [here](https://kubernetes.io/docs/concepts/cluster-administration/logging/).
 
 ### Scale the application
-You now have our application up and running but you decide one pod isn't enough. Say you want to run three. This is simply a case of changing the replicaCount value in the values.yaml whilst running the `helm upgrade` command.
+You now have our application up and running but you decide two pods aren't enough. Say you want to run three. This is simply a case of changing the replicaCount value in the values.yaml whilst running the `helm upgrade` command.
 
 Let's try:
 
     $ helm upgrade django-app-<YourName> . --set replicaCount=3 --tiller-namespace <env-name> --set deploy.host=<DeploymentURL>
 
-This command spins up more pods to bring the total number to 3.
+This command spins up another pod to bring the total number to 3.
 
 If we run the familiar command we've been using:
 
