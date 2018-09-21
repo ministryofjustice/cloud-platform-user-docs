@@ -110,4 +110,4 @@ In your CircleCI project, go to the settings (the cog icon) and select 'AWS Perm
 
 ## Next steps
 
-Try [deploying an app]({{ "/02-deploying-an-app/001-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager, or [deploying manually]({{ "/02-deploying-an-app/002-app-deploy" | relative_url }}) by writing some custom YAML files.
+Try [deploying an app]({{ "/02-deploying-an-app/002-app-deploy-helm" | relative_url }}) with [Helm](https://helm.sh/), a Kubernetes package manager, or [deploying manually]({{ "/02-deploying-an-app/001-app-deploy" | relative_url }}) by writing some custom YAML files.
