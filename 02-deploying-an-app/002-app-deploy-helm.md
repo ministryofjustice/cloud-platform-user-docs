@@ -175,7 +175,7 @@ Let's try:
 
     $ helm upgrade django-app-<YourName> . --set replicaCount=3 --tiller-namespace <env-name> --set deploy.host=<DeploymentURL>
 
-This command terminates the current running pod and spins up three in its place.
+This command spins up more pods to bring the total number to 3.
 
 If we run the familiar command we've been using:
 
