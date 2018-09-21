@@ -134,9 +134,12 @@ If the deploy was successful you should be greeted with something similar to the
 NAME                                           READY     STATUS    RESTARTS   AGE
 django-app-<Name>-fcc657679-w69cr               1/1       Running   1          39m
 django-app-<Name>-fcc657679-c5wdm               1/1       Running   1          39m
+django-app-<Name>-db-migration-dgnse-qgs7r      0/1       Completed 0          39m
 django-app-<Name>-postgresql-7b4bdff4b8-xdlw2   1/1       Running   0          39m
 ```
 You should have a postgres pod and 2 app pods **ready** with the status **running**.
+
+(There's also a line for a pod which ran the initial database migrations, but that's completed and no longer running so we'll ignore it.)
 
 Let's check your host has a URL by running:
 
