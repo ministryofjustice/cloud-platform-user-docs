@@ -22,8 +22,8 @@ You create an environment by adding the definition of the environment in YAML to
 
 [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments)
 
-Adding your environment definition kicks off a pipeline which builds your environment on the appropriate cluster.  
-
+Adding your environment definition kicks off a pipeline which builds your environment on the appropriate cluster. 
+ 
 ### Set up
 
 First we need to clone the repository, change directory and create a new branch:
@@ -65,6 +65,50 @@ Within the cluster directory you will create a directory for your environment in
 **/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/<servicename-env>**
 
 The `<servicename-env>` directory for your environment defines the specific resources we will create in your namespace. In this guide we create the base namespace definition and a rolebinding that sets who can perform actions on the namespace.
+
+### Create your namespace and namespace-resources
+We will automate the creation of these namespace-resources files using terraform. You will need to install terraform locally.
+
+```Shell
+$ brew install terraform
+```
+
+In each of these files you need to replace some example values with information about your namespace, team or app. We do this by running terraform commands and filling in the values.
+
+```Shell
+$ cd cloud-platform-environments/namespace-resources/
+$ terraform init
+$ terraform plan
+$ terraform apply
+```
+Our terraform module uses live-0 by default but if you would like to deploy to another cluster.
+
+```Shell
+$ terraform apply -var "cluster=<cluster-name>"
+```
+
+### Terraform Inputs
+
+These are the inputs for the terraform module, that you will need to fill.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| application |  | string | - | yes |
+| business-unit | Area of the MOJ responsible for the service | string | - | yes |
+| cluster | What cluster are you deploying your namespace. I.E cloud-platform-test-1 | string | `cloud-platform-live-0` | no |
+| contact_email | Contact email address for owner of the application | string | - | yes |
+| environment |  | string | - | yes |
+| github_team | This is your team name as defined by the GITHUB api. This has to match the team name on the Github API | string | - | yes |
+| is-production |  | string | `false` | no |
+| namespace | Namespace you would like to create on cluster <application>-<environment>. I.E myapp-dev | string | - | yes |
+| owner | Who is the owner/Who is responsible for this application | string | - | yes |
+| source_code_url | Url of the source code for your application | string | - | yes |
+
+You can access your namespace files under cloud-platform-environments/$namespaces/$cluster/$your-namespace, if satisfied you can then push the changes to your branch and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
+
+The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel. 
+
+Once this is completed you can skip to ['Accessing your environment'](#Accessing-your-environments)
 
 ## Define your environment
 
