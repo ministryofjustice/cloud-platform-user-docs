@@ -112,7 +112,7 @@ $ terraform plan
 $ terraform apply
 ```
 
-Our terraform module creates a namespace on live-0 by default but if you would like to deploy to another cluster you can use:
+Our terraform module creates the files for a new namespace on the live-0 cluster by default but if you would like to deploy to another cluster you can use:
 
 ```Shell
 $ terraform apply -var "cluster=<cluster-name>"
