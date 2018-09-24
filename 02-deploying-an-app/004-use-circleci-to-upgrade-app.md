@@ -73,7 +73,7 @@ From Builds click the cog and select Enviroment Variables under Build Settings. 
   - `KUBE_ENV_<ENVIRONMENT>_NAME` - the full name of the cluster (eg.: `cloud-platform-live-0.k8s.integration.dsd.io`)
   - `KUBE_ENV_<ENVIRONMENT>_NAMESPACE` - the name of the `Namespace` (see [Create a namespace]({{ "/01-getting-started/002-env-create" | relative_url }}))
   - `KUBE_ENV_<ENVIRONMENT>_CACERT` - the CA Certificate for the cluster, can be acquired from the `Secret` that is generated for the `ServiceAccount`
-  - `KUBE_ENV_<ENVIRONMENT>_TOKEN` - the access token generated for the `ServiceAccount` (please note that you should first `base64` decode the value shown in the previous section)
+  - `KUBE_ENV_<ENVIRONMENT>_TOKEN` - the access token generated for the `ServiceAccount`. Please note, you should first base64 decode the value shown in the previous section, e.g. `echo <thereallylongstringthatyougetback> | base64 --decode && echo`.
 
 ### Creating the config.yml
 [Tutorial](https://circleci.com/docs/2.0/tutorials/) on creating a config.yml file. As long as you are building a Docker image you can configure Circle however you wish. The only additional configuration you will need to add is to upload an image to ECR and deploy to Kubernetes:
