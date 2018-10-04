@@ -108,7 +108,6 @@ Create your namespace and these resources files, filling in the values as you ar
 ```Shell
 $ cd cloud-platform-environments/namespace-resources/
 $ terraform init
-$ terraform plan
 $ terraform apply
 ```
 
