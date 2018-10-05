@@ -39,7 +39,12 @@ variable "cluster_state_bucket" {}
 
 The main README file of each module repository will list all the available configuration options that can be passed to the module.
 
-## Versioning
+### Outputs
+Each module will have its own outputs. These expose useful information, such as endpoints, credentials etc. The module examples all use a common approach: they employ the `kubernetes_secret` terraform resource to push the outputs straight into your environment in the form of a `Secret` which you could then extract information from or directly reference in `Pods`.
+
+This is currently the only supported way of accessing terraform outputs.
+
+### Versioning
 
 All modules are versioned. This allows us to implement changes without breaking existing resources. To use a specific version of a module you need to define it in the `source` attribute by specifying the `ref` attribute in the query string of the source URL:
 
