@@ -10,7 +10,7 @@ The platform is for teams working anywhere in the Ministry of Justice that need 
 
 ### What do we currently support
 
-Users can create non-production environments and get access to the Kubernetes API for those environments.  
+Users can create non-production and production environments and get access to the Kubernetes API for those environments. 
 
 ## Getting started
 
