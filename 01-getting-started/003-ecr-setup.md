@@ -104,6 +104,47 @@ kubectl -n <namespace_name> get secret ecr-repo-my-app-name -o yaml
 
 The values in kubernetes `Secrets` are always `base64` encoded so you will have to decode them before you can use them outside kubernetes. Inside the cluster, the nodes already have access to the ECR so you don't need to make any changes.
 
+This convenience function placed in `~/.bash_profile` will log you on all the team's repositories:
+```
+function ecr_login() {
+ # kubectl context as defined in ~/.kube/config
+ local ecr_ctx="live-cluster"
+ # GitHub team name goes here
+ local ecr_t="my-team-name"
+ export AWS_DEFAULT_REGION="eu-west-1"
+ local ecr_ns=$(kubectl --context ${ecr_ctx} -o json get ns | jq -r ".items[] | select(.metadata.name|test(\"${1}\")) | .metadata.name")
+ local ecr_n
+ for ecr_n in ${ecr_ns} ; do
+  local ecr_rb=$(kubectl --context ${ecr_ctx} -n ${ecr_n} get rolebindings -o json 2>/dev/null | jq -r ".items[].subjects[].name | select(.==\"github:${ecr_t}\")")
+  if [ "${ecr_rb}" == "github:${ecr_t}" ] ; then
+   local ecr_id ecr_sec ecr_url ecr_name
+   while read ecr_id ; do
+    read ecr_sec
+    read ecr_url
+    ecr_id=$(echo -n ${ecr_id} | base64 -D)
+    ecr_sec=$(echo -n ${ecr_sec} | base64 -D)
+    ecr_url=$(echo -n ${ecr_url} | base64 -D)
+    ecr_name=$(echo -n ${ecr_url} | cut -d'/' -f2,3)
+    echo "logging on ${ecr_url}"
+    eval $(AWS_ACCESS_KEY_ID=${ecr_id} AWS_SECRET_ACCESS_KEY=${ecr_sec} aws ecr get-login --no-include-email) 2>&1 | grep -v WARN
+    AWS_ACCESS_KEY_ID=${ecr_id} AWS_SECRET_ACCESS_KEY=${ecr_sec} aws ecr describe-images --repository-name ${ecr_name} | jq -r '.imageDetails? | map(.imageTags[]?) | join (" ")'
+   done < <(kubectl --context ${ecr_ctx} -n ${ecr_n} get secrets -o json | jq -r '.items[] | select(.data.repo_url) | .data.access_key_id,.data.secret_access_key,.data.repo_url')
+  fi
+ done
+}
+```
+
+To use it, just call with a parameter matching one or more projects, you will be logged on for `docker pull/push` and also get a list of exisiting tags:
+```
+$ ecr_login laa
+logging on dkr.ecr.eu-west-1.amazonaws.com/laa/backend
+Login Succeeded
+master.9a126c8 circleci-badge cloud-platform-ecr-repo ...
+logging on dkr.ecr.eu-west-1.amazonaws.com/laa/frontend
+Login Succeeded
+circleci circleci.29b3ecd ...
+```
+
 ### Setting up CircleCI
 In your CircleCI project, go to the settings (the cog icon) and select 'AWS Permissions' from the left hand menu. Fill in the IAM credentials and CircleCI will be able to use ECR images. For more information please see [the official docs](https://circleci.com/docs/2.0/private-images/).
 
