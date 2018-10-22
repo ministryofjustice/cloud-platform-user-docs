@@ -25,7 +25,7 @@ Grafana is set up as a stateless app, managed entirely through code. This also h
 
 1. Login to grafana (see the links below) with your GitHub account. All users are able to edit dashboards but cannot save the changes. Find the dashboard titled 'Blank Dashboard' and modify it as you see fit.
 
-2. Once happy with your dashboard, click the share icon on the top right corner, select the `Export` tab and `View JSON`. Copy the JSON string into a `ConfigMap` according to the example below. Make sure you've included the `label` and that the JSON string is properly indented.
+2. Once happy with your dashboard, click the share icon on the top right corner, select the `Export` tab and `View JSON`. Copy the JSON string into a `ConfigMap` according to the example below.
 
 ```YAML
 ---
@@ -42,6 +42,8 @@ data:
       [ ... ]
     }
 ```
+
+Make sure you've included the `label` and that the JSON string is properly indented. Also, name of the key in the `ConfigMap` must end in `-dashboard.json`. Please note that you can have multiple dashboards exported in a single `ConfigMap` as well.
 
 3. Use `kubectl` to apply the `ConfigMap` above, your dashboard should be visible in Grafana shortly.
 
