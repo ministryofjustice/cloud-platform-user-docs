@@ -2,9 +2,9 @@
 category: cloud-platform
 expires: 2019-01-01
 ---
-# Using the Cloud Platform Prometheus, AlertManager and Grafana 
+# Using the Cloud Platform Prometheus, AlertManager and Grafana
 ## Introduction
-Prometheus, AlertManager and Grafana have been installed on Live-0 to ensure the reliability and availability of the Cloud Platform. This document will briefly outline how to access the monitoring tools and where to find further information. 
+Prometheus, AlertManager and Grafana have been installed on Live-0 to ensure the reliability and availability of the Cloud Platform. This document will briefly outline how to access the monitoring tools and where to find further information.
 
 ## What is Prometheus
 
@@ -20,9 +20,36 @@ The Alertmanager handles alerts sent by client applications such as the Promethe
 
 Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored. Create, explore, and share dashboards with your team and foster a data driven culture.
 
+### Creating dashboards
+Grafana is set up as a stateless app, managed entirely through code. This also helps achieve better availability. However, it means that dashboards will not persist in its database. To create a dashboard:
+
+1. Login to grafana (see the links below) with your GitHub account. All users are able to edit dashboards but cannot save the changes. Find the dashboard titled 'Blank Dashboard' and modify it as you see fit.
+
+2. Once happy with your dashboard, click the share icon on the top right corner, select the `Export` tab and `View JSON`. Copy the JSON string into a `ConfigMap` according to the example below.
+
+```YAML
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <my-dashboard>
+  namespace: <my-namespace>
+  labels:
+    cloud-platform.justice.gov.uk/grafana-dashboard: ""
+data:
+  blank-dashboard.json: |
+    {
+      [ ... ]
+    }
+```
+
+Make sure you've included the `label` and that the JSON string is properly indented. Also, name of the key in the `ConfigMap` must end in `-dashboard.json`. Please note that you can have multiple dashboards exported in a single `ConfigMap` as well.
+
+3. Use `kubectl` to apply the `ConfigMap` above, your dashboard should be visible in Grafana shortly.
+
 ## How to access monitoring tools
 
-All links provided below require you to authenticate with your Github account. 
+All links provided below require you to authenticate with your Github account.
 
 Prometheus: [https://prometheus.apps.cloud-platform-live-0.k8s.integration.dsd.io](https://prometheus.apps.cloud-platform-live-0.k8s.integration.dsd.io)
 
