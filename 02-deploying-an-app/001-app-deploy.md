@@ -29,7 +29,7 @@ If you are not deploying your own application and would like to deploy the examp
 
 To deploy an application to the Cloud Platform, firstly the application image needs to be retrievable from a repository.
 
-Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored. A single AWS account is used (mojds-platforms-integration), and within it each team can generate separate repositories. The ECR address will be `926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app`.
+Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored. A single AWS account is used (mojds-platforms-integration), and within it each team can generate separate repositories. The ECR address will be `926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-app`.
 
 ### Authenticating with the repository
 
@@ -53,11 +53,11 @@ Now we need to tag the image with the tag provided by ECR, so it can be pushed i
 
 View the **Push Commands** again, and modify the fourth command provided, ensuring the first tag is the one currently used on your machine:
 
-`docker tag my-app:latest 926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app:latest`
+`docker tag my-app:latest 926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-app:latest`
 
 Finish by running the fifth command provided, to push the image to your repository.
 
-`docker push 926803513772.dkr.ecr.us-west-1.amazonaws.com/my-app:latest`
+`docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-app:latest`
 
 The ECR does not allow unauthenticated pulls, to use the repo `aws ecr get-login` must be run first. For CircleCI, the AWS CLI tools must be installed as part of the build (sample images are described in https://github.com/ministryofjustice/cloud-platform-tools-image) and the AWS_ vars set in the build settings (https://circleci.com/gh/ministryofjustice/my-app/edit#env-vars)
 
@@ -95,7 +95,7 @@ spec:
     spec:
       containers:
       - name: cp-demo-app
-        image: 926803513772.dkr.ecr.us-west-1.amazonaws.com/cloud-platform-demo-app:latest
+        image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
         ports:
         - containerPort: 80
 ```
