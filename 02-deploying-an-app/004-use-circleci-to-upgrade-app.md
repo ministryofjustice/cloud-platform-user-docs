@@ -50,9 +50,6 @@ A Service Account is created in the [namespace creation github repository](https
   token: ZX...EE=
 ```
 
-### Migration to CircleCI 2.0
-We are using CircleCI 2.0 if you already have a CircleCI ```circle.yml``` please [migrate](https://circleci.com/docs/2.0/migration/) your project to 2.0.
-
 ### Linking Repository to CircleCI
 MoJ has as an account with CircleCI, please login to [CircleCI](https://circleci.com/dashboard) using GitHub credentials. Select project, and if config.yml is in the repo CircleCI will build and run tests.
 
