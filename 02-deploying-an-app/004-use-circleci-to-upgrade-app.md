@@ -50,32 +50,31 @@ A Service Account is created in the [namespace creation github repository](https
   token: ZX...EE=
 ```
 
-### Migration to CircleCI 2.0
-We are using CircleCI 2.0 if you already have a CircleCI ```circle.yml``` please [migrate](https://circleci.com/docs/2.0/migration/) your project to 2.0.
-
 ### Linking Repository to CircleCI
 MoJ has as an account with CircleCI, please login to [CircleCI](https://circleci.com/dashboard) using GitHub credentials. Select project, and if config.yml is in the repo CircleCI will build and run tests.
 
-### Adding the config.yml
-CircleCI uses a YAML file to identify how you want your testing environment set up and what tests you want to run. On CircleCI 2.0, this file must be called ```config.yml``` and must be in a hidden folder called ```.circleci``` .
-
 ### Add variables to CircleCI
-From Builds click the cog and select Enviroment Variables under Build Settings. The variables you will need to set are:
+There is a number of environment variables that you will need to set on your CircleCI project in order to build a docker image, push it to the ECR and trigger a deployment in your environment. On the project page, click the cog icon in the top right corner and select `Enviroment Variables` under `Build Settings`. The variables you will need to set are listed below.
 
-- AWS Credentials, used to authenticate with ECR:
-  - `AWS_DEFAULT_REGION` - would be `eu-west-1` for Cloud Platform clusters unless specified otherwise
-  - `AWS_ACCESS_KEY_ID`
-  - `AWS_SECRET_ACCESS_KEY`
-  - `ECR_ENDPOINT` is useful to avoid having to hardcode the full hostname of the registry
+#### AWS credentials
+To authenticate with ECR, you will need to set:
+- `AWS_DEFAULT_REGION` - would be `eu-west-1` for Cloud Platform clusters unless specified otherwise
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `ECR_ENDPOINT` is optional but useful if you want to avoid having to hardcode the full hostname of the registry
 
-- Kubernetes `ServiceAccount` credentials. There are four different variables per environment that CircleCI will need to access (eg.: development and production). The naming scheme is what our helper script expects (see the last section of this document) and `<ENVIRONMENT>` should be replaced below:
+#### Kubernetes `ServiceAccount` credentials
+Since a single CircleCI project will need to access multiple namespaces in kubernetes (the environments), it will also need to handle multiple credentials. To simplify authentication, we provide a helper script in our supported [build image](https://github.com/ministryofjustice/cloud-platform-tools-image). For a usage example, see [Deploy To Kubernetes](#upload-to-ecr) below.
 
-  - `KUBE_ENV_<ENVIRONMENT>_NAME` - the full name of the cluster (eg.: `cloud-platform-live-0.k8s.integration.dsd.io`)
-  - `KUBE_ENV_<ENVIRONMENT>_NAMESPACE` - the name of the `Namespace` (see [Create a namespace]({{ "/01-getting-started/002-env-create" | relative_url }}))
-  - `KUBE_ENV_<ENVIRONMENT>_CACERT` - the CA Certificate for the cluster, can be acquired from the `Secret` that is generated for the `ServiceAccount`
-  - `KUBE_ENV_<ENVIRONMENT>_TOKEN` - the access token generated for the `ServiceAccount`. Please note, you should first base64 decode the value shown in the previous section, e.g. `echo <thereallylongstringthatyougetback> | base64 --decode && echo`.
+There are four different variables that CircleCI will need to access *per environment*. Our helper script expects environment variables to be named according to the list below where `<ENVIRONMENT>` should be replaced by some identifier of your choosing (eg.: `STAGING`, `PRODUCTION`).
+- `KUBE_ENV_<ENVIRONMENT>_NAME` - the full name of the cluster (eg.: `cloud-platform-live-0.k8s.integration.dsd.io`)
+- `KUBE_ENV_<ENVIRONMENT>_NAMESPACE` - the name of the `Namespace` (see [Create a namespace]({{ "/01-getting-started/002-env-create" | relative_url }}))
+- `KUBE_ENV_<ENVIRONMENT>_CACERT` - the CA Certificate for the cluster, can be acquired from the `Secret` that is generated for the `ServiceAccount`
+- `KUBE_ENV_<ENVIRONMENT>_TOKEN` - the access token generated for the `ServiceAccount`. Please note, you should first base64 decode the token value you retrieve from the secret [in the previous section](#creating-a-service-account-for-circleci), e.g. `echo <thereallylongstringthatyougetback> | base64 --decode`.
 
 ### Creating the config.yml
+CircleCI uses a YAML file to identify how you want your testing environment set up and what tests you want to run. On CircleCI 2.0, this file must be called ```config.yml``` and must be in a hidden folder called ```.circleci``` .
+
 [Tutorial](https://circleci.com/docs/2.0/tutorials/) on creating a config.yml file. As long as you are building a Docker image you can configure Circle however you wish. The only additional configuration you will need to add is to upload an image to ECR and deploy to Kubernetes:
 
 #### Upload to ECR
