@@ -29,7 +29,7 @@ If you are not deploying your own application and would like to deploy the examp
 
 To deploy an application to the Cloud Platform, firstly the application image needs to be retrievable from a repository.
 
-Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored. A single AWS account is used (mojds-platforms-integration), and within it each team can generate separate repositories. The ECR address will be `926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-app`.
+Amazon's ECR, within ECS is where all of the application images used by the Cloud Platform are stored. A single AWS account is used (mojds-platforms-integration), and within it each team can generate separate repositories. The ECR address will be `926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-team/my-app`.
 
 ### Authenticating with the repository
 
@@ -37,7 +37,11 @@ Login details for your newly created ECR will be available as Kubernetes secrets
 
 `kubectl -n your-namespace get secrets -o yaml`
 
-You will need to set `--profile yourAWSProfile` if values are copied to `~/.aws/credentials` or set the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+Base64 decode the `access_key_id` and `secret_access_key` values stored in the secret.
+
+`echo 'your_access_key_id_value' | base64 -D`
+
+You will need to set the environment variable `AWS_PROFILE=YourECRAWSProfile` if values are copied to `~/.aws/credentials` or set the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 `aws ecr get-login --no-include-email --region eu-west-1`
 
@@ -49,15 +53,15 @@ Execute the command, then proceed to execute the Docker login command provided i
 
 Ensure the Docker image for your application has been built and is stored locally on your machine.
 
-Now we need to tag the image with the tag provided by ECR, so it can be pushed into the correct repository.
+`docker build -t my-team/my-app .`
 
-View the **Push Commands** again, and modify the fourth command provided, ensuring the first tag is the one currently used on your machine:
+Now we need to tag the image so it can be pushed into the correct repository.
 
-`docker tag my-app:latest 926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-app:latest`
+`docker tag my-team/my-app:latest 926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-team/my-app:latest`
 
-Finish by running the fifth command provided, to push the image to your repository.
+Finish by running the last command to push the image to your repository.
 
-`docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-app:latest`
+`docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/my-team/my-app:latest`
 
 The ECR does not allow unauthenticated pulls, to use the repo `aws ecr get-login` must be run first. For CircleCI, the AWS CLI tools must be installed as part of the build (sample images are described in https://github.com/ministryofjustice/cloud-platform-tools-image) and the AWS_ vars set in the build settings (https://circleci.com/gh/ministryofjustice/my-app/edit#env-vars)
 
