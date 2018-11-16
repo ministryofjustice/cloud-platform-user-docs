@@ -60,7 +60,7 @@ The namespaces directory contains a directory for each of the clusters that you 
 
 **/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/**
 
-Within the cluster directory you will create a directory for your environment in the format `<servicename-env>`, for example `myapp-dev`.
+Within the cluster directory you will generate a directory for your environment in the format `<servicename-env>`, for example `myapp-dev`.
 
 **/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/servicename-env/**
 
@@ -119,7 +119,7 @@ $ terraform apply -var "cluster=<cluster-name>"
 
 You can then access your namespace files under `cloud-platform-environments/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/<your-namespace>`, if satisfied you can then push the changes to your branch and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
-The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel.
+The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel. This can take about 5 minutes.
 
 ## Accessing your environments
 
