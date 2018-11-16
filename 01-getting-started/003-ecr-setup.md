@@ -28,11 +28,11 @@ AWS resources are provisioned through the [cloud-platform-environments](https://
 
 ```bash
 
-  $ cd namespaces/$your_service  #navigate to your service's directory.
+  $ cd namespaces/cloud-platform-live-0.k8s.integration.dsd.io/$your_service  #navigate to your service's directory.
 
   $ mkdir resources # make directory called resources
 
-  $ cd namespaces/$your_service/resources
+  $ cd namespaces/$your_service/cloud-platform-live-0.k8s.integration.dsd.io/resources
 
 ```
 
@@ -76,7 +76,7 @@ resource "kubernetes_secret" "ecr-repo" {
 }
 ```
 
-This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amazonaws.com/my-team-name/my-app-name` along with the credentials to push to it. Make sure you adjust the values of `team_name`, `repo_name` and `namespace` to what is appropriate for your environment.
+This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amazonaws.com/my-team-name/my-app-name` along with the credentials to push to it. Make sure you adjust the values of `team_name`, `repo_name` `name` and `namespace` to what is appropriate for your environment.
 
 5\. git add, commit and push to your branch.
 
