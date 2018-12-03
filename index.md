@@ -14,7 +14,7 @@ Users can create non-production and production environments and get access to th
 
 ### Help and support
 
-For help or support, drop into the MoJ Digital slack channel `#cloud-platform-users`, raise an issue on the [Ministry of Justice cloud-platform](https://github.com/ministryofjustice/cloud-platform) repo, or email the cloud platform team `platforms@digital.justice.gov.uk`.
+For help or support, drop into the MoJ Digital slack channel `#ask-cloud-platform`, raise an issue on the [Ministry of Justice cloud-platform](https://github.com/ministryofjustice/cloud-platform) repo, or email the cloud platform team `platforms@digital.justice.gov.uk`.
 
 ## Getting started
 
