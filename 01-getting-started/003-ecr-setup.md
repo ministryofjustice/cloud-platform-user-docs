@@ -40,49 +40,17 @@ AWS resources are provisioned through the [cloud-platform-environments](https://
 
 ```bash
 
-  $ vi main.tf  #create a terraform file.
+  $ vi ecr.tf  #create a terraform file.
 
 ```
 
-4\. Add the following contents to the .tf file:
-
-```
-terraform {
-  backend "s3" {}
-}
-
-provider "aws" {
-  region = "eu-west-1"
-}
-
-module "ecr-repo" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-ecr-credentials?ref=1.0"
-
-  team_name = "<my-team>"
-  repo_name = "<my-app>"
-}
-
-resource "kubernetes_secret" "ecr-repo" {
-  metadata {
-    name      = "<ecr-repo-my-app>"
-    namespace = "<my-app-dev>"
-  }
-
-  data {
-    repo_url          = "${module.ecr-repo.repo_url}"
-    access_key_id     = "${module.ecr-repo.access_key_id}"
-    secret_access_key = "${module.ecr-repo.secret_access_key}"
-  }
-}
-```
-
-This will create an image repository at `<account_number>.dkr.ecr.eu-west-1.amazonaws.com/my-team-name/my-app-name` along with the credentials to push to it. Make sure you adjust the values of `team_name`, `repo_name` `name` and `namespace` to what is appropriate for your environment.
+4\. Adapt the definition from the example described in https://github.com/ministryofjustice/cloud-platform-terraform-ecr-credentials/tree/master/examples; make sure you adjust the values of `team_name`, `repo_name` `name` and `namespace` to what is appropriate for your environment.
 
 5\. git add, commit and push to your branch.
 
 ```bash
 
-  $ git add main.tf
+  $ git add ecr.tf
 
   $ git commit
 
