@@ -119,7 +119,7 @@ $ terraform apply -var "cluster=<cluster-name>"
 
 You can then access your namespace files under `cloud-platform-environments/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/<your-namespace>`, if satisfied you can then push the changes to your branch and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
-The cloud platform team will merge the pull request which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel. This can take about 5 minutes.
+The cloud platform team will review the pull request when it gets opened.  As soon as the pull request has been approved by the cloud platform team you can then merge it into the master branch which will kick off the pipeline that builds the environment. You can check whether the build succeeded or failed in the [`#cp-build-notifications`](https://mojdt.slack.com/messages/CA5MDLM34/) slack channel. This can take about 5 minutes.
 
 ## Accessing your environments
 
