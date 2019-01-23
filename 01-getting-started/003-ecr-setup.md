@@ -32,7 +32,7 @@ AWS resources are provisioned through the [cloud-platform-environments](https://
 
   $ mkdir resources # make directory called resources
 
-  $ cd namespaces/$your_service/cloud-platform-live-0.k8s.integration.dsd.io/resources
+  $ cd namespaces/cloud-platform-live-0.k8s.integration.dsd.io/$your_service/resources
 
 ```
 
