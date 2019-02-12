@@ -25,7 +25,7 @@ Grafana is set up as a stateless app, managed entirely through code. This also h
 
 1. Login to grafana (see the links below) with your GitHub account. All users are able to edit dashboards but cannot save the changes. Find the dashboard titled 'Blank Dashboard' and modify it as you see fit.
 
-2. Once happy with your dashboard, click the share icon on the top right corner, select the `Export` tab and `View JSON`. Copy the JSON string into a `ConfigMap` according to the example below.
+2. Once happy with your dashboard, click the share icon on the top right corner, select the `Export` tab, check the `Export for sharing externally` box and click on `View JSON`. Copy the JSON string into a `ConfigMap` according to the example below.
 
 ```YAML
 ---
