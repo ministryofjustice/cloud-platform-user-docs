@@ -35,9 +35,9 @@ metadata:
   name: <my-dashboard>
   namespace: <my-namespace>
   labels:
-    cloud-platform.justice.gov.uk/grafana-dashboard: ""
+    grafana_dashboard: ""
 data:
-  blank-dashboard.json: |
+  my-dashboard.json: |
     {
       [ ... ]
     }
