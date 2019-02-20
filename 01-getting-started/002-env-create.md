@@ -219,7 +219,7 @@ spec:
 
 ### `03-resourcequota.yaml`
 
-The [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) object allows us to set a total limit on the resources used in a namespace. As with the LimitRange, the `requests.cpu` and `requests.memory` limits set how much namespace will request on creation. The `limits.cpu` and `limits.memory` define the overall hard limits for the namespace.
+The [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) object allows us to set a total limit on the resources used in a namespace. As with the LimitRange, the `requests.cpu` and `requests.memory` limits set how much the namespace will request on creation. The `limits.cpu` and `limits.memory` define the overall hard limits for the namespace.
 
 In `03-resourcequota.yaml` you need to change the value of the `namespace` key to match the name of your namespace in the form `<service-env>`. We have set default values for the limits in the templates. As you learn more about the behaviour of your applications on Kubernetes you can change them.  
 
