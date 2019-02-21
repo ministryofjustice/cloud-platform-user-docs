@@ -57,6 +57,82 @@ AlertManager: [https://alertmanager.apps.cloud-platform-live-0.k8s.integration.d
 
 Grafana: [https://grafana.apps.cloud-platform-live-0.k8s.integration.dsd.io](https://grafana.apps.cloud-platform-live-0.k8s.integration.dsd.io)
 
+## Custom Rules/Alerts
+
+Once you own a namespace, you can have custom alerts setup that can send alert information to your slack channel when triggered.
+
+Steps:
+1. Create a ticket with the Cloud Platform team requesting a new Alermanager Alert Route be set up and include the following information:
+  
+- Namespace
+- Team Name
+- Application Name
+- Slack Channel messages shoud go to
+
+Once completed, the Cloud Platform team will supply you with a `value` for the `severity` label. All alerts are routed using this label.
+
+2. Create a PrometheusRule
+
+#### prometheus-custom-rules-<application_name>.yaml
+
+Once the route configuration is complete by the Cloud Platform Team, use the 'severity' label value supplied and create a custom rule using the template below:
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  creationTimestamp: null
+  namespace: <namespace>
+  labels:
+    prometheus: prometheus-operator
+    role: alert-rules
+  name: prometheus-custom-rules-<application_name>
+spec:
+  groups:
+  - name: application-rules
+    rules:
+    - alert: <alert_name>
+      expr: <alert_query>
+      for: <check_time_length>
+      labels:
+        severity: <team_name>
+      annotations:
+        message: <alert_message> 
+        runbook_url: <http://my-support-docs>
+```
+
+Example:
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  creationTimestamp: null
+  namespace: test-namespace
+  labels:
+    prometheus: prometheus-operator
+    role: alert-rules
+  name: prometheus-custom-rules-my-application
+spec:
+  groups:
+  - name: node.rules
+    rules:
+    - alert: CPU-High
+      expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+      for: 5m
+      labels:
+        severity: cp-team
+      annotations:
+        message: This device's CPU usage has exceeded the threshold with a value of {{ $value }}. Instance {{ $labels.instance }} CPU usage is dangerously high
+        runbook_url: http://link-to-support-docs.website
+```
+The `alert` name, `message` and `runbook_url` annotations will be sent to the Slack channel when the rule has been triggered. 
+
+You can view the applied rules with the following command:
+
+```sh 
+kubectl -n <namespace> describe prometheusrules prometheus-custom-rules-<application_name>
+```
 
 ## Further documentation
 
