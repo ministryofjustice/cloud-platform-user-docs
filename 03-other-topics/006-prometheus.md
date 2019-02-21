@@ -67,7 +67,7 @@ Steps:
 - Namespace
 - Team Name
 - Application Name
-- Slack Channel messages shoud go to
+- Slack Channel messages should go to
 
 Once completed, the Cloud Platform team will supply you with a `value` for the `severity` label. All alerts are routed using this label.
 
@@ -81,10 +81,8 @@ Once the route configuration is complete by the Cloud Platform Team, use the 'se
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  creationTimestamp: null
   namespace: <namespace>
   labels:
-    prometheus: prometheus-operator
     role: alert-rules
   name: prometheus-custom-rules-<application_name>
 spec:
@@ -110,7 +108,6 @@ metadata:
   creationTimestamp: null
   namespace: test-namespace
   labels:
-    prometheus: prometheus-operator
     role: alert-rules
   name: prometheus-custom-rules-my-application
 spec:
