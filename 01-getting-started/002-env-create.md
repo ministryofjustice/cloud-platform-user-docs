@@ -192,11 +192,11 @@ roleRef:
 
 ### `02-limitrange.yaml`
 
-As we are working on a shared Kubernetes cluster it is useful to put in place limits on the resources that each namespace, pod and container can use. This helps to stop us accidentally entering a situation where a one service impacts the performance of another through using more resources than are available.  
+As we are working on a shared Kubernetes cluster it is useful to put in place limits on the resources that each namespace, pod and container can use. This helps to stop us accidentally entering a situation where one service impacts the performance of another through using more resources than are available.
 
 The first Kubernetes limit we can use is a [LimitRange](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/) which we define in `02-limitrange.yaml`.
 
-The LimitRange object specifies two key resource limits on containers, `defaultRequest` and `default`. `defaultRequest` is the memory and cpu a container will request on startup. This is what the Kubernetes scheduler uses to determine whether there is enough space on the cluster to run your application and what you application will start up with when it is created. `default` is the limit at which your application will be killed or throttled.
+The LimitRange object specifies two key resource limits on containers, `defaultRequest` and `default`. `defaultRequest` is the memory and cpu a container will request on startup. This is what the Kubernetes scheduler uses to determine whether there is enough space on the cluster to run your application and what your application will start up with when it is created. `default` is the limit at which your application will be killed or throttled.
 
 In `02-limitrange.yaml` you need to change the value of the `namespace` key to match the name of your namespace in the form `<service-env>`. We have set default values for the limits in the templates. As you learn more about the behaviour of your applications on Kubernetes you can change them.  
 
@@ -219,7 +219,7 @@ spec:
 
 ### `03-resourcequota.yaml`
 
-The [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) object allows us to set a total limit on the resources used in a namespace. As with the LimitRange, the `requests.cpu` and `requests.memory` limits set how much namespace will request on creation. The `limits.cpu` and `limits.memory` define the overall hard limits for the namespace.
+The [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) object allows us to set a total limit on the resources used in a namespace. As with the LimitRange, the `requests.cpu` and `requests.memory` limits set how much the namespace will request on creation. The `limits.cpu` and `limits.memory` define the overall hard limits for the namespace.
 
 In `03-resourcequota.yaml` you need to change the value of the `namespace` key to match the name of your namespace in the form `<service-env>`. We have set default values for the limits in the templates. As you learn more about the behaviour of your applications on Kubernetes you can change them.  
 
