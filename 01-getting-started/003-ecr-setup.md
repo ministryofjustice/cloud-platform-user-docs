@@ -65,6 +65,8 @@ For more information about the terraform module being used, please read the docu
 
 The end result will be a kubernetes `Secret` inside your environment, called `ecr-repo-my-app-name`; the secret holds IAM access keys to authenticate with the registry and the actual repository URL.
 
+Note: For `ecr-repo-my-app-name` you should use the value of the `name` property of the `kubernetes_secret` resource in the `ecr.tf` file you created previously.
+
 To retrieve the credentials:
 ```
 kubectl -n <namespace_name> get secret ecr-repo-my-app-name -o yaml
