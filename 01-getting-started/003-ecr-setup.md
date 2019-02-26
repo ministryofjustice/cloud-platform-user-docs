@@ -63,13 +63,13 @@ For more information about the terraform module being used, please read the docu
 
 ## Accessing the credentials
 
-The end result will be a kubernetes `Secret` inside your environment, called `ecr-repo-my-app-name`; the secret holds IAM access keys to authenticate with the registry and the actual repository URL.
+The end result will be a kubernetes `Secret` inside your environment, called `example-team-ecr-credentials-output` (or whatever you changed that to); the secret holds IAM access keys to authenticate with the registry and the actual repository URL.
 
-Note: For `ecr-repo-my-app-name` you should use the value of the `name` property of the `kubernetes_secret` resource in the `ecr.tf` file you created previously.
+Note: For `example-team-ecr-credentials-output` you should put whatever you used as the value of the `name` property of the `kubernetes_secret` resource in the `ecr.tf` file you created previously.
 
 To retrieve the credentials:
 ```
-kubectl -n <namespace_name> get secret ecr-repo-my-app-name -o yaml
+kubectl -n <namespace_name> get secret example-team-ecr-credentials-output -o yaml
 ```
 
 The values in kubernetes `Secrets` are always `base64` encoded so you will have to decode them before you can use them outside kubernetes. Inside the cluster, the nodes already have access to the ECR so you don't need to make any changes.
