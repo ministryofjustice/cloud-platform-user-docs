@@ -121,6 +121,8 @@ Fill in your values in response to the prompts.
 
 For `var.source_code_url`, this should be the URL of an application which is 'cluster-ready' to be deployed. If you do not have such an application ready to go, you can use the reference application which the Cloud Platform team have prepared `git@github.com:ministryofjustice/cloud-platform-reference-app.git`
 
+Note: The `source_code_url` is a descriptive label, used by the Cloud Platform team in supporting your namespace. It does not set up an explicit link between your namespace and your application's code repository.
+
 At the final prompt "Do you want to perform these actions?", enter "yes"
 
 You can then access your namespace files under `cloud-platform-environments/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/<your-namespace>`, if satisfied you can then push the changes to your branch and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
