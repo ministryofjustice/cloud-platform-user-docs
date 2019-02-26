@@ -92,18 +92,18 @@ These are the inputs for the terraform module, that you will need to fill:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| application |  | string | - | yes |
+| application | The name of your application | string | - | yes |
 | business-unit | Area of the MOJ responsible for the service | string | - | yes |
 | cluster | What cluster are you deploying your namespace. i.e cloud-platform-test-1 | string | `cloud-platform-live-0` | no |
 | contact_email | Contact email address for owner of the application | string | - | yes |
-| environment |  | string | - | yes |
+| environment | A label for your environment (e.g. dev/staging/...) | string | - | yes |
 | github_team | This is your team name as defined by the GITHUB api. This has to match the team name on the Github API | string | - | yes |
 | is-production |  | string | `false` | no |
 | namespace | Namespace you would like to create on cluster <application>-<environment>. i.e myapp-dev | string | - | yes |
 | owner | Who is the owner/Who is responsible for this application | string | - | yes |
 | source_code_url | Url of the source code for your application | string | - | yes |
 
-Create your namespace and these resources files, filling in the values as you are prompted:
+Run the following commands to create your namespace and these resources files:
 
 ```Shell
 $ cd cloud-platform-environments/namespace-resources/
@@ -116,6 +116,12 @@ Our terraform module creates the files for a new namespace on the live-0 cluster
 ```Shell
 $ terraform apply -var "cluster=<cluster-name>"
 ```
+
+Fill in your values in response to the prompts.
+
+For `var.source_code_url`, this should be the URL of an application which is 'cluster-ready' to be deployed. If you do not have such an application ready to go, you can use the reference application which the Cloud Platform team have prepared `git@github.com:ministryofjustice/cloud-platform-reference-app.git`
+
+At the final prompt "Do you want to perform these actions?", enter "yes"
 
 You can then access your namespace files under `cloud-platform-environments/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/<your-namespace>`, if satisfied you can then push the changes to your branch and create a pull request against the [`cloud-platform-environments`](https://github.com/ministryofjustice/cloud-platform-environments) master repo.
 
