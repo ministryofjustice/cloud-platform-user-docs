@@ -91,7 +91,7 @@ kubectl -n <namespace> describe prometheusrules prometheus-custom-rules-<applica
 ```
 
 ## PrometheusRule examples
-If you're struggling for ideas on how and which alerts to setup, please see some examples [here]().
+If you're struggling for ideas on how and which alerts to setup, please see some examples [here](https://github.com/ministryofjustice/cloud-platform-infrastructure/blob/master/terraform/cloud-platform-components/resources/prometheusrule-examples/application-alerts.yaml).
 
 ## Further reading
 - [Prometheus Operator - Getting Started](https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md)
