@@ -13,7 +13,6 @@ The aim of this document is to provide you with the necessary information to cre
 This guide assumes the following:
 
 * You have [created a namespace for your application]({{ "/01-getting-started/002-env-create" | relative_url }})
-* Deployed at least one pod in your namespace 
 
 ## Creating a slack webhook and amend Alertmanager
 This step requires the Cloud Platform team to create a receiver in [Alertmanager](https://github.com/ministryofjustice/cloud-platform-infrastructure/blob/master/terraform/cloud-platform-components/templates/prometheus-operator.yaml.tpl#L115) and a [Slack webhook](https://api.slack.com/incoming-webhooks).
@@ -25,7 +24,7 @@ Use the #ask-cloud-platform Slack channel to request a new alert route in Alertm
 - application name
 - slack channel
 
-The team will provide you with a `value` that'll need to be defined in the next step. Please copy it to your clipboard. 
+The team will provide you with a "`custom severity level`" that'll need to be defined in the next step. Please copy it to your clipboard. 
 
 ## Create a PrometheusRule
 A `PrometheusRule` is a custom resource that defines your triggered alert. This file will contain the alert name, promql expression and time of check. 
@@ -33,7 +32,7 @@ A `PrometheusRule` is a custom resource that defines your triggered alert. This 
 To create your own custom alert you'll need to fill in the template below and deploy it to your namespace (tip: you can check rules in your namespace by running `kubectl get prometheusrule -n <namespace>`). 
 
 - Create a file called `prometheus-custom-rules-<application_name>.yaml`
-- Copy in the template below and replace the bracket values, specifying the requirements of your alert. The `<team_name>` field is the value you were passed earlier. 
+- Copy in the template below and replace the bracket values, specifying the requirements of your alert. The `<custom_severity_level>` field is the value you were passed earlier. 
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -51,7 +50,7 @@ spec:
       expr: <alert_query>
       for: <check_time_length>
       labels:
-        severity: <team_name>
+        severity: <custom_severity_level>
       annotations:
         message: <alert_message> 
         runbook_url: <http://my-support-docs>
@@ -65,7 +64,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   creationTimestamp: null
-  namespace: test-namespace
+  namespace: monitoring
   labels:
     role: alert-rules
   name: prometheus-custom-rules-my-application
@@ -73,14 +72,14 @@ spec:
   groups:
   - name: node.rules
     rules:
-    - alert: CPU-High
-      expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+    - alert: Quota-Exceeded
+      expr: 100 * kube_resourcequota{job="kube-state-metrics",type="used",namespace="monitoring"} / ignoring(instance, job, type) (kube_resourcequota{job="kube-state-metrics",type="hard"} > 0) > 90
       for: 5m
       labels:
         severity: cp-team
       annotations:
-        message: This device's CPU usage has exceeded the threshold with a value of {{ $value }}. Instance {{ $labels.instance }} CPU usage is dangerously high
-        runbook_url: http://link-to-support-docs.website
+        message: Namespace {{ $labels.namespace }} is using {{ printf "%0.0f" $value}}% of its {{ $labels.resource }} quota.
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaexceeded
 ```
 
 The `alert` name, `message` and `runbook_url` annotations will be sent to the Slack channel when the rule has been triggered. 
