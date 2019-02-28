@@ -6,6 +6,8 @@ expires: 2019-01-31
 
 ## Overview
 
+<img src="{{ "images/k8s-cluster-application-deployment-process.png" | relative_url }}" />
+
 The aim of this guide is to walkthrough the process of deploying an application into the Cloud Platform.
 
 This guide uses a pre-configured application as an example of how to deploy your own.
