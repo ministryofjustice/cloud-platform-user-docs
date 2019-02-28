@@ -15,6 +15,11 @@ defaults:
       02-deploying-an-app: true
   -
     scope:
-      path: "03-other-topics"
+      path: "03-monitoring-an-app"
     values:
-      03-other-topics: true
+      03-monitoring-an-app: true
+  -
+    scope:
+      path: "99-other-topics"
+    values:
+      99-other-topics: true

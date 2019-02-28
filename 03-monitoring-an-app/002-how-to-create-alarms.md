@@ -2,7 +2,7 @@
 category: cloud-platform
 expires: 2019-07-01
 ---
-# How do I create my own alerts?
+# Creating your own custom alerts
 
 ## Overview
 Alertmanager allows you define your own alert conditions based on [Prometheus expression language](https://prometheus.io/docs/prometheus/latest/querying/basics) expressions. 
@@ -33,7 +33,8 @@ A `PrometheusRule` is a custom resource that defines your triggered alert. This 
 To create your own custom alert you'll need to fill in the template below and deploy it to your namespace (tip: you can check rules in your namespace by running `kubectl get prometheusrule -n <namespace>`). 
 
 - Create a file called `prometheus-custom-rules-<application_name>.yaml`
-- Copy in the below and replace the required values in brackets. The `<team_name>` value under `severity` is the value you were passed earlier. 
+- Copy in the template below and replace the bracket values, specifying the requirements of your alert. The `<team_name>` field is the value you were passed earlier. 
+
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
