@@ -34,10 +34,19 @@ For help or support, drop into the MoJ Digital slack channel `#ask-cloud-platfor
   [{{ article.title }}]({{ article.url | relative_url }})
 {% endfor %}
 
+## Monitoring an app
+
+{% assign monitoring_groups = site.pages
+  | where: "03-monitoring-an-app", true %}
+
+{% for article in monitoring_groups %}
+  [{{ article.title }}]({{ article.url | relative_url }})
+{% endfor %}
+
 ## Other topics
 
 {% assign other_topics_groups = site.pages
-  | where: "03-other-topics", true %}
+  | where: "99-other-topics", true %}
 
 {% for article in other_topics_groups %}
   [{{ article.title }}]({{ article.url | relative_url }})
