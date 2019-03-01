@@ -119,6 +119,10 @@ $ terraform apply -var "cluster=<cluster-name>"
 
 Fill in your values in response to the prompts.
 
+For `var.namespace`, this is the name of your (team's) 'private' part of the cluster. The name of your namespace must be unique across the whole of the cluster. If you try to create a new namespace using the name of one which already exists, you will get an error when you try to apply the generated kubernetes config files (or when our build pipeline applies them on your behalf).
+
+For 'real' services, this is very unlikely to be a problem - most services have distinct names, so namespace name conflicts are unlikely. But, if you are creating a test/dummy namespace in order to learn how the platform works, it's better to avoid generic names like 'dummy', 'test' or 'example'. Add something unique (e.g. your name) to minimise the risk of trying to re-use a name by mistake.
+
 For `var.source_code_url`, this should be the URL of an application which is 'cluster-ready' to be deployed. If you do not have such an application ready to go, you can use the reference application which the Cloud Platform team have prepared `git@github.com:ministryofjustice/cloud-platform-reference-app.git`
 
 Note: The `source_code_url` is a descriptive label, used by the Cloud Platform team in supporting your namespace. It does not set up an explicit link between your namespace and your application's code repository.
