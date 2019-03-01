@@ -192,6 +192,11 @@ spec:
         matchLabels: 
           component: monitoring
 ```
+You can view your current NetworkPolices with the following command:
+
+```sh
+kubectl -n <namespace> get networkpolicies 
+```
 
 ## Further reading
 - [Prometheus Operator - Getting Started](https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md)
