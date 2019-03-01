@@ -108,7 +108,7 @@ Finish by running the last command to push the image to your repository.
 
     docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/[team_name]/[repo_name]:latest
 
-## Step 3 - Configure the Kubernetes Cluster
+## Step 3 - Configure your namespace in the Kubernetes Cluster
 
 To deploy an application to the Cloud Platform, a number of deployment files must first be configured. You can find examples of these in the `kubectl_deploy` directory of the [demo application][rubyapp-github], but you will need to edit your copy to replace some of the values to use your kubernetes cluster environment and docker image.
 
@@ -198,7 +198,7 @@ Change the `helloworld-rubyapp` prefix of the `host` string to the value you wan
 
 *Tip:* You can find more info on ingress in the [kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
-## Deploying application to the cluster
+## Deploying the application
 
 With all of the deployment files configured, you can now deploy your application to the Cloud Platform.
 
