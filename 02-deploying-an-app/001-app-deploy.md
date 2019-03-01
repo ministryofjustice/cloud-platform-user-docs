@@ -60,6 +60,10 @@ You must authenticate to the docker image repository before you can push an imag
 
 To authenticate to your ECR, you will need the `access_key_id` and `secret_access_key` which were created for you when you created your ECR. To retrieve these, see the [this section]({{ "/01-getting-started/003-ecr-setup/#accessing-the-credentials" | relative_url }}) of this guide.
 
+*tl;dr* use this command:
+
+      kubectl -n [namespace_name] get secret [name of your secret] -o yaml
+
 Don't forget to base64 decode the `access_key_id` and `secret_access_key` values before using them.
 
       echo 'your_access_key_id_value' | base64 --decode
