@@ -7,6 +7,20 @@ The resources to be removed are:
 * The ECR which stores your docker images
 * Your namespace in the cluster. This contains all of the pods, containers and other cluster resources for your application. Removing the cluster namespace will automatically clean up all of its contents.
 
+## Removing resources from your namespace
+
+Do this if you want to empty your namespace, e.g. to reuse it for another section of the user guide, or to experiment for yourself. You do not need to do this if you are removing the whole namespace - any contents will be deleted automatically, in that case.
+
+Use the `kubectl` command to remove resources from your namespace, e.g.
+
+      kubectl delete deployment helloworld-rubyapp --namespace [your namespace]
+      kubectl delete service rubyapp-service --namespace [your namespace]
+      kubectl delete ingress helloworld-rubyapp-ingress -n [your namespace]
+
+Use `kubectl get ...` to determine the correct names, and to confirm deletion.
+
+You can find more information about `kubectl` [here][kubectl].
+
 ## Removing your ECR
 
 Your [ECR][ecr] was created by adding an `ecr.tf` file to the Cloud Platform [environments repository][envrepo].
@@ -35,3 +49,4 @@ In the body of your PR, please add a note to ask the cloud platform team to manu
 [ecr]: https://aws.amazon.com/ecr/
 [awscli]: https://aws.amazon.com/cli/
 [pr]: https://help.github.com/en/articles/about-pull-requests
+[kubectl]: https://kubernetes.io/docs/reference/kubectl/overview/
