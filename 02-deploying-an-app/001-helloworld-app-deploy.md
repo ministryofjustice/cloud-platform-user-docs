@@ -2,7 +2,7 @@
 category: cloud-platform
 expires: 2019-01-31
 ---
-# Deploying an application to the Cloud Platform
+# Deploying a 'Hello World' application to the Cloud Platform
 
 <img src="{{ "images/k8s-cluster-application-deployment-process.png" | relative_url }}" />
 
