@@ -15,7 +15,7 @@ Use the `kubectl` command to remove resources from your namespace, e.g.
 
       kubectl delete deployment helloworld-rubyapp --namespace [your namespace]
       kubectl delete service rubyapp-service --namespace [your namespace]
-      kubectl delete ingress helloworld-rubyapp-ingress -n [your namespace]
+      kubectl delete ingress helloworld-rubyapp-ingress --namespace [your namespace]
 
 Use `kubectl get ...` to determine the correct names, and to confirm deletion.
 
