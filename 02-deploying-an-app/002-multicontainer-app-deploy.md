@@ -77,7 +77,6 @@ It should behave in the same way as when you were running it locally via docker-
 [multi-demo]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app
 [multi-demo-readme]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app#multi-container-demo-application
 [cloudplatform]: https://github.com/ministryofjustice/cloud-platform
-
 [k8s-deployment]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 [k8s-pod]: https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/
 [k8s-service]: https://kubernetes.io/docs/concepts/services-networking/service/
