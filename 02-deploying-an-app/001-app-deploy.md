@@ -44,7 +44,7 @@ This guide assumes the following:
 
 The `ECR Team Name` and `ECR Repository Name` must match the `team_name` and `repo_name` values you entered when you created the ECR via [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments) Github repository.
 
-You can find them in the file `namespaces/cloud-platform-live-0.k8s.integration.dsd.io/[YOUR ENVIRONMENT]/resources/ecr.tf`.
+You can find them in the file `namespaces/live-1.cloud-platform.service.justice.gov.uk/[YOUR ENVIRONMENT]/resources/ecr.tf`.
 
 ### Amazon ECR Terminology
 
@@ -182,7 +182,7 @@ metadata:
   name: helloworld-rubyapp-ingress
 spec:
   rules:
-  - host: helloworld-rubyapp.apps.cloud-platform-live-0.k8s.integration.dsd.io
+  - host: helloworld-rubyapp.apps.live-1.cloud-platform.service.justice.gov.uk
     http:
       paths:
       - path: /
@@ -193,7 +193,7 @@ spec:
 
 The value of `serviceName` and `servicePort` must be the same as those specified in the `service.yml` file.
 
-Change the `helloworld-rubyapp` prefix of the `host` string to the value you want to use as the hostname part of the URL on which your application will be available to the world (do not change the `.apps.cloud-platform...` part).
+Change the `helloworld-rubyapp` prefix of the `host` string to the value you want to use as the hostname part of the URL on which your application will be available to the world (do not change the `.apps.live-1.cloud...` part).
 
 
 *Tip:* You can find more info on ingress in the [kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/)
@@ -234,7 +234,7 @@ For `[POD-NAME]` use the value returned by the `kubectl get pods...` command
 
 You should be able to view the app. at the following URL:
 
-      curl -L http://helloworld-rubyapp.apps.cloud-platform-live-0.k8s.integration.dsd.io
+      curl -L http://helloworld-rubyapp.apps.live-1.cloud-platform.service.justice.gov.uk
 
 Don't forget to change `helloworld-rubyapp` to whatever hostname you chose earlier.
 

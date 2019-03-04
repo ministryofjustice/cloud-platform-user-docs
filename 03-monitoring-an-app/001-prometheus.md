@@ -4,7 +4,7 @@ expires: 2019-07-01
 ---
 # Using the Cloud Platform Prometheus, AlertManager and Grafana
 ## Introduction
-Prometheus, AlertManager and Grafana have been installed on Live-0 to ensure the reliability and availability of the Cloud Platform. This document will briefly outline how to access the monitoring tools and where to find further information.
+Prometheus, AlertManager and Grafana have been installed on Live-1 to ensure the reliability and availability of the Cloud Platform. This document will briefly outline how to access the monitoring tools and where to find further information.
 
 ## What is Prometheus
 
@@ -51,11 +51,11 @@ Make sure you've included the `label` and that the JSON string is properly inden
 
 All links provided below require you to authenticate with your Github account.
 
-Prometheus: [https://prometheus.apps.cloud-platform-live-0.k8s.integration.dsd.io](https://prometheus.apps.cloud-platform-live-0.k8s.integration.dsd.io)
+Prometheus: [https://prometheus.apps.live-1.cloud-platform.service.justice.gov.uk](https://prometheus.apps.live-1.cloud-platform.service.justice.gov.uk)
 
-AlertManager: [https://alertmanager.apps.cloud-platform-live-0.k8s.integration.dsd.io](https://alertmanager.apps.cloud-platform-live-0.k8s.integration.dsd.io/)
+AlertManager: [https://alertmanager.apps.live-1.cloud-platform.service.justice.gov.uk](https://alertmanager.apps.live-1.cloud-platform.service.justice.gov.uk)
 
-Grafana: [https://grafana.apps.cloud-platform-live-0.k8s.integration.dsd.io](https://grafana.apps.cloud-platform-live-0.k8s.integration.dsd.io)
+Grafana: [https://grafana.apps.live-1.cloud-platform.service.justice.gov.uk](https://grafana.apps.live-1.cloud-platform.service.justice.gov.uk)
 
 ## Further documentation
 

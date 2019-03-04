@@ -6,6 +6,9 @@ This document is intended to assist engineers in accessing application and syste
 Live-0 cluster: 
 [https://kibana.apps.cloud-platform-live-0.k8s.integration.dsd.io/_plugin/kibana](https://kibana.apps.cloud-platform-live-0.k8s.integration.dsd.io/_plugin/kibana)
 
+Live-1 cluster: 
+[https://kibana.apps.live-1.cloud-platform.service.justice.gov.uk/_plugin/kibana](https://kibana.apps.live-1.cloud-platform.service.justice.gov.uk/_plugin/kibana)
+
 ## How to get my data into Elasticsearch
 As long as your application is writing to stdout, it'll be collected by fluentd and passed to the Elasticsearch cluster. Use one of the links above and authenticate with your GitHub username and password. 
 ## How do I use Kibana?

@@ -42,7 +42,7 @@ We build new environments by creating a new directory for our environment and pu
 cloud-platform-environments
 ├── namespace-resources
 └── namespaces
-    └── cloud-platform-live-0.k8s.integration.dsd.io
+    └── live-1.cloud-platform.service.justice.gov.uk
         ├── kube-system
 
         ...
@@ -56,13 +56,13 @@ This is the root of the repo, containing `namespaces` directory
 
 **/namespaces**
 
-The namespaces directory contains a directory for each of the clusters that you can build environments on. Create your environment in the `cloud-platform-live-0.k8s.integration.dsd.io` directory.
+The namespaces directory contains a directory for each of the clusters that you can build environments on. Create your environment in the `live-1.cloud-platform.service.justice.gov.uk` directory.
 
-**/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/**
+**/namespaces/live-1.cloud-platform.service.justice.gov.uk/**
 
 Within the cluster directory you will generate a directory for your environment in the format `<servicename-env>`, for example `myapp-dev`.
 
-**/namespaces/cloud-platform-live-0.k8s.integration.dsd.io/servicename-env/**
+**/namespaces/live-1.cloud-platform.service.justice.gov.uk/servicename-env/**
 
 The `<servicename-env>` directory for your environment defines the specific resources we will create in your namespace. We describe these resources in more detail in [how we set up an environment](#how-we-set-up-an-environment).
 
@@ -94,7 +94,7 @@ These are the inputs for the terraform module, that you will need to fill:
 |------|-------------|:----:|:-----:|:-----:|
 | application | The name of your application | string | - | yes |
 | business-unit | Area of the MOJ responsible for the service | string | - | yes |
-| cluster | What cluster are you deploying your namespace. i.e cloud-platform-test-1 | string | `cloud-platform-live-0` | no |
+| cluster | What cluster are you deploying your namespace. i.e cloud-platform-live-1 | string | `cloud-platform-live-1` | no |
 | contact_email | Contact email address for owner of the application | string | - | yes |
 | environment | A label for your environment (e.g. dev/staging/...) | string | - | yes |
 | github_team | This is your team name as defined by the GITHUB api. This has to match the team name on the Github API | string | - | yes |

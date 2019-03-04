@@ -67,7 +67,7 @@ To authenticate with ECR, you will need to set:
 Since a single CircleCI project will need to access multiple namespaces in kubernetes (the environments), it will also need to handle multiple credentials. To simplify authentication, we provide a helper script in our supported [build image](https://github.com/ministryofjustice/cloud-platform-tools-image). For a usage example, see [Deploy To Kubernetes](#upload-to-ecr) below.
 
 There are four different variables that CircleCI will need to access *per environment*. Our helper script expects environment variables to be named according to the list below where `<ENVIRONMENT>` should be replaced by some identifier of your choosing (eg.: `STAGING`, `PRODUCTION`).
-- `KUBE_ENV_<ENVIRONMENT>_NAME` - the full name of the cluster (eg.: `cloud-platform-live-0.k8s.integration.dsd.io`)
+- `KUBE_ENV_<ENVIRONMENT>_NAME` - the full name of the cluster (eg.: `live-1.cloud-platform.service.justice.gov.uk`)
 - `KUBE_ENV_<ENVIRONMENT>_NAMESPACE` - the name of the `Namespace` (see [Create a namespace]({{ "/01-getting-started/002-env-create" | relative_url }}))
 - `KUBE_ENV_<ENVIRONMENT>_CACERT` - the CA Certificate for the cluster, can be acquired from the `Secret` that is generated for the `ServiceAccount`
 - `KUBE_ENV_<ENVIRONMENT>_TOKEN` - the access token generated for the `ServiceAccount`. Please note, you should first base64 decode the token value you retrieve from the secret [in the previous section](#creating-a-service-account-for-circleci), e.g. `echo <thereallylongstringthatyougetback> | base64 --decode`.
