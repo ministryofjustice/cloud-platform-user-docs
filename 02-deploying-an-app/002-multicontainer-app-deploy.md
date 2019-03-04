@@ -4,4 +4,48 @@ expires: 2019-04-30
 ---
 # Deploying a multi-container application to the Cloud Platform
 
+## Overview
 
+This section goes through the process of deploying a [demo application][multi-demo] consisting of several components, each running in its own container.
+
+In the [Cloud Platform][cloudplatform] kubernetes cluster, the application will be set up like this:
+
+<img src="{{ "images/multi-container-k8s.png" | relative_url }}" />
+
+Each container needs a [Deployment][k8s-deployment] which will contain a [Pod][k8s-pod]. [Services][k8s-service] make pods available on the cluster's internal network, and an [Ingress][k8s-ingress] exposes one or more services to the outside world.
+
+## Build docker images and pushing to ECR
+
+As before, we need to build docker images which we will push to our [Amazon ECR][ecr].
+
+Please carry out the following steps on your own working copy of the [demo application][multi-demo].
+
+For `team_name` and `repo_name` please use the values from your `ecr.tf` file, when you [created your ECR]({{ "/01-getting-started/003-ecr-setup" | relative_url }}).
+
+```
+cd rails-app
+docker build -t [team_name]/[repo_name]:rails-app .
+docker tag [team_name]/[repo_name]:rails-app 926803513772.dkr.ecr.eu-west-1.amazonaws.com/[team_name]/[repo_name]:rails-app-1.0
+docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/[team_name]/[repo_name]:rails-app-1.0
+```
+
+Note that we are overloading the tag value to push multiple different containers to a single Amazon ECR. This is because of a quirk in the way Amazon ECR refers to `image repositories` and `images`.
+
+Repeat the steps above for the `content-api` and `worker` sub-directories (changing `rails-app` as appropriate, in the commands).
+
+## Create an RDS instance
+
+The application database will be an Amazon RDS instance. To create this, refer to the [cloud platform RDS][rds-module] repository, and create a terraform file in your sub-directory of the [cloud platform environments][cp-env] repository (you will need to raise a PR for this, and get the cloud platform team to approve it).
+
+For more information see [Adding AWS resources to your environment]({{ "/02-deploying-an-app/006-add-aws-resources" | relative_url }}).
+
+[multi-demo]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app
+[cloudplatform]: https://github.com/ministryofjustice/cloud-platform
+
+[k8s-deployment]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+[k8s-pod]: https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/
+[k8s-service]: https://kubernetes.io/docs/concepts/services-networking/service/
+[k8s-ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
+[ecr]: https://aws.amazon.com/ecr/
+[rds-module]: https://github.com/ministryofjustice/cloud-platform-terraform-rds-instance
+[cp-env]: https://github.com/ministryofjustice/cloud-platform-environments
