@@ -31,8 +31,8 @@ For `team_name` and `repo_name` please use the values from your `ecr.tf` file, w
 ```
 cd rails-app
 docker build -t [team_name]/[repo_name]:rails-app .
-docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/[team_name]/[repo_name]:rails-app-1.0
 docker tag [team_name]/[repo_name]:rails-app 926803513772.dkr.ecr.eu-west-1.amazonaws.com/[team_name]/[repo_name]:rails-app-1.0
+docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/[team_name]/[repo_name]:rails-app-1.0
 ```
 
 Note that we are overloading the tag value to push multiple different containers to a single Amazon ECR. This is because of a quirk in the way Amazon ECR refers to `image repositories` and `images`.
@@ -51,8 +51,6 @@ In `rails-app-deployment.yaml` and `worker-deployment.yaml` you can see the conf
 
 * `DATABASE_URL` is retrieved from the kubernetes secret which was created when the RDS instance was set up
 * `CONTENT_API_URL` uses the name and port defined in `content-api-service.yaml`
-
-
 
 [multi-demo]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app
 [cloudplatform]: https://github.com/ministryofjustice/cloud-platform
