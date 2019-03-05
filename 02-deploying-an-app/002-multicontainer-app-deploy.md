@@ -8,6 +8,10 @@ expires: 2019-04-30
 
 This section goes through the process of deploying a [demo application][multi-demo] consisting of several components, each running in its own container.
 
+Please see the [application README][multi-demo-readme] for a description of the different components, and how they connect. You can also run the application locally via docker-compose to confirm that it works as it should.
+
+## Running in the Kubernetes Cluster
+
 In the [Cloud Platform][cloudplatform] kubernetes cluster, the application will be set up like this:
 
 <img src="{{ "images/multi-container-k8s.png" | relative_url }}" />
@@ -55,6 +59,7 @@ In `rails-app-deployment.yaml` and `worker-deployment.yaml` you can see the conf
 * `CONTENT_API_URL` uses the name and port defined in `content-api-service.yaml`
 
 [multi-demo]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app
+[multi-demo-readme]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app#multi-container-demo-application
 [cloudplatform]: https://github.com/ministryofjustice/cloud-platform
 
 [k8s-deployment]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
