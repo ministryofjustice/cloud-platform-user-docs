@@ -39,6 +39,8 @@ Note that we are overloading the tag value to push multiple different containers
 
 Repeat the steps above for the `content-api` and `worker` sub-directories (changing `rails-app` as appropriate, in the commands).
 
+The `makefile` in the [demo application][multi-demo] contains commands to make this process easier. Don't forget to edit the values for `TEAM_NAME`, `REPO_NAME` and `VERSION` appropriately.
+
 ## Kubernetes configuration
 
 As per the diagram, we need to configure six objects in kubernetes - 3 deployments, 2 services and 1 ingress.
