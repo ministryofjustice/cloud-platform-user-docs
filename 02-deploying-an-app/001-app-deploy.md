@@ -198,7 +198,7 @@ Change the `helloworld-rubyapp` prefix of the `host` string to the value you wan
 
 *Tip:* You can find more info on ingress in the [kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
-## Deploying the application
+## Step 4 - Deploy the application
 
 With all of the deployment files configured, you can now deploy your application to the Cloud Platform.
 
