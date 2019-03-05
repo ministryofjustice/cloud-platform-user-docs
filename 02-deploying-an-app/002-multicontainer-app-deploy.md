@@ -51,7 +51,7 @@ As per the diagram, we need to configure six objects in kubernetes - 3 deploymen
 
 You can see these YAML config files in the `kubernetes_deploy` directory of the [demo application][multi-demo].
 
-Note: The yaml files in the github repository have the namespace name `davids-dummy-dev`, team name `davids-dummy-team` and application name `davids-dummy-app`. You will need to change these to the corresponding values for your situation.
+Note: The yaml files in the github repository have the namespace name `davids-dummy-dev`, team name `davids-dummy-team` and application name `davids-dummy-app`. You will need to change these to the corresponding values for your situation, and also the full names of your docker images.
 
 In `rails-app-deployment.yaml` and `worker-deployment.yaml` you can see the configuration for two environment variables:
 
