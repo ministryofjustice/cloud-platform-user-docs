@@ -11,15 +11,29 @@ The resources to be removed are:
 
 Do this if you want to empty your namespace, e.g. to reuse it for another section of the user guide, or to experiment for yourself. You do not need to do this if you are removing the whole namespace - any contents will be deleted automatically, in that case.
 
-Use the `kubectl` command to remove resources from your namespace, e.g.
+### The safe way
+
+Use `kubectl get ...` commands to identify the different resources in your namespace, e.g.
+
+      kubectl get deployment helloworld-rubyapp --namespace [your namespace]
+      kubectl get service rubyapp-service --namespace [your namespace]
+      kubectl get ingress helloworld-rubyapp-ingress --namespace [your namespace]
+
+Then, once you have identified the resources running in your namespace, use `kubectl delete` to delete them:
 
       kubectl delete deployment helloworld-rubyapp --namespace [your namespace]
       kubectl delete service rubyapp-service --namespace [your namespace]
       kubectl delete ingress helloworld-rubyapp-ingress --namespace [your namespace]
 
-Use `kubectl get ...` to determine the correct names, and to confirm deletion.
-
 You can find more information about `kubectl` [here][kubectl].
+
+### The quicker, less safe way
+
+If you are confident that your kubernetes deployment files accurately map to the resources running in your cluster, you can delete everything at once like this:
+
+      kubectl delete --filename kubernetes_deploy --namespace [your namespace]
+
+This is analogous to using `kubectl apply` to create the resources from your YAML files, but it will delete all the named resources.
 
 ## Removing your ECR
 
