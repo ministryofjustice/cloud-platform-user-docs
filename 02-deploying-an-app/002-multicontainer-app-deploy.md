@@ -53,6 +53,8 @@ You can see these YAML config files in the `kubernetes_deploy` directory of the 
 
 Note: The yaml files in the github repository have the namespace name `davids-dummy-dev`, team name `davids-dummy-team` and application name `davids-dummy-app`. You will need to change these to the corresponding values for your situation, and also the full names of your docker images.
 
+You may also need to change the `host` entry in the `ingress.yaml` file, if someone else has deployed an instance of the demo application using the same hostname.
+
 In `rails-app-deployment.yaml` and `worker-deployment.yaml` you can see the configuration for two environment variables:
 
 * `DATABASE_URL` is retrieved from the kubernetes secret which was created when the RDS instance was set up
