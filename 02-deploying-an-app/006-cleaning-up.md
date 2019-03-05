@@ -41,7 +41,7 @@ To delete a namespace requires two steps:
 
 ## Raising a pull request
 
-When you have finished with your sandbox namespace, and its associated ECR, please create a fork of the [environments repository][envrepo] with your environment's sub-directory of the `namespaces/cloud-platform-live-0.k8s.integration.dsd.io` directory removed, and raise a [pull request][pr] to merge your fork into master. Once merged, this will remove the YAML files which define your namespace, and also the `ecr.tf` file which defines your ECR.
+When you have finished with your sandbox namespace, and its associated ECR, please create a branch of the [environments repository][envrepo] with your environment's sub-directory of the `namespaces/cloud-platform-live-0.k8s.integration.dsd.io` directory removed, and raise a [pull request][pr] to merge your branch into master. Once merged, this will remove the YAML files which define your namespace, and also the `ecr.tf` file which defines your ECR.
 
 In the body of your PR, please add a note to ask the cloud platform team to manually delete both your namespace and your ECR.
 
