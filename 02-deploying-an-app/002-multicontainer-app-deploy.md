@@ -60,6 +60,20 @@ In `rails-app-deployment.yaml` and `worker-deployment.yaml` you can see the conf
 * `DATABASE_URL` is retrieved from the kubernetes secret which was created when the RDS instance was set up
 * `CONTENT_API_URL` uses the name and port defined in `content-api-service.yaml`
 
+## Deploying to the cluster
+
+After you have built and pushed your docker images, and made the corresponding changes to the `kubernetes_deploy/*.yaml` files, you can apply the configuration to your namespace in the kubernetes cluster:
+
+      kubectl apply --filename kubernetes_deploy --namespace [your namespace]
+
+## Interacting with the application
+
+You should be able to view the application in your browser at:
+
+      https://multi-container-demo.apps.cloud-platform-live-0.k8s.integration.dsd.io/
+
+It should behave in the same way as when you were running it locally via docker-compose.
+
 [multi-demo]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app
 [multi-demo-readme]: https://github.com/ministryofjustice/cloud-platform-multi-container-demo-app#multi-container-demo-application
 [cloudplatform]: https://github.com/ministryofjustice/cloud-platform
