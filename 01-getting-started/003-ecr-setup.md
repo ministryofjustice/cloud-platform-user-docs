@@ -74,6 +74,11 @@ kubectl -n <namespace_name> get secret example-team-ecr-credentials-output -o ya
 
 The values in kubernetes `Secrets` are always `base64` encoded so you will have to decode them before you can use them outside kubernetes. Inside the cluster, the nodes already have access to the ECR so you don't need to make any changes.
 
+This can be done at the command line using the following:
+```
+echo QWxhZGRpbjpvcGVuIHNlc2FtZQ== | base64 --decode; echo
+```
+
 ### Setting up CircleCI
 In your CircleCI project, go to the settings (the cog icon) and select 'AWS Permissions' from the left hand menu. Fill in the IAM credentials and CircleCI will be able to use ECR images. For more information please see [the official docs](https://circleci.com/docs/2.0/private-images/).
 
