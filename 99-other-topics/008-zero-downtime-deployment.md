@@ -35,7 +35,7 @@ For zero downtime deployments, you will need a readiness probe in your applicati
 
 SSL will be terminated outside of your pod, so your probes will need to respond to HTTP requests. However, Ruby on Rails applications are sometimes configured to only respond to HTTPS traffic (by adding `config.force_ssl = true` in the `config/environments/production.rb` file).
 
-In this case, the application will respond to any HTTP request with a 301 redirect, asking the requester to resend the request to the equivalent HTTPS URL. This will cause your probes to fail, because the redirect will not be followed.
+In this case, the application will respond to any HTTP request with a redirect status code, asking the requester to resend the request to the equivalent HTTPS URL. This will cause your probes to fail, because the redirect will not be followed.
 
 To fix this, the probe needs to tell the application that it is an HTTPS request, even though it isn't, so that the application will process the request rather than sending a redirect response. You can do this by adding some HTTP headers to your probe definitions like this:
 
