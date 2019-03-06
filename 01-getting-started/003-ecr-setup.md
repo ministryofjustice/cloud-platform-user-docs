@@ -76,7 +76,7 @@ The values in kubernetes `Secrets` are always `base64` encoded so you will have 
 
 This can be done at the command line using the following:
 ```
-`echo QWxhZGRpbjpvcGVuIHNlc2FtZQ== | base64 --decode; echo`
+echo QWxhZGRpbjpvcGVuIHNlc2FtZQ== | base64 --decode; echo
 ```
 
 ### Setting up CircleCI
