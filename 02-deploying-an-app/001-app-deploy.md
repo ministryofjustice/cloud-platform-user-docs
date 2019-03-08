@@ -35,7 +35,7 @@ This guide assumes the following:
 
 * Clone the [demo application](https://github.com/ministryofjustice/cloud-platform-helloworld-ruby-app)
 
-      git clone git@github.com:ministryofjustice/cloud-platform-helloworld-ruby-app.git
+      git clone https://github.com/ministryofjustice/cloud-platform-helloworld-ruby-app
       cd cloud-platform-helloworld-ruby-app
 
 * Build the docker image
