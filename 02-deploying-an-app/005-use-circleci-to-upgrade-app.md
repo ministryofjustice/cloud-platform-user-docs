@@ -6,7 +6,7 @@ expires: 2018-01-31
 # Continuous Deployment of an application using CircleCI and Helm
 
 ## Introduction
-This document covers how to continuously deploy your application in the Cloud Platform. It is essentially a continuation of [‘Deploying an application to the Cloud Platform with Helm’](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/002-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm).
+This document covers how to continuously deploy your application in the Cloud Platform. It is essentially a continuation of [‘Deploying an application to the Cloud Platform with Helm’]({{ "/02-deploying-an-app/003-app-deploy-helm" | relative_url }}).
 
 *Note: This document is specific to using [CircleCI](https://circleci.com/) as the Continuous Integration method.*
 
@@ -21,8 +21,8 @@ By the end of the tutorial, you will have done the following:
 It is assumed you have the following:
 
  - You have [created an environment for your application](/01-getting-started/002-env-create)
- - You have [deployed an application](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/002-app-deploy-helm/#tutorial-deploying-an-application-to-the-cloud-platform-with-helm) to the 'cloud-platform-live-0' cluster using Helm.
- - You have created an [ECR repository](/01-getting-started/003-ecr-setup/#creating-an-ecr-repository)
+ - You have [deployed an application]({{ "/02-deploying-an-app/003-app-deploy-helm" | relative_url }}) to the 'cloud-platform-live-0' cluster using Helm.
+ - You have created an [ECR repository]({{ "/01-getting-started/003-ecr-setup/#creating-an-ecr-repository" | relative_url }})
 
 ### Creating a Service Account for CircleCI
 As part of the CircleCI deployment pipeline, CircleCI will need to authenticate with the Kubernetes cluster. In order to do so, Kubernetes uses [Service Accounts](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/). Service Accounts provide an identity for processes that run in a cluster allowing the process to access the API server.

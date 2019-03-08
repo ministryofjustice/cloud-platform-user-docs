@@ -25,7 +25,7 @@ For help or support, drop into the MoJ Digital slack channel `#ask-cloud-platfor
   [{{ article.title }}]({{ article.url | relative_url }})
 {% endfor %}
 
-## Deploying an app
+## Deploying applications
 
 {% assign deploying_groups = site.pages
   | where: "02-deploying-an-app", true %}
