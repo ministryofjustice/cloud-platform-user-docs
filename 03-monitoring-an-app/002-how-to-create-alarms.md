@@ -17,7 +17,7 @@ This guide assumes the following:
 ## Creating a slack webhook and amend Alertmanager
 This step requires the Cloud Platform team to create a receiver in [Alertmanager](https://github.com/ministryofjustice/cloud-platform-infrastructure/blob/master/terraform/cloud-platform-components/templates/prometheus-operator.yaml.tpl#L115) and a [Slack webhook](https://api.slack.com/incoming-webhooks).
 
-Use the #ask-cloud-platform Slack channel to request a new alert route in Alertmanager. The team will need the following information:
+Create a ticket to request a new alert route in Alertmanager. The team will need the following information:
   
 - namespace name
 - team name
