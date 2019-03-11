@@ -95,4 +95,4 @@ If you're struggling for ideas on how and which alerts to setup, please see some
 
 ## Further reading
 - [Prometheus Operator - Getting Started](https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md)
-- [Alerting](https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/alerting.md)
+- [Prometheus Operator - Alerting](https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/alerting.md)
