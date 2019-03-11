@@ -14,4 +14,4 @@ However, please be aware that any production services should be deployed to **li
 
 Deploying to **live-1** in the first instance will avoid the need for another migration, after your service goes live.
 
-If you have any questions, please ask in the **#ask-cloud-platforms** slack channel.
+If you have any questions, please ask in the **#ask-cloud-platform** slack channel.
