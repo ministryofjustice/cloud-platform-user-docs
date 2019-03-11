@@ -44,6 +44,9 @@
             <a href="#" class="toc__close js-toc-close" aria-controls="toc" aria-label="Hide table of contents"></a>
             <nav id="toc" class="js-toc-list toc__list" aria-labelledby="toc-heading">
               {% include toc.html html=content %}
+                <a href="{{ "/deprecation-warning" | relative_url }}">
+                  <strong style="color: red;">LIVE-0 CLUSTER<br />DEPRECATION NOTICE</strong>
+                </a>
             </nav>
           </div>
         </div>
