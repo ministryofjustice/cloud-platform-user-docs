@@ -86,6 +86,8 @@ Note: The output of the `aws ecr...` command is a long `docker login...` command
 
 The output of the above should include `Login Succeeded` to confirm you have authenticated to the docker image repository.
 
+These credential are valid for 12 hours. So, if you are working through this example over a longer period, you will have to login again, e.g. the following day.
+
 ### Pushing your docker image to the ECR
 
 All of the MoJ Digital docker images are stored within the same Cloud Platform AWS account (mojds-platforms-integration).
