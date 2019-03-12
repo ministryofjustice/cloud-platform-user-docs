@@ -15,13 +15,14 @@ up for usage.
 ## Setup
 
 ### You do not have a DNS zone for the desired hostname
-[raise an issue with cloud-platform?]
+Please [create a support ticket](http://goo.gl/msfGiS) providing as much
+information as possible.
 
 ### You already have a DNS zone for the desired hostname
 
 #### > It's a Route53 zone
-1. Raise an issue with Cloud Platform to request the `provider` name for your
-`Certificate` (see the next step).
+1. [Create a support ticket](http://goo.gl/msfGiS) requesting the `provider`
+name for your `Certificate` (see the next step).
 
 2. Create the `Certificate`, using the `provider` name from the previous step.
 The `secretName` attribute defines the `Secret` where the certificate and key
@@ -94,4 +95,4 @@ or you can target the top-level domain, `apps.cloud-platform-live-0.k8s.integrat
 #### > It's a DNS zone hosted with another provider
 For the time being, we only support Route53 natively. Depending on the provider
 we might be able to accommodate you or we might need to handle this manually.
-Please raise an issue with Cloud Platform.
+Please [create a support ticket](http://goo.gl/msfGiS).
