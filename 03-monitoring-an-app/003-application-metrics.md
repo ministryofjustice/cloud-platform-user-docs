@@ -76,7 +76,7 @@ spec:
 
 More detailed information about service-monitors can be found [here](https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/running-exporters.md)
 
-## NetworkPolicy for Monitor Namespace
+## NetworkPolicy for Monitoring Namespace
 
 By default, all connections from outside a namespace are blocked, therefore a network policy is required for the `monitoring` namespace to be able to connect into an application namespace to scrape the metrics endpoint.
 
@@ -106,6 +106,6 @@ You can view your current NetworkPolices with the following command:
 kubectl -n <namespace> get networkpolicies 
 ```
 
-### Advisory note: Applications configured to use multiple processes
+## Advisory note: Applications configured to use multiple processes
 
 If you're using a pre-forking web server (like unicorn or puma for Ruby, or gunicorn for Python) and have it configured to use multiple processes, then you need to use a Prometheus client library which supports exporting metrics from multiple processes. Not all the official clients do that. If you don't use a library which supports this, then requests to `/metrics` could be served by any of the processes, which would mean Prometheus sees inconsistent data on each scrape
