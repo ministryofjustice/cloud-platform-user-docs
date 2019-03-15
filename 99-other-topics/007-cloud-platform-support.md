@@ -1,7 +1,7 @@
----
-category: cloud-platform
-expires: 2019-01-01
----
-# Cloud Platform Support
+# The Cloud Platform User Guide has moved
 
-[https://docs.google.com/document/d/1M89TXQJIQAqu8yb2wzatlI8PgsXrgOi-GxLtB76XgjU/edit?usp=sharing](https://docs.google.com/document/d/1M89TXQJIQAqu8yb2wzatlI8PgsXrgOi-GxLtB76XgjU/edit?usp=sharing)
+Please go to the new site and use the search function to find the content you are looking for
+
+[https://user-docs.cloud-platform.service.justice.gov.uk](https://user-docs.cloud-platform.service.justice.gov.uk)
+
+This is the new [github repository](https://github.com/ministryofjustice/cloud-platform-user-docs)

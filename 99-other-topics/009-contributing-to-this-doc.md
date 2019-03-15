@@ -1,13 +1,7 @@
----
-category: cloud-platform
-expires: 2020-03-08
----
+# The Cloud Platform User Guide has moved
 
-# Contributing to this document
+Please go to the new site and use the search function to find the content you are looking for
 
-This guide is built using [GitHub Pages][gh-pages].
+[https://user-docs.cloud-platform.service.justice.gov.uk](https://user-docs.cloud-platform.service.justice.gov.uk)
 
-If you would like to contribute to this guide, please fork [the repository][repo], make your changes and then raise a pull request.
-
-[repo]: https://github.com/ministryofjustice/cloud-platform-user-docs
-[gh-pages]: https://pages.github.com/
+This is the new [github repository](https://github.com/ministryofjustice/cloud-platform-user-docs)
