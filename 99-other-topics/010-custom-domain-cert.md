@@ -55,7 +55,7 @@ spec:
 $ kubectl describe certificate <my-cert>
 ```
 
-4. You will need to update your `Ingress` spec to include the new hostname. *Once your host is defined here, the cluster will take control of the DNS record and automatically adjust to point to the cluster.*
+4. You will need to update your `Ingress` spec to include the new hostname. **Once your host is defined here, the cluster will take control of the DNS record and automatically adjust to point to the cluster.**
 
 ```
   apiVersion: extensions/v1beta1
