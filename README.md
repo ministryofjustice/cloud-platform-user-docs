@@ -1,5 +1,7 @@
 # The Cloud Platform User Guide has moved
 
-This repository is deprecated in favour of:
+Please go to the new site and use the search function to find the content you are looking for
 
-[https://github.com/ministryofjustice/cloud-platform-user-guide](https://github.com/ministryofjustice/cloud-platform-user-guide)
+[https://user-guide.cloud-platform.service.justice.gov.uk](https://user-guide.cloud-platform.service.justice.gov.uk)
+
+This is the new [github repository](https://github.com/ministryofjustice/cloud-platform-user-guide)
